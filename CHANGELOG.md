@@ -14,9 +14,12 @@ y el versionado sigue [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 - **Plantillas de scaffolding** en `templates/`:
   - `agent-template.md` — estructura base para crear un agente nuevo.
   - `skill-template.md` — estructura base para crear una skill nueva.
-- **2 skills nuevas** para el flujo de propuestas:
-  - `consultora-branding-lookup` — trae logo, paleta, tipografías y plantilla de la consultora socia con la que Claudio esté presentando. Paso obligatorio antes de escribir cualquier propuesta.
-  - `presentation-inspiration-lookup` — trae refs de FORMATO de propuestas/decks/one-pagers desde el vault de Notion. Distinto de `design-inspiration-lookup` (sitios/productos).
+- **3 skills nuevas** para el flujo de propuestas y prospectos:
+  - `consultora-branding-lookup` — trae logo, paleta, tipografías y plantilla de la consultora socia. Paso obligatorio antes de escribir cualquier propuesta.
+  - `presentation-inspiration-lookup` — refs de FORMATO de propuestas/decks/one-pagers desde el vault de Notion.
+  - `prospect-branding-lookup` — research de clientes potenciales en `🎨 Branding de Consultoras → Prospectos` con completitud variable vía tags (`solo-nombre`, `con-website`, `con-brief-inicial`, `con-propuesta-enviada`).
+- **`templates/notion-architecture.md`** — documento de referencia para organizar el workspace de Notion de Claudio. Define 4 secciones raíz (🎨 Branding de Consultoras, 💡 Inspiración, 🧾 Inspiración — Presentaciones, 📊 Proyectos) con estructura interna, tags y guía de migración. Centraliza inspiración (antes dispersa dentro de cada proyecto) y separa branding de consultoras socias vs prospectos.
+- **`templates/STYLE.md`** — plantilla de design system (tipografía, paleta, spacing, radius, motion, iconografía, componentes, voice/tone, accesibilidad). `new-project.sh` la copia a proyectos `platform` y `portfolio`. Establece jerarquía: brandbook cliente > consultora > STYLE.md proyecto > defaults plugin.
 - **`CLAUDE.md` raíz del repo** — reglas para cuando Claude Code trabaja DENTRO del marketplace (convenciones del plugin, cómo bumpear, invocar agent-manager).
 - Campo `version` en `plugin.json` (antes solo estaba en `marketplace.json`).
 

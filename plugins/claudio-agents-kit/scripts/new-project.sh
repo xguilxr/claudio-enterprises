@@ -90,6 +90,16 @@ mkdir -p "$PROJECT_DIR/.claude/skills"
 # CLAUDE.md con nombre reemplazado
 sed "s/\[NOMBRE_PROYECTO\]/$PROJECT_NAME/g" "$TEMPLATE" > "$PROJECT_DIR/CLAUDE.md"
 
+# STYLE.md para proyectos con UI (platform, portfolio)
+case "$PROJECT_TYPE" in
+    platform|portfolio)
+        STYLE_TEMPLATE="${CLAUDE_PLUGIN_ROOT}/templates/STYLE.md"
+        if [ -f "$STYLE_TEMPLATE" ]; then
+            sed "s/\[NOMBRE_PROYECTO\]/$PROJECT_NAME/g" "$STYLE_TEMPLATE" > "$PROJECT_DIR/STYLE.md"
+        fi
+        ;;
+esac
+
 # README stub diferenciado por tipo
 case "$PROJECT_TYPE" in
     platform|portfolio|automation|data)
