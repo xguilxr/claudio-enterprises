@@ -4,7 +4,7 @@ Marketplace privado de Claude Code para la agencia Claudio-Enterprises.
 
 ## Contenido
 
-- **`claudio-agents-kit`** — equipo de 15 agentes + 11 skills + 5 templates de proyecto
+- **`claudio-agents-kit`** — equipo de 16 agentes + 12 skills + 5 templates de proyecto + meta-agente `agent-manager`
 
 ## Cómo usar este marketplace
 
@@ -103,42 +103,108 @@ Seguimos [Semantic Versioning](https://semver.org/):
 - **MINOR** (ej 2.0.0 → 2.1.0): agentes o skills nuevas sin romper nada
 - **PATCH** (ej 2.0.0 → 2.0.1): correcciones de typos, pequeños ajustes en descripciones
 
-## Cómo evolucionar el plugin (flujo real)
+## Cómo evolucionar el plugin (flujo recomendado: agent-manager)
+
+A partir de v2.1.0 hay un meta-agente `agent-manager` que hace todo el bookkeeping (crear/modificar/remover agentes y skills, bump, CHANGELOG, commit con Conventional Commits).
+
+Desde Claude Code, dentro del repo del marketplace:
+
+```
+> Usá agent-manager para crear un agente llamado sales-expert que analice pipelines de ventas
+```
+
+El agente te pregunta lo mínimo (descripción, modelo), propone el cambio, espera tu OK, y luego:
+1. Escribe el archivo desde plantilla (`templates/agent-template.md` o `skill-template.md`).
+2. Valida el frontmatter.
+3. Bumpea `plugin.json` y `marketplace.json` (MAJOR/MINOR/PATCH según SemVer).
+4. Agrega entrada a `CHANGELOG.md`.
+5. Commit con formato Conventional Commits.
+6. Push a la branch actual.
+
+## Flujo manual (si no querés usar agent-manager)
 
 ### Agregar un agente nuevo
 
-1. Crear `plugins/claudio-agents-kit/agents/mi-experto.md` con frontmatter:
+1. Crear `plugins/claudio-agents-kit/agents/mi-experto.md` desde `templates/agent-template.md`:
    ```yaml
    ---
    name: mi-experto
-   description: [descripción específica para routing automático]
+   description: [descripción específica para routing automático — mencionar CUÁNDO invocarlo]
    model: sonnet
+   memory: user
    ---
    ```
-2. Bump de versión: `2.0.0` → `2.1.0`
-3. Agregar entrada al CHANGELOG
-4. Commit + push
-5. `claude plugin update` en tus máquinas
+2. Bump MINOR en `plugin.json` Y `marketplace.json` (ambos).
+3. Entrada en `CHANGELOG.md`.
+4. Commit + push.
+5. En tus máquinas: `claude plugin marketplace update && claude plugin update claudio-agents-kit`.
 
 ### Agregar una skill nueva
 
-1. Crear `plugins/claudio-agents-kit/skills/mi-skill/SKILL.md`
-2. Bump MINOR
-3. Commit + push + update
+1. Crear `plugins/claudio-agents-kit/skills/mi-skill/SKILL.md` desde `templates/skill-template.md`.
+2. Bump MINOR + CHANGELOG.
+3. Commit + push + update.
 
 ### Cambiar un prompt de agente existente
 
-1. Editar el `.md` del agente
-2. Bump PATCH (si es refinamiento) o MINOR (si cambia comportamiento)
-3. Commit + push + update
+1. Editar el `.md` del agente.
+2. Bump PATCH (refinamiento) o MINOR (cambio de comportamiento).
+3. Commit + push + update.
 
 ### Agregar un nuevo tipo de proyecto
 
-1. Crear `plugins/claudio-agents-kit/templates/project-types/mi-tipo.md`
-2. Editar `plugins/claudio-agents-kit/scripts/new-project.sh` — agregar case
-3. Editar `plugins/claudio-agents-kit/commands/new-project.md` — agregar a la lista
-4. Bump MINOR
-5. Commit + push + update
+1. Crear `plugins/claudio-agents-kit/templates/project-types/mi-tipo.md`.
+2. Editar `plugins/claudio-agents-kit/scripts/new-project.sh` — agregar case.
+3. Editar `plugins/claudio-agents-kit/commands/new-project.md` — agregar a la lista.
+4. Bump MINOR + CHANGELOG.
+5. Commit + push + update.
+
+## Montar estos agentes en un proyecto nuevo (step by step)
+
+**Una sola vez, por máquina** (si nunca usaste este marketplace):
+
+```bash
+# 1. Registrar el marketplace
+claude plugin marketplace add github:TU-USUARIO/claudio-enterprises
+
+# 2. Instalar el plugin
+claude plugin install claudio-agents-kit@claudio-enterprises
+
+# 3. Copiar el CLAUDE global (define cómo trabajás, qué agentes core corren)
+mkdir -p ~/.claude
+cp ~/.claude/plugins/claudio-enterprises/claudio-agents-kit/templates/CLAUDE-global.md ~/.claude/CLAUDE.md
+# (o abrilo en el editor y copiá a mano lo que quieras)
+```
+
+**Por cada proyecto nuevo**:
+
+```bash
+# 4. Dentro de Claude Code, en cualquier carpeta donde arme el proyecto
+/new-project
+# Te pregunta: nombre, tipo (platform | proposal | portfolio | automation | data), destino.
+# Crea carpeta con CLAUDE.md, .gitignore y estructura adecuada al tipo.
+
+# 5. Entrá al proyecto
+cd ~/projects/<nombre-proyecto>
+
+# 6. Abrí Claude Code
+claude
+
+# 7. Primer mensaje al orquestador:
+# "Leé el CLAUDE.md y llamá a discovery-agent para arrancar"
+```
+
+**Mantener actualizado** (cuando este marketplace reciba updates):
+
+```bash
+claude plugin marketplace update
+claude plugin update claudio-agents-kit
+```
+
+**Agregar / modificar / remover agentes**: desde Claude Code, dentro del repo `claudio-enterprises`, pedí:
+```
+> Usá agent-manager para <crear|modificar|remover> <agente|skill>
+```
 
 ## Troubleshooting
 

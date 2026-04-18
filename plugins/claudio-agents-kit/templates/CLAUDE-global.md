@@ -14,13 +14,28 @@ Soy Claudio, Business Analyst y especialista en Data Science. Trabajo solo, arma
 
 ## Stack preferido
 
-- **Lenguaje principal**: Python (nivel intermedio con Pandas)
+### Python (principal para data + backend)
+- **Gestor**: uv (preferido) o poetry
 - **Data**: Pandas primero, Polars si >5M filas
-- **DB**: PostgreSQL + SQLAlchemy async
-- **Backend**: FastAPI
+- **Backend**: FastAPI + SQLAlchemy async
+- **Testing**: pytest, pytest-asyncio
+- **Lint/format**: ruff (reemplaza black + isort + flake8)
+
+### Node / TypeScript (frontend + scripts)
+- **Gestor**: pnpm
 - **Frontend**: React + Vite + Tailwind + TanStack Query (o Astro para sitios de contenido)
-- **Deploy**: Cloudflare Pages + Fly.io/Railway + GitHub Actions
-- **Testing**: pytest (backend), Vitest + RTL (frontend)
+- **Scripts**: tsx para ejecutar TS directamente (sin compilar)
+- **Testing**: Vitest + React Testing Library
+- **Lint/format**: eslint + prettier (configs compartidas via preset)
+
+### SQL / DB
+- **Principal**: PostgreSQL 15+
+- **Migraciones**: Alembic (Python) o Prisma (Node)
+- **Convenciones**: snake_case en DB, CTEs para queries complejas, índices por acceso real (ver skill `postgres-query-patterns`)
+
+### Infra
+- **Deploy**: Cloudflare Pages (frontend) + Fly.io/Railway (backend) + GitHub Actions
+- **Secrets**: `.env.local` nunca commiteado, `.env.example` en el repo
 
 ## Mi equipo de agentes
 
@@ -30,7 +45,7 @@ Soy Claudio, Business Analyst y especialista en Data Science. Trabajo solo, arma
 - `limpiador` — refactor para legibilidad
 - `optimizador` — performance, N+1, Pandas, SQL
 
-### Agentes de planning (nuevos en v2)
+### Agentes de planning
 - `discovery-agent` — fuerza clarificar antes de construir (tipo "Grill Me")
 - `product-analyst` — Epics / User Stories / Test Cases (nivel intermedio)
 - `design-researcher` — consulta vault Notion para inspiración visual
@@ -38,6 +53,9 @@ Soy Claudio, Business Analyst y especialista en Data Science. Trabajo solo, arma
 ### Biblioteca de expertos (opt-in por proyecto)
 - `data-expert`, `backend-expert`, `frontend-expert`, `devops-expert`
 - `qa-expert`, `db-architect`, `client-reporter`, `security-auditor`
+
+### Meta (gestión del kit)
+- `agent-manager` — crea/modifica/remueve agentes y skills del marketplace con bump + CHANGELOG + commit. Invocar solo cuando trabajás en el repo del marketplace.
 
 Cada proyecto tiene su propio `CLAUDE.md` (copiado de un template según tipo de proyecto) que lista qué agentes están activos.
 
@@ -90,13 +108,73 @@ data-expert (análisis) → documentador (diccionario/supuestos) → client-repo
 7. **Nunca commitear secrets.**
 8. **Para proyectos PaaS**: usar formato Epic/US/TC (skill `epic-user-story-format`).
 9. **Moodboard antes de CSS.** En cualquier proyecto con UI significativa, consultar vault Notion antes de escribir HTML.
+10. **Reporte post-cambio obligatorio.** Todo turno que modifica archivos cierra con el bloque "Cambios aplicados" (commits + archivos + cómo replicar). Ver sección dedicada más abajo.
+
+## Reporte post-cambio (obligatorio)
+
+Cada vez que cualquier agente (o Claude directamente) termina un cambio que toca archivos del proyecto, debe cerrar el turno con este reporte. No es opcional; no es negociable.
+
+### Formato
+
+```
+📦 Cambios aplicados
+
+### Commits
+- <hash corto> <mensaje>
+- <hash corto> <mensaje>
+(si no hubo commits todavía, decir "ninguno (cambios sin commitear)")
+
+### Archivos modificados
+- <ruta>  (+N -M)
+- <ruta>  (creado)
+- <ruta>  (borrado)
+
+### Cómo replicar en el ambiente
+1. <paso concreto>
+2. <paso concreto>
+3. <paso concreto>
+```
+
+### Cómo armar cada sección
+
+**Commits** — `git log <base>..HEAD --oneline` desde el último punto conocido (por defecto, los commits de este turno).
+
+**Archivos modificados** — `git diff --stat <base>..HEAD` para cambios commiteados, o `git status --short` para cambios sin commitear.
+
+**Cómo replicar** — pensá el camino más corto desde que el cambio está en el branch hasta que corre en donde tiene que correr. Incluí SOLO los pasos que realmente aplican al proyecto. Ejemplos de pasos típicos:
+
+| Situación | Pasos típicos |
+|---|---|
+| Cambio de código backend (FastAPI) en dev | `git pull`, reinstalar deps si cambió `pyproject.toml` (`uv sync`), reiniciar `uvicorn` |
+| Cambio de frontend (Vite/React) | `git pull`, `pnpm install` si cambió lockfile, reiniciar `pnpm dev` |
+| Cambio de DB schema | `git pull`, correr migración (`alembic upgrade head` o `prisma migrate deploy`), reiniciar backend |
+| Cambio que ya está en branch y falta merge | Armar PR: `gh pr create ...` (o dar URL), esperar CI, merge a `develop`/`main` |
+| Cambio con dependencias nuevas | Mencionar el gestor exacto (`uv sync`, `pnpm install`, `cargo build`) |
+| Cambio de config de env (`.env`) | Listar las variables nuevas/modificadas con un ejemplo de valor |
+| Deploy a prod | Tag + push del tag si dispara CD, o pasos manuales |
+| Sin impacto en runtime (solo docs) | "Ninguno — solo documentación" |
+
+### Reglas
+
+- **Pasos específicos, no genéricos.** "Reiniciar el server" no sirve; `pkill -f uvicorn && uv run uvicorn app.main:app --reload` sí.
+- **Un paso por línea, en orden de ejecución.**
+- **Si hay más de un ambiente a actualizar** (dev + staging + prod), separar en bloques.
+- **Si el cambio está en una branch sin merge**, el primer paso SIEMPRE es el PR (URL o comando para crearlo).
+- **Nunca inventes pasos.** Si no sabés cómo se despliega un proyecto, preguntá y registrá la respuesta en el `CLAUDE.md` del proyecto para la próxima.
+
+### Cuándo NO emitir el reporte
+
+- El turno fue solo lectura (exploración, preguntas) y no se modificó nada.
+- El usuario está en un diálogo de discovery y el reporte interrumpe el flujo.
 
 ## Conectores MCP habituales
 
 - **GitHub**: repos, PRs, issues, workflows
 - **Notion**: brief de proyectos, vault de inspiración, updates
 - **Gmail**: comunicación con clientes
-- **PostgreSQL MCP**: cuando esté disponible, queries directas a DBs de proyectos
+- **PostgreSQL**: cuando esté disponible, queries directas a DBs de proyectos
+
+Si un agente necesita un MCP que no está conectado, lo avisa; nunca inventa respuestas.
 
 ## Memoria de agentes
 
