@@ -1,7 +1,7 @@
 {
   "name": "claudio-agents-kit",
-  "version": "2.1.0",
-  "description": "Equipo de 16 agentes (discovery, product-analyst, design-researcher, orquestador, documentador, limpiador, optimizador, agent-manager + 8 expertos técnicos) con 14 skills reutilizables, 5 templates de proyecto (platform, proposal, portfolio, automation, data) + STYLE.md y arquitectura de Notion documentada, para la agencia Claudio-Enterprises.",
+  "version": "2.2.0",
+  "description": "Equipo de 16 agentes (discovery, product-analyst, design-researcher, orquestador, documentador, limpiador, optimizador, agent-manager + 8 expertos técnicos) con 14 skills reutilizables, 5 templates de proyecto (platform, proposal, portfolio, automation, data) + STYLE.md, arquitectura de Notion documentada y prompt de Claude Chrome para clasificar extracciones web (inspiration vs competitor-research), para la agencia Claudio-Enterprises.",
   "author": {
     "name": "Claudio"
   },
