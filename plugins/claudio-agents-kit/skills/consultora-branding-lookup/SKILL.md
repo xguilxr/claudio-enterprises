@@ -11,33 +11,45 @@ Esta skill define **dónde viven los assets** de cada consultora y **cómo traer
 
 ## Source of truth
 
-El brandbook de cada consultora vive en Notion, bajo una página madre:
+El brandbook de cada consultora vive en Notion, según la arquitectura documentada en `templates/notion-architecture.md`:
 
 ```
-📓 Notion → "Consultoras Socias" → <nombre-consultora>
+📓 Claudio-Enterprises
+  └── 🎨 Branding de Consultoras
+        └── Consultoras socias
+              ├── Claudio-Enterprises    ← tu propia identidad
+              ├── <Consultora A>
+              └── <Consultora B>
 ```
 
-Cada subpágina contiene:
+Cada subpágina contiene (estructura uniforme):
 
-1. **Logo** (SVG + PNG, light/dark)
-2. **Paleta oficial** (primarios + secundarios, con HEX + uso)
-3. **Tipografías** (titular + cuerpo, con peso y tamaño recomendado por pieza)
-4. **Plantilla de propuesta** (archivo maestro, Markdown o Google Doc)
-5. **Plantilla de slides** (Keynote / Google Slides / PPTX)
-6. **Reglas de firma y footer** (quién firma, qué URL va, disclaimers legales)
-7. **Idioma y tono** (formal / cercano / técnico, según cliente target)
+1. **📎 Logos** (SVG + PNG light/dark + isotipo)
+2. **🎨 Paleta** (primario, secundario, neutros, semánticos — todos con HEX + uso)
+3. **🔤 Tipografías** (titulares + cuerpo + monospace — familia, weight, tamaño recomendado)
+4. **📄 Especificaciones de documentos**:
+   - Plantilla Word (.docx adjunto)
+   - Plantilla PowerPoint (.pptx adjunto)
+   - Plantillas Google Docs / Slides (links)
+   - Márgenes / grillas / layout base
+5. **✍️ Firma y footer** (texto exacto, mail de contacto, disclaimer legal)
+6. **🎯 Idioma y tono** (formal/cercano/técnico, ES/EN, ejemplos de copy)
+7. **📝 Notas** (historia de cambios, do/don't)
 
 > Si alguna consultora todavía no tiene esta página → Claudio la arma antes de avanzar. No se improvisa branding.
 
 ## Cómo consultar (MCP Notion)
 
 ```
-1. Buscar: query "Consultoras Socias"
-2. Navegar a la subpágina de la consultora indicada en el CLAUDE.md del proyecto
-3. Descargar (o leer embebido) los assets listados arriba
-4. Copiar links directos de los archivos al brief del proyecto
-   (para que client-reporter los pueda referenciar)
+1. Navegar a: 🎨 Branding de Consultoras → Consultoras socias → <nombre indicado en CLAUDE.md>
+2. Leer los 7 bloques de la estructura (logos, paleta, tipografías, specs docs, firma, tono, notas)
+3. Copiar/linkear los archivos adjuntos (Word/PPT) a la carpeta de entregables del proyecto
+4. Emitir el "Branding brief" (formato abajo) al contexto antes de escribir contenido
 ```
+
+**Verificar tags** de la página raíz de la consultora:
+- `estado`: si está `pausada` o `archivada`, avisar a Claudio antes de usarla.
+- `modalidad`: `socia-frecuente` / `socia-ocasional` / `solo-referencia`.
 
 ## Output esperado
 

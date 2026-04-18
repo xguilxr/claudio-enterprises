@@ -4,7 +4,7 @@ Marketplace privado de Claude Code para la agencia Claudio-Enterprises.
 
 ## Contenido
 
-- **`claudio-agents-kit`** — equipo de 16 agentes + 13 skills + 5 templates de proyecto + meta-agente `agent-manager`
+- **`claudio-agents-kit`** — 16 agentes + 14 skills + 5 templates de proyecto + `STYLE.md` + arquitectura de Notion documentada + meta-agente `agent-manager`
 
 ## Cómo usar este marketplace
 

@@ -1,91 +1,129 @@
 ---
 name: design-inspiration-lookup
-description: Estrategia para consultar el vault de Notion de Claudio (organizado por proyecto/referencia) y extraer inspiración visual. Invocar cuando cualquier agente necesite referencias de diseño antes de proponer UI.
+description: Estrategia para consultar la sección centralizada "💡 Inspiración" del workspace de Notion de Claudio (Websites / Animaciones / SaaS styling / Snippets). Invocar cuando cualquier agente necesite referencias visuales antes de proponer UI, o código pegable para resolver un patrón concreto.
 ---
 
-# Cómo consultar el vault de Notion de Claudio
+# Cómo consultar la Inspiración de Notion
 
-El vault está organizado **por proyecto/referencia**, no por tipo de recurso. Es decir: una página por cliente o por sitio-que-me-gustó, dentro cada uno tiene screenshots, notas, paletas, links.
+El vault está organizado de forma **centralizada por tipo de pieza**, no por proyecto (ver `templates/notion-architecture.md` del plugin). Una ref vive en un solo lugar y los proyectos la linkean.
 
-Esto significa que no podés buscar "tipografías serif" y encontrar una página con 50 tipografías. Tenés que buscar por **proyecto-con-ese-tipo-de-diseño** y extraer la tipografía de ahí.
-
-## Queries recomendadas (con el conector Notion MCP)
-
-### Búsqueda 1 — Por tipo de pieza
 ```
-query: "landing page"
-query: "portfolio site"
-query: "dashboard"
-query: "pricing"
-query: "hero section"
+💡 Inspiración
+├── Websites         ← páginas completas (landing, portfolio, corporate, e-commerce, editorial)
+├── Animaciones      ← micro-interacciones, scroll, transitions, loaders
+├── SaaS styling     ← dashboards, tables, forms, settings, empty states, pricing
+└── Snippets         ← código pegable, taggeado por framework
 ```
 
-### Búsqueda 2 — Por estética/tono
-```
-query: "editorial minimalist"
-query: "brutalist"
-query: "playful illustrated"
-query: "dark corporate"
-query: "serif elegant"
-query: "glassmorphism"
-```
+## Decidí primero QUÉ buscás
 
-### Búsqueda 3 — Por industria cliente
-Si el brief menciona "cliente farmacéutico", buscás:
-```
-query: "farma" (proyectos anteriores tuyos)
-query: "pharmacy" (referencias externas)
-query: "healthcare" / "salud"
-```
+| Necesidad | Subsección | Búsqueda típica |
+|---|---|---|
+| "Diseñar un hero de landing" | Websites → Landing pages | `hero`, tag tono |
+| "Portfolio de profesional creativo" | Websites → Portfolio sites | `portfolio`, tag tono |
+| "Dashboard analítico" | SaaS styling → Dashboards | `dashboard`, `analytics` |
+| "Empty state para tabla vacía" | SaaS styling → Empty states | `empty`, `blank state` |
+| "Hover lift en cards" | Animaciones → Hover / micro | `hover`, `card` |
+| "Parallax hero" | Animaciones → Scroll-triggered | `parallax`, `hero-scroll` |
+| "Un snippet React listo" | Snippets | tag de framework + tipo |
 
-### Búsqueda 4 — Por tecnología de animación
+## Búsqueda dentro de cada subsección
+
+### Websites / SaaS styling
+Buscar por combinación de tipo de pieza + tono:
 ```
-query: "framer motion"
-query: "gsap"
-query: "lottie"
-query: "parallax"
+query: "landing minimal"
+query: "dashboard dark"
+query: "pricing editorial"
+query: "portfolio brutalist"
 ```
 
-## Cómo extraer valor de una página de Notion
+Tags que Claudio usa: `minimal`, `brutalist`, `editorial`, `playful`, `dark`, `serif-elegant`, `glassmorphism`, `playful-illustrated`, `dark-corporate`.
 
-Cada página de inspiración típicamente tiene:
+### Animaciones
+Buscar por **mecánica** + **lib**:
+```
+query: "scroll parallax framer"
+query: "page transition gsap"
+query: "loader skeleton css"
+query: "hover lift framer-motion"
+```
 
-1. **Screenshots o embeds** — la referencia visual directa
-2. **URL del sitio original** — para que Claudio pueda abrir y ver live
-3. **Notas de Claudio** — qué le gustó específicamente (muy importante, ese es el filtro de "taste")
-4. **Paletas guardadas** — a veces como text, a veces como bloques de color
+Tags de tecnología: `framer-motion`, `gsap`, `lottie`, `css-only`, `react-spring`.
 
-Extraé en este orden de prioridad:
-1. Las notas de Claudio (qué le llamó la atención)
-2. Los colores dominantes (si los mencionó)
-3. El layout (estructura de secciones)
-4. Movimiento/animación (si hay video o gif)
+### Snippets
+Buscar por **framework + tipo**:
+```
+query: "react hero"
+query: "tailwind card"
+query: "tanstack table sort"
+query: "framer-motion scroll-reveal"
+query: "astro image"
+```
 
-## Cómo decidir cuántas referencias usar
+Tags de framework: `react`, `astro`, `next`, `vue`, `tailwind`, `framer-motion`, `gsap`, `tanstack-query`, `tanstack-table`, `vanilla-css`.
+Tags de tipo: `component`, `hook`, `animation`, `layout`, `pattern`.
 
-- **Para un sitio chico** (portfolio 1-page): 3 refs es suficiente
-- **Para un sitio mediano** (multi-página): 5-7 refs, algunas específicas por sección
-- **Para una plataforma/dashboard**: 4-6 refs, priorizando dashboards reales, no landings
+## Cómo extraer valor de una página
+
+### Si es Website / SaaS styling
+1. Screenshot full-page (referencia visual directa).
+2. URL del sitio original.
+3. **Notas de Claudio** (prioridad alta — ese es el filtro de "taste").
+4. Tags (tono + tipo de pieza).
+5. Paletas si hay.
+
+### Si es Animación
+1. GIF o video corto (lo más importante).
+2. URL original.
+3. Lib identificada (framer-motion / gsap / etc.).
+4. Notas de Claudio sobre por qué le gustó.
+
+### Si es Snippet
+1. **Código** — es el deliverable.
+2. Screenshot del resultado visual.
+3. Dependencias requeridas (`framer-motion@^11`, `@tanstack/react-table@^8`).
+4. Notas / gotchas (ej: "requiere `prefers-reduced-motion` wrap").
+5. Link al original (si es adaptado de un autor externo).
+
+## Cuántas refs usar
+
+- **Sitio chico** (portfolio 1-page): 3 refs.
+- **Sitio mediano** (multi-page): 5-7 refs, algunas específicas por sección.
+- **Plataforma / dashboard**: 4-6 refs, priorizando dashboards reales (no landings).
+- **Una animación específica**: 1-2 refs + 1 snippet si hay.
+- **Pattern común** (ej: card hover, empty state): 1 ref + 1 snippet es suficiente.
 
 ## Output ideal
 
 Un moodboard en Markdown con:
-- Links directos a las páginas de Notion (que Claudio pueda abrir)
-- Descripción breve de por qué esa ref importa
-- Elementos extraídos listos para pasar al frontend
+- Links directos a las páginas de Notion (abribles por Claudio).
+- Descripción breve de por qué cada ref importa.
+- Elementos extraídos listos para pasar a frontend-expert.
+- **Snippets listos para pegar** con sus dependencias.
 
 Ver el agente `design-researcher` para el formato completo.
 
-## Qué hacer si el vault no tiene refs para el proyecto
+## Qué hacer si la Inspiración no tiene refs para este caso
 
-1. Avisá a Claudio que no hay refs guardadas para ese tipo de pieza.
-2. Sugerí que antes de arrancar agregue 3-5 refs al vault (pasará 15 minutos pero salva horas de iteración).
-3. Si no hay tiempo, proponé buscar en Dribbble/Awwwards/Godly por keyword y que Claudio elija 3 que le gusten — se suman al vault antes de diseñar.
+1. Avisar a Claudio: "no hay refs guardadas en `<subsección>` para `<tipo>`".
+2. Sugerir que dedique 15 min a agregar 3-5 refs al vault (Dribbble, Awwwards, Godly, Mobbin, Page Flows, o sitios que le hayan gustado recientemente).
+3. Alternativamente, ir con los defaults del `STYLE.md` del proyecto — no es bloqueante, pero la curaduría es más pobre.
+
+## Relación con otras skills
+
+| Skill | Cubre |
+|---|---|
+| `design-inspiration-lookup` (esta) | Inspiración **visual y código** para sitios/productos |
+| `presentation-inspiration-lookup` | Inspiración de formato de slides/propuestas |
+| `consultora-branding-lookup` | Branding de consultoras socias (identidad corporativa) |
+| `prospect-branding-lookup` | Research de branding de clientes potenciales |
 
 ## Reglas
 
-- **Nunca inventar colores ni tipografías** que no salgan de una ref concreta del vault.
+- **Nunca inventar colores ni tipografías** que no salgan de una ref concreta o del STYLE.md del proyecto.
 - **Siempre link** a la página de Notion origen.
-- **Respetar brand del cliente** por encima de inspiración. Si el cliente tiene brand book, ese es el filtro primario.
-- **Considerar accesibilidad**: si una ref tiene texto blanco sobre amarillo, se toma como inspiración pero se ajusta contrast al exportar.
-- **No más de 7 refs en un moodboard.** Si hay más, Claudio no decide.
+- **Respetar STYLE.md y brandbook del cliente** por encima de la inspiración. Si la ref propone una paleta distinta, se toma layout/animación y se ajusta paleta al marco del proyecto.
+- **Considerar accesibilidad**: si una ref tiene bajo contraste, se toma como inspiración pero se ajusta al exportar.
+- **No más de 7 refs** en un moodboard (Claudio no decide con más).
+- **Para snippets**, verificar que las deps sean compatibles con el stack del proyecto antes de proponerlos.

@@ -141,9 +141,22 @@ Cada vez que cualquier agente (o Claude directamente) termina un cambio que toca
 
 **Commits** — `git log <base>..HEAD --oneline` desde el último punto conocido (por defecto, los commits de este turno).
 
-**Archivos modificados** — `git diff --stat <base>..HEAD` para cambios commiteados, o `git status --short` para cambios sin commitear.
+**Archivos modificados** — `git diff --stat <base>..HEAD` para cambios commiteados, o `git status --short` para cambios sin commiteados.
 
-**Cómo replicar** — pensá el camino más corto desde que el cambio está en el branch hasta que corre en donde tiene que correr. Incluí SOLO los pasos que realmente aplican al proyecto. Ejemplos de pasos típicos:
+**Cómo replicar** — pensá el camino más corto desde que el cambio está en el branch hasta que corre en donde tiene que correr. **Para cada paso indicá SIEMPRE la terminal/herramienta donde correrlo** entre paréntesis al principio: `(Git Bash)`, `(PowerShell)`, `(CMD)`, `(WSL)`, `(zsh/bash en macOS/Linux)`, `(Docker Desktop)`, `(navegador)`, `(Claude Code CLI)`. Si el paso es GUI (ej: crear PR en GitHub), decilo explícito: `(GitHub web)`.
+
+Ejemplo bien formateado:
+```
+### Cómo replicar en el ambiente
+1. (GitHub web) mergear PR → `https://github.com/xguilxr/foo/pull/123`
+2. (Git Bash o WSL) `git pull origin main`
+3. (PowerShell, desde la raíz del proyecto) `pnpm install` si cambió el lockfile
+4. (Git Bash) `uv sync` si cambió `pyproject.toml`
+5. (PowerShell) `pnpm dev` para levantar el front (puerto 5173)
+6. (Claude Code CLI, en otra ventana) reiniciar sesión para recargar CLAUDE.md
+```
+
+Ejemplos de pasos típicos por situación:
 
 | Situación | Pasos típicos |
 |---|---|
@@ -160,6 +173,7 @@ Cada vez que cualquier agente (o Claude directamente) termina un cambio que toca
 
 - **Pasos específicos, no genéricos.** "Reiniciar el server" no sirve; `pkill -f uvicorn && uv run uvicorn app.main:app --reload` sí.
 - **Un paso por línea, en orden de ejecución.**
+- **Cada paso arranca con la terminal/herramienta entre paréntesis.** Si un comando funciona en varias (ej: git), listar las compatibles: `(Git Bash o PowerShell)`.
 - **Si hay más de un ambiente a actualizar** (dev + staging + prod), separar en bloques.
 - **Si el cambio está en una branch sin merge**, el primer paso SIEMPRE es el PR (URL o comando para crearlo).
 - **Nunca inventes pasos.** Si no sabés cómo se despliega un proyecto, preguntá y registrá la respuesta en el `CLAUDE.md` del proyecto para la próxima.
