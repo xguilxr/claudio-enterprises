@@ -100,8 +100,18 @@ Prospectos
 ├── 🏢 Industria
 ├── 📝 Notas del discovery (si ya hablaste)
 ├── 💰 Budget percibido
+├── 🔍 Competidores (research)
+│   ├── <Competidor 1>
+│   │   ├── URL
+│   │   ├── Qué hace similar / diferente al prospecto
+│   │   ├── Branding observado (colores, fonts, tono)
+│   │   ├── Posicionamiento y pricing visible
+│   │   └── Qué aprendemos para la propuesta
+│   └── <Competidor 2>
 └── 📎 Propuesta enviada (link si ya mandaste)
 ```
+
+**Por qué separar competidores del prospecto**: el branding del prospecto es lo que *ellos ya tienen*; los competidores son el *paisaje del mercado* que usamos para posicionar la propuesta. Nunca se mezclan (confunden al redactar).
 
 **Tags útiles:**
 - `solo-nombre` — únicamente sabés cómo se llaman
@@ -117,7 +127,9 @@ Las skills (`prospect-branding-lookup`) usan estos tags para decidir qué pueden
 
 ## 2. 💡 Inspiración
 
-Referencias visuales para websites y frontends. Centralizado (antes vivía disperso dentro de cada proyecto).
+Referencias visuales para websites y frontends. **Es inspiración propia para crear** — no research de competidores de un cliente concreto (eso va en `🎨 Branding de Consultoras → Prospectos → <Cliente> → 🔍 Competidores`).
+
+Centralizado (antes vivía disperso dentro de cada proyecto).
 
 ```
 💡 Inspiración
@@ -241,6 +253,21 @@ Las páginas que ya tenés por proyecto siguen existiendo, pero **sin duplicar i
 4. Crear `Claudio-Enterprises` como una "consultora" más (es tu default cuando no hay socio).
 
 Esto toma ~1h si son 5-10 proyectos. Peor en backlog, mejor que seguir disperso.
+
+---
+
+## Clasificación de extracciones desde websites
+
+Cuando Claudio lee un sitio con Claude Chrome (u otra herramienta de browsing) y decide guardarlo, **cada extracción se clasifica en uno de dos tipos** antes de escribir en Notion:
+
+| Tipo | Destino | Cuándo aplica |
+|---|---|---|
+| `inspiration` | `💡 Inspiración → <subsección>` | El sitio te gusta estéticamente o resuelve un patrón bien. Se guarda como ref reusable para cualquier proyecto futuro. |
+| `competitor-research` | `🎨 Branding de Consultoras → Prospectos → <Cliente> → 🔍 Competidores` | El sitio es de un competidor directo o indirecto de un prospecto concreto. Se guarda atado a ese prospecto para posicionar su propuesta. |
+
+El prompt [`chrome-site-classification-prompt.md`](./chrome-site-classification-prompt.md) automatiza esta decisión: al leer una página, pregunta a Claudio cómo clasificarla y hace la extracción adecuada según el tipo.
+
+Regla: **si dudás, es `inspiration`** (se puede re-etiquetar después; pegarlo en el prospecto equivocado contamina el research).
 
 ---
 
