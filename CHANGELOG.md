@@ -7,6 +7,24 @@ y el versionado sigue [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ---
 
+## [2.1.0] — 2026-04-18
+
+### Added
+- **Meta-agente `agent-manager`** — gestiona el ciclo de vida de agentes y skills del marketplace (crear desde plantilla, listar/auditar, modificar, renombrar, remover con limpieza). Maneja bump SemVer de `plugin.json` y `marketplace.json`, actualiza `CHANGELOG.md` y crea commits con formato Conventional Commits.
+- **Plantillas de scaffolding** en `templates/`:
+  - `agent-template.md` — estructura base para crear un agente nuevo.
+  - `skill-template.md` — estructura base para crear una skill nueva.
+- **`CLAUDE.md` raíz del repo** — reglas para cuando Claude Code trabaja DENTRO del marketplace (convenciones del plugin, cómo bumpear, invocar agent-manager).
+- Campo `version` en `plugin.json` (antes solo estaba en `marketplace.json`).
+
+### Changed
+- `templates/CLAUDE-global.md` refinado:
+  - Stack desglosado en Python / Node-TS / SQL / Infra (antes mezclado).
+  - Agregado `agent-manager` a la lista de agentes del equipo.
+  - Nota sobre MCPs no conectados.
+
+---
+
 ## [2.0.0] — 2026-04-18
 
 ### Added

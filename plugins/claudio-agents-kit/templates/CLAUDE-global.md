@@ -14,13 +14,28 @@ Soy Claudio, Business Analyst y especialista en Data Science. Trabajo solo, arma
 
 ## Stack preferido
 
-- **Lenguaje principal**: Python (nivel intermedio con Pandas)
+### Python (principal para data + backend)
+- **Gestor**: uv (preferido) o poetry
 - **Data**: Pandas primero, Polars si >5M filas
-- **DB**: PostgreSQL + SQLAlchemy async
-- **Backend**: FastAPI
+- **Backend**: FastAPI + SQLAlchemy async
+- **Testing**: pytest, pytest-asyncio
+- **Lint/format**: ruff (reemplaza black + isort + flake8)
+
+### Node / TypeScript (frontend + scripts)
+- **Gestor**: pnpm
 - **Frontend**: React + Vite + Tailwind + TanStack Query (o Astro para sitios de contenido)
-- **Deploy**: Cloudflare Pages + Fly.io/Railway + GitHub Actions
-- **Testing**: pytest (backend), Vitest + RTL (frontend)
+- **Scripts**: tsx para ejecutar TS directamente (sin compilar)
+- **Testing**: Vitest + React Testing Library
+- **Lint/format**: eslint + prettier (configs compartidas via preset)
+
+### SQL / DB
+- **Principal**: PostgreSQL 15+
+- **Migraciones**: Alembic (Python) o Prisma (Node)
+- **Convenciones**: snake_case en DB, CTEs para queries complejas, índices por acceso real (ver skill `postgres-query-patterns`)
+
+### Infra
+- **Deploy**: Cloudflare Pages (frontend) + Fly.io/Railway (backend) + GitHub Actions
+- **Secrets**: `.env.local` nunca commiteado, `.env.example` en el repo
 
 ## Mi equipo de agentes
 
@@ -30,7 +45,7 @@ Soy Claudio, Business Analyst y especialista en Data Science. Trabajo solo, arma
 - `limpiador` — refactor para legibilidad
 - `optimizador` — performance, N+1, Pandas, SQL
 
-### Agentes de planning (nuevos en v2)
+### Agentes de planning
 - `discovery-agent` — fuerza clarificar antes de construir (tipo "Grill Me")
 - `product-analyst` — Epics / User Stories / Test Cases (nivel intermedio)
 - `design-researcher` — consulta vault Notion para inspiración visual
@@ -38,6 +53,9 @@ Soy Claudio, Business Analyst y especialista en Data Science. Trabajo solo, arma
 ### Biblioteca de expertos (opt-in por proyecto)
 - `data-expert`, `backend-expert`, `frontend-expert`, `devops-expert`
 - `qa-expert`, `db-architect`, `client-reporter`, `security-auditor`
+
+### Meta (gestión del kit)
+- `agent-manager` — crea/modifica/remueve agentes y skills del marketplace con bump + CHANGELOG + commit. Invocar solo cuando trabajás en el repo del marketplace.
 
 Cada proyecto tiene su propio `CLAUDE.md` (copiado de un template según tipo de proyecto) que lista qué agentes están activos.
 
@@ -96,7 +114,9 @@ data-expert (análisis) → documentador (diccionario/supuestos) → client-repo
 - **GitHub**: repos, PRs, issues, workflows
 - **Notion**: brief de proyectos, vault de inspiración, updates
 - **Gmail**: comunicación con clientes
-- **PostgreSQL MCP**: cuando esté disponible, queries directas a DBs de proyectos
+- **PostgreSQL**: cuando esté disponible, queries directas a DBs de proyectos
+
+Si un agente necesita un MCP que no está conectado, lo avisa; nunca inventa respuestas.
 
 ## Memoria de agentes
 
