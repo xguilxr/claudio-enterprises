@@ -17,10 +17,13 @@ El brandbook de cada consultora vive en Notion, según la arquitectura documenta
 📓 Claudio-Enterprises
   └── 🎨 Branding de Consultoras
         └── Consultoras socias
+              ├── _Template Consultora   ← plantilla vacía para duplicar
               ├── Claudio-Enterprises    ← tu propia identidad
-              ├── <Consultora A>
-              └── <Consultora B>
+              └── <Consultora A>
 ```
+
+> Changelog:
+> - Path sin cambios en 2026-04-18 (seguís consultando subpáginas navegando). El único ajuste: existe una página `_Template Consultora` con el esqueleto vacío — duplicala al agregar una consultora nueva.
 
 Cada subpágina contiene (estructura uniforme):
 

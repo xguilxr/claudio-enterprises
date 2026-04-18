@@ -7,16 +7,23 @@ description: Consulta el vault de Notion de Claudio para extraer inspiración de
 
 El vault de Notion de Claudio tiene una sección dedicada a **presentaciones que le gustaron** (propias, de consultoras referentes, o externas). Esta skill describe cómo extraer ideas de FORMATO — no de branding corporativo, que es otra skill.
 
+> Changelog:
+> - Path actualizado (2026-04-18): ahora vive bajo `🎨 Branding de Consultoras → Inspiración — Presentaciones`. Antes estaba como raíz `🧾 Inspiración — Presentaciones`.
+
 ## Dónde viven las refs
 
 ```
-📓 Notion → "Inspiración — Presentaciones"
-            ├── Propuestas que cerraron deals
-            ├── Decks de pitch (kickoff, venture, producto)
-            ├── One-pagers ejecutivos
-            ├── Reportes de cierre de proyecto
-            └── Referencias externas (McKinsey, Pitch, Tome, Linear, etc.)
+📓 Claudio-Enterprises
+  └── 🎨 Branding de Consultoras
+        └── Inspiración — Presentaciones
+              ├── Propuestas que cerraron deals
+              ├── Decks de pitch (kickoff, venture, producto)
+              ├── One-pagers ejecutivos
+              ├── Reportes de cierre de proyecto
+              └── Referencias externas (McKinsey, Pitch, Tome, Linear, etc.)
 ```
+
+Sigue siendo una estructura de subpáginas (no un DB como `💡 Inspiración`). La consulta es por navegación y búsqueda de texto en cada categoría.
 
 Cada página típicamente tiene:
 

@@ -7,6 +7,34 @@ y el versionado sigue [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ---
 
+## [3.0.0] — 2026-04-18
+
+### Changed (BREAKING)
+- **Migración de `💡 Inspiración` de árbol de carpetas a base de datos central de Notion**. Las skills ya no navegan subpáginas (`Websites/`, `Animaciones/`, `SaaS styling/`, `Snippets/`) — consultan una DB por propiedades. Database ID: `deae078a-ab7d-4d2a-97f9-00fdf23ddb86`; data source ID: `7342e2aa-a312-42d6-a8b5-39b2443ca210`.
+- **`design-inspiration-lookup`** reescrita para operar via `databases.query` de la API de Notion. Input signatures nuevas: `asset_type`, `surface`, `style`, `library`, `project`, `include_generic`, `priority`, `status`, `technique_contains`. Soporta `legacy_path` como retrocompat (traduce paths viejos a filtros según tabla en `notion-architecture.md` §2.3). Fallback obligatorio cuando 0 matches (muestra filtros usados + causas + recomendación; nunca devuelve vacío silencioso).
+- **`presentation-inspiration-lookup`** cambió de path: ahora vive en `🎨 Branding de Consultoras → Inspiración — Presentaciones` (antes era la raíz `🧾 Inspiración — Presentaciones`). Estructura interna de subpáginas sin cambios.
+- **`prospect-branding-lookup`** ahora recorre subpáginas recursivamente sin asumir schema fijo (prefijos `Current Site —`, `Competitor —`, `Inspiration —` son hints, no requisitos). Al cerrar un prospecto ganado, agrega el cliente a `Project context` de la DB en vez de mover la página a un `📊 Proyectos` raíz (que ya no existe).
+- **`consultora-branding-lookup`** path sin cambios; solo se documentó la existencia de `_Template Consultora` como plantilla vacía para duplicar.
+- **`agents/design-researcher.md`** actualizado para reflejar DB + filtros y nueva jerarquía de fuentes (brandbook del cliente vive dentro del prospecto, no en un `📊 Proyectos` raíz).
+- **`templates/chrome-site-classification-prompt.md`** ahora genera, para `inspiration`, un payload JSON con las propiedades exactas del schema de la DB (`Asset Type`, `Surface`, `Style Tags`, `Library / Stack`, `Project context`, `Is Generic`, `Priority`, `Difficulty`, `Status`, `Technique`) + body Markdown separado. Valores cerrados al schema; si falta un valor, pregunta antes de inventar.
+
+### Removed
+- **`📊 Proyectos` como raíz del workspace** — el trabajo por proyecto ahora vive dentro del prospecto en `🎨 Branding de Consultoras → Prospectos → <Cliente>`, junto con su sitio actual, competidores, inspiración del rubro y propuesta.
+- Árbol de carpetas interno de `💡 Inspiración` (Websites/Landing/, Animaciones/Scroll-triggered/, SaaS styling/Dashboards/, Snippets/, etc.). Todo reemplazado por filtros de DB.
+
+### Added
+- **`templates/notion-architecture.md` §2.1 Schema** — schema completo de la DB `Inspiración` con tipos, valores cerrados de cada `select` y `multi_select`, IDs del DB y del data source.
+- **`templates/notion-architecture.md` §2.3 Mapeo legacy** — tabla de equivalencias path-carpeta → filtros-DB para flujos antiguos.
+- Subpáginas recomendadas por prospecto: `Current Site — <dominio>`, `Competitor — <Nombre>`, `Inspiration — <Nombre>`, `Redesign Proposal & Demo`, `🔍 Research adicional`. La plantilla `_Template Prospecto` es la base.
+- Views en Notion: `All`, `By Asset Type`, `By Surface`, `By Project`, `Must-Haves only`, `Generic library` (creadas manualmente; las skills no las gestionan).
+
+### Migration notes
+- Si tenés flujos o skills externas que pasan paths viejos (`"Websites/Landing pages/"`), `design-inspiration-lookup` los acepta via `legacy_path` y los traduce a filtros — pero loguea la traducción para que actualices el caller.
+- El `Inspiration Vault` dentro de `Shutterexx — Portfolio Build` es legacy. Sus 6 filas ya migraron a la DB central con `Project context=Shutterexx`, `Is Generic=false`. No leer del Vault.
+- Prospectos referenciados hasta hoy como valores válidos de `Project context`: `Shutterexx`, `Integrity`, `DG`, `Claudio-Enterprises`. Cualquier prospecto nuevo debe agregarse explícitamente al schema antes de que las skills lo filtren.
+
+---
+
 ## [2.2.1] — 2026-04-18
 
 ### Fixed

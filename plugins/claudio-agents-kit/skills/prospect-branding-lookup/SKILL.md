@@ -1,6 +1,6 @@
 ---
 name: prospect-branding-lookup
-description: Consulta la sección "Prospectos" del workspace de Notion de Claudio para traer lo que se conozca sobre un cliente potencial (desde solo el nombre hasta website + brief + propuesta enviada). Maneja completitud variable vía tags. Invocar cuando se arranca un proyecto tipo `proposal` y el cliente todavía no es un cliente activo, o cuando design-researcher necesita inferir branding desde el website del prospecto.
+description: Consulta la sección "Prospectos" del workspace de Notion de Claudio para traer lo que se conozca sobre un cliente potencial (sitio actual, competidores, inspiración del rubro, notas de discovery, propuesta enviada). Recorre subpáginas recursivamente sin asumir schema fijo. Invocar cuando se arranca un proyecto tipo `proposal` y el cliente todavía no es un cliente activo, o cuando design-researcher necesita inferir branding/posicionamiento desde el material de research del prospecto.
 ---
 
 # Prospect Branding Lookup
@@ -11,12 +11,18 @@ El research de prospectos vive en Notion bajo:
 📓 Claudio-Enterprises
   └── 🎨 Branding de Consultoras
         └── Prospectos
-              ├── <Cliente X>  [tag: solo-nombre]
-              ├── <Cliente Y>  [tag: con-website, con-brief-inicial]
-              └── <Cliente Z>  [tag: con-website, con-propuesta-enviada]
+              ├── _Template Prospecto
+              ├── <Cliente X>  [tag: con-website, con-brief-inicial]
+              │   ├── Current Site — <dominio>
+              │   ├── Competitor — <Nombre 1>
+              │   ├── Competitor — <Nombre 2>
+              │   ├── Inspiration — <Nombre>   (opcional, refs del rubro)
+              │   └── Redesign Proposal & Demo
+              └── <Cliente Y>  [tag: con-propuesta-enviada]
+                  └── ...
 ```
 
-A diferencia de `consultora-branding-lookup` (donde la estructura es rígida), acá la **completitud es variable**. A veces Claudio solo tiene el nombre del cliente; a veces tiene el website; a veces ya hubo discovery y hay notas. Los tags indican qué se puede esperar.
+A diferencia de `consultora-branding-lookup` (donde la estructura es rígida), acá la **completitud es variable** y **las subpáginas son arbitrarias** según lo que Claudio haya armado. Los tags de la página raíz del prospecto indican completitud general; el contenido real son las subpáginas. La skill las **recorre recursivamente sin asumir un schema fijo** — se adapta a lo que encuentre.
 
 ## Tags de completitud
 
@@ -26,23 +32,35 @@ A diferencia de `consultora-branding-lookup` (donde la estructura es rígida), a
 | `con-website` | Se puede hacer un pasaje rápido al website para inferir colores/fonts/tono. |
 | `con-brief-inicial` | Hay notas del discovery. Leerlas y sintetizar. |
 | `con-propuesta-enviada` | Ya hay propuesta. Útil para seguimientos, no para branding nuevo. |
-| `cerrado-ganado` | Mover a 📊 Proyectos (ya no es prospecto). |
+| `cerrado-ganado` | Marcar `cerrado-ganado` y agregar el valor del cliente a `Project context` de la DB `Inspiración` para seguir arrastrando refs. La página del prospecto se queda donde está (no hay `📊 Proyectos` raíz). |
 | `cerrado-perdido` / `archivado` | No consultar salvo referencia histórica. |
 
-## Estructura esperada de cada prospecto (rellenar lo que haya)
+## Estructura esperada de cada prospecto (subpáginas arbitrarias, rellenar lo que haya)
+
+La página raíz del prospecto contiene metadatos en el body (industria, budget, notas de discovery, tags). Las subpáginas cubren el research con granularidad variable — la skill las recorre recursivamente.
+
+**Subpáginas recomendadas** (de `_Template Prospecto`):
 
 ```
 <Cliente>
-├── 🌐 Website (URL)
-├── 🎨 Branding detectado del website
-│   ├── Colores dominantes (HEX, extraídos manual o con herramienta)
-│   ├── Tipografías visibles (inferidas del sitio)
-│   └── Tono (formal / juvenil / técnico / corporativo / etc.)
-├── 🏢 Industria
-├── 📝 Notas del discovery
-├── 💰 Budget percibido
-└── 📎 Propuesta enviada (link si ya mandaste)
+├── Current Site — <dominio>        ← análisis del sitio actual del prospecto
+├── Competitor — <Nombre 1>         ← una subpágina por competidor
+├── Competitor — <Nombre 2>
+├── Inspiration — <Nombre>          ← opcional: refs del rubro que inspiran (no competidores)
+├── Redesign Proposal & Demo        ← propuesta concreta (links, decks, mockups)
+└── 🔍 Research adicional            ← cualquier cosa no categorizada
 ```
+
+No es un schema rígido. Si una subpágina aparece con otro nombre o hay subpáginas extra bajo `🔍 Research adicional`, la skill las lee igual y las clasifica por el prefijo del título (`Competitor —`, `Inspiration —`, `Current Site —`) o por keywords en el body.
+
+**Campos del body de la página raíz** (rellenar lo que haya):
+
+- 🌐 Website del prospecto (URL)
+- 🏢 Industria
+- 📝 Notas del discovery
+- 💰 Budget percibido
+- 📎 Propuesta enviada (link)
+- Branding detectado (colores, fonts, tono — si hubo extracción manual)
 
 ## Flujo según el tag
 
@@ -59,25 +77,30 @@ A diferencia de `consultora-branding-lookup` (donde la estructura es rígida), a
 ### Caso 2: `con-website`
 
 ```
-1. Abrir la URL (o leer los metadatos si el MCP no soporta browsing).
+1. Si existe la subpágina `Current Site — <dominio>`, leerla (ya hay research).
+   Si no, abrir la URL directa y extraer.
 2. Extraer candidatos de branding del website:
    - Colores dominantes (buscar el CSS o analizar screenshots si hay)
    - Tipografía del titular y del cuerpo
    - Tono visual (corporativo / playful / editorial / minimal)
    - Logo si se puede descargar
-3. Emitir "Branding inferido" (formato abajo) con disclaimer:
+3. Si hay subpáginas `Competitor — <Nombre>`, leerlas también para armar
+   el paisaje competitivo del rubro (relevante para la propuesta).
+4. Emitir "Branding inferido" (formato abajo) con disclaimer:
    "Inferido del website público. Confirmar con el cliente antes de comprometer
    colores exactos en la propuesta."
-4. Sugerir a Claudio que guarde los hallazgos en la página del prospecto
+5. Sugerir a Claudio que guarde los hallazgos en `Current Site — <dominio>`
    para no re-extraer la próxima vez.
 ```
 
 ### Caso 3: `con-brief-inicial`
 
 ```
-1. Leer las notas del discovery guardadas en la página.
-2. Cruzar con branding del website si también está disponible.
-3. Emitir brief enriquecido: branding visual + preferencias explícitas del cliente.
+1. Leer las notas del discovery guardadas en el body de la página raíz del prospecto.
+2. Cruzar con `Current Site — <dominio>` + subpáginas `Competitor — <Nombre>`
+   + `Inspiration — <Nombre>` si existen.
+3. Emitir brief enriquecido: branding visual + paisaje competitivo +
+   preferencias explícitas del cliente.
 4. Nota: si cliente mencionó preferencias (ej: "no quiero nada azul"), esas
    sobrescriben lo inferido visualmente.
 ```
@@ -123,7 +146,8 @@ linkear la propuesta previa para mantener consistencia.
 - **Preguntar antes que inventar.** Si falta información crítica (ej: industria para elegir tono), preguntar a Claudio.
 - **Actualizar el tag** cuando se enriquezca la información. Claudio lo refleja en Notion para que la próxima consulta sea más rica.
 - **Priorizar preferencias explícitas** del cliente por encima de inferencias visuales.
-- **Si el prospecto cierra** (ganado/perdido), sugerir mover o archivar la página para no ensuciar el espacio activo.
+- **Si el prospecto cierra** (ganado/perdido), actualizar el tag de la página raíz (`cerrado-ganado` / `cerrado-perdido` / `archivado`). En caso de `cerrado-ganado`, agregar el nombre del cliente al schema de `Project context` de la DB `Inspiración` para que refs futuras se puedan tagguear contra él.
+- **Sin schema fijo**: si una subpágina no matchea los prefijos esperados (`Current Site —`, `Competitor —`, `Inspiration —`), leerla igual y clasificarla por contenido. No filtrar a mano.
 
 ## Ver también
 
