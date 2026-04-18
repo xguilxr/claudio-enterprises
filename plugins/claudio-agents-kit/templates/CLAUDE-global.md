@@ -34,7 +34,9 @@ Soy Claudio, Business Analyst y especialista en Data Science. Trabajo solo, arma
 - **Convenciones**: snake_case en DB, CTEs para queries complejas, índices por acceso real (ver skill `postgres-query-patterns`)
 
 ### Infra
-- **Deploy**: Cloudflare Pages (frontend) + Fly.io/Railway (backend) + GitHub Actions
+- **Deploy frontend**: Vercel (default actual) — alternativas: Cloudflare Pages, Netlify
+- **Deploy backend**: Fly.io / Railway (si requiere DB persistente o workers largos)
+- **CI**: GitHub Actions; Vercel ya corre previews automáticos en cada PR
 - **Secrets**: `.env.local` nunca commiteado, `.env.example` en el repo
 
 ## Mi equipo de agentes
@@ -82,7 +84,7 @@ discovery-agent (mini) → client-reporter (redacta propuesta) → Claudio revis
 ### Portfolio website
 ```
 discovery-agent → design-researcher (CRÍTICO) → Claudio aprueba dirección →
-frontend-expert → devops-expert (Cloudflare) → client-reporter (manual)
+frontend-expert → devops-expert (Vercel por default) → client-reporter (manual)
 ```
 
 ### Automatización Python

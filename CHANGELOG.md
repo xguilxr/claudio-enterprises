@@ -14,6 +14,9 @@ y el versionado sigue [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 - **Plantillas de scaffolding** en `templates/`:
   - `agent-template.md` — estructura base para crear un agente nuevo.
   - `skill-template.md` — estructura base para crear una skill nueva.
+- **2 skills nuevas** para el flujo de propuestas:
+  - `consultora-branding-lookup` — trae logo, paleta, tipografías y plantilla de la consultora socia con la que Claudio esté presentando. Paso obligatorio antes de escribir cualquier propuesta.
+  - `presentation-inspiration-lookup` — trae refs de FORMATO de propuestas/decks/one-pagers desde el vault de Notion. Distinto de `design-inspiration-lookup` (sitios/productos).
 - **`CLAUDE.md` raíz del repo** — reglas para cuando Claude Code trabaja DENTRO del marketplace (convenciones del plugin, cómo bumpear, invocar agent-manager).
 - Campo `version` en `plugin.json` (antes solo estaba en `marketplace.json`).
 
@@ -23,7 +26,19 @@ y el versionado sigue [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
   - Agregado `agent-manager` a la lista de agentes del equipo.
   - Nota sobre MCPs no conectados.
   - **Nueva regla global #10**: "Reporte post-cambio obligatorio" — todo turno que modifica archivos cierra con bloque `📦 Cambios aplicados` (commits + archivos + pasos concretos para replicar en el ambiente).
-- `CLAUDE.md` raíz del marketplace: misma regla aplicada al contexto del repo (PR + update de plugin en consumidores).
+  - Deploy frontend: **Vercel por default** (antes Cloudflare Pages). Cloudflare/Netlify quedan como alternativas.
+- `CLAUDE.md` raíz del marketplace: misma regla de reporte post-cambio.
+- `templates/project-types/proposal.md`:
+  - Campo nuevo "Consultora socia" al inicio (define branding a aplicar).
+  - Flujo actualizado: paso 1 ahora es definir consultora + lookup de branding; paso 4 invoca `presentation-inspiration-lookup`.
+  - Checklist pre-envío incluye verificación de branding.
+  - Nombre de archivo final incluye consultora.
+- `templates/project-types/portfolio-website.md`: deploy default a **Vercel** (antes Cloudflare Pages).
+- `templates/project-types/platform.md`: deploy frontend a Vercel.
+- `agents/devops-expert.md`: stack actualizado — Vercel primero, Cloudflare/Fly/Netlify como alternativas. Quitada referencia a la skill inexistente `cloudflare-deploy-patterns`.
+- `agents/orquestador.md`: tabla de ruteo menciona Vercel/Cloudflare/Fly.
+- `skills/proposal-writing/SKILL.md`: prerrequisitos nuevos al inicio (invocar `consultora-branding-lookup` + `presentation-inspiration-lookup` antes de escribir).
+- README: step 3 del setup recomienda `ln -sf` (symlink) en lugar de `cp`, para que el CLAUDE global se actualice automáticamente con cada `plugin update`.
 
 ---
 

@@ -1,7 +1,7 @@
 {
   "name": "claudio-agents-kit",
   "version": "2.1.0",
-  "description": "Equipo de 16 agentes (discovery, product-analyst, design-researcher, orquestador, documentador, limpiador, optimizador, agent-manager + 8 expertos técnicos) con 12 skills reutilizables y 5 templates de proyecto (platform, proposal, portfolio, automation, data) para la agencia Claudio-Enterprises.",
+  "description": "Equipo de 16 agentes (discovery, product-analyst, design-researcher, orquestador, documentador, limpiador, optimizador, agent-manager + 8 expertos técnicos) con 13 skills reutilizables y 5 templates de proyecto (platform, proposal, portfolio, automation, data) para la agencia Claudio-Enterprises.",
   "author": {
     "name": "Claudio"
   },

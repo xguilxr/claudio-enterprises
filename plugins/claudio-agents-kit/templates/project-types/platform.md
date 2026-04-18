@@ -28,7 +28,7 @@
 - Backend: FastAPI + PostgreSQL + SQLAlchemy async
 - Data: Pandas para ETLs, si hay
 - Frontend: React + Vite + Tailwind + TanStack Query
-- Deploy: Cloudflare Pages (frontend) + Fly.io / Railway (backend)
+- Deploy: Vercel (frontend, default actual) + Fly.io / Railway (backend). Cloudflare Pages como alternativa si el proyecto lo requiere.
 - Monitoreo: Sentry vía conector
 
 ## Agentes activos en este proyecto
