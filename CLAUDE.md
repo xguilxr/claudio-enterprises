@@ -95,6 +95,29 @@ claude plugin install claudio-agents-kit
 git push -u origin <branch>
 ```
 
+## Reporte post-cambio (obligatorio)
+
+Cuando cualquier operación modifica archivos del marketplace, cerrás el turno con este bloque:
+
+```
+📦 Cambios aplicados
+
+### Commits
+- <hash> <mensaje>
+
+### Archivos modificados
+- <ruta>  (+N -M)
+
+### Cómo replicar en el ambiente
+1. Si falta merge: crear PR a `main` (dar URL o comando `gh pr create ...`).
+2. En cada máquina consumidora:
+   claude plugin marketplace update
+   claude plugin update claudio-agents-kit
+3. Si cambió `CLAUDE-global.md`: recopiar a `~/.claude/CLAUDE.md`.
+```
+
+Regla general completa: ver `templates/CLAUDE-global.md` → sección "Reporte post-cambio".
+
 ## No hacer
 
 - ❌ Editar `plugin.json`/`marketplace.json` sin bumpear.

@@ -22,6 +22,8 @@ y el versionado sigue [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
   - Stack desglosado en Python / Node-TS / SQL / Infra (antes mezclado).
   - Agregado `agent-manager` a la lista de agentes del equipo.
   - Nota sobre MCPs no conectados.
+  - **Nueva regla global #10**: "Reporte post-cambio obligatorio" — todo turno que modifica archivos cierra con bloque `📦 Cambios aplicados` (commits + archivos + pasos concretos para replicar en el ambiente).
+- `CLAUDE.md` raíz del marketplace: misma regla aplicada al contexto del repo (PR + update de plugin en consumidores).
 
 ---
 
