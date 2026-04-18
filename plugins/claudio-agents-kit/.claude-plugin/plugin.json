@@ -1,0 +1,18 @@
+{
+  "name": "claudio-agents-kit",
+  "description": "Equipo de 15 agentes (discovery, product-analyst, design-researcher, orquestador, documentador, limpiador, optimizador + 8 expertos técnicos) con 11 skills reutilizables y 5 templates de proyecto (platform, proposal, portfolio, automation, data) para la agencia Claudio-Enterprises.",
+  "author": {
+    "name": "Claudio"
+  },
+  "homepage": "https://github.com/claudio/claudio-agents-kit",
+  "license": "MIT",
+  "keywords": [
+    "agents",
+    "workflow",
+    "pandas",
+    "fastapi",
+    "postgresql",
+    "consulting",
+    "spanish"
+  ]
+}

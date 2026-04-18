@@ -1,0 +1,17 @@
+{
+  "name": "claudio-enterprises",
+  "description": "Marketplace privado de Claudio-Enterprises. Agentes y skills para proyectos de consultoría técnica.",
+  "owner": {
+    "name": "Claudio"
+  },
+  "plugins": [
+    {
+      "name": "claudio-agents-kit",
+      "source": "./plugins/claudio-agents-kit",
+      "description": "Equipo reutilizable de agentes + skills + templates",
+      "version": "2.0.0",
+      "category": "workflow",
+      "tags": ["agents", "consulting", "pandas", "fastapi", "spanish"]
+    }
+  ]
+}
