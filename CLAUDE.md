@@ -97,24 +97,27 @@ git push -u origin <branch>
 
 ## Reporte post-cambio (obligatorio)
 
-Cuando cualquier operación modifica archivos del marketplace, cerrás el turno con este bloque:
+Cuando cualquier operación modifica archivos del marketplace, cerrás el turno con el reporte en **Markdown normal** — NO envuelto en un fence exterior. Si lo envolvés en triple-backticks, la prosa queda monoespaciada y los comandos anidados no son copiables (se invierte el efecto).
 
-```
-📦 Cambios aplicados
+Estructura:
 
-### Commits
-- <hash> <mensaje>
+**📦 Cambios aplicados**
 
-### Archivos modificados
-- <ruta>  (+N -M)
+**Commits**
+- `<hash>` &lt;mensaje&gt;
 
-### Cómo replicar en el ambiente
+**Archivos modificados**
+- `<ruta>` (+N −M)
+
+**Cómo replicar en el ambiente**
 1. Si falta merge: crear PR a `main` (dar URL o comando `gh pr create ...`).
-2. En cada máquina consumidora:
-   claude plugin marketplace update
-   claude plugin update claudio-agents-kit
-3. Si cambió `CLAUDE-global.md`: recopiar a `~/.claude/CLAUDE.md`.
-```
+2. En cada máquina consumidora: `claude plugin marketplace update && claude plugin update claudio-agents-kit`.
+3. Si cambió `CLAUDE-global.md`: recopiar a `~/.claude/CLAUDE.md` (o `ln -sf` si usás symlink).
+
+Reglas de formato:
+- Prosa como Markdown plano (listas, headers, bold).
+- Comandos copiables en backticks inline o fenced code block con lenguaje (` ```bash `).
+- Nunca envolver TODO el reporte en un fence exterior.
 
 Regla general completa: ver `templates/CLAUDE-global.md` → sección "Reporte post-cambio".
 

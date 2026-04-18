@@ -118,24 +118,33 @@ Cada vez que cualquier agente (o Claude directamente) termina un cambio que toca
 
 ### Formato
 
-```
-📦 Cambios aplicados
+El reporte se escribe en **Markdown normal**, NO envuelto en un bloque de código. Razón: así la prosa queda legible y cada comando copiable va en su propio bloque (o inline con backticks simples) y se renderiza con botón de copiar. Si envolvés todo en triple-backticks, se invierte: la prosa queda monoespaciada y los comandos no son copiables.
 
-### Commits
-- <hash corto> <mensaje>
-- <hash corto> <mensaje>
-(si no hubo commits todavía, decir "ninguno (cambios sin commitear)")
+Estructura exacta (pegá esta plantilla y completala en Markdown plano):
 
-### Archivos modificados
-- <ruta>  (+N -M)
-- <ruta>  (creado)
-- <ruta>  (borrado)
+> **📦 Cambios aplicados**
+>
+> **Commits**
+> - `<hash corto>` &lt;mensaje&gt;
+> - `<hash corto>` &lt;mensaje&gt;
+>
+> (si no hubo commits todavía, escribir "ninguno (cambios sin commitear)")
+>
+> **Archivos modificados**
+> - `<ruta>` (+N −M)
+> - `<ruta>` (creado)
+> - `<ruta>` (borrado)
+>
+> **Cómo replicar en el ambiente**
+> 1. (Terminal) `<comando copiable>`
+> 2. (GitHub web) &lt;acción manual con URL&gt;
+> 3. (PowerShell) `<comando copiable>`
 
-### Cómo replicar en el ambiente
-1. <paso concreto>
-2. <paso concreto>
-3. <paso concreto>
-```
+Reglas de formato:
+- Encabezados como `## 📦 Cambios aplicados` y `### Commits` en Markdown real (no dentro de un fence).
+- **Comandos**: backticks inline (`` `git pull` ``) para uno corto, o fenced code block con lenguaje (` ```bash ... ``` `) para bloques multilínea.
+- **Prosa**: texto plano, listas con `-`, numeración con `1.`.
+- **Nunca** envolver todo el reporte en un fence exterior.
 
 ### Cómo armar cada sección
 
@@ -145,16 +154,15 @@ Cada vez que cualquier agente (o Claude directamente) termina un cambio que toca
 
 **Cómo replicar** — pensá el camino más corto desde que el cambio está en el branch hasta que corre en donde tiene que correr. **Para cada paso indicá SIEMPRE la terminal/herramienta donde correrlo** entre paréntesis al principio: `(Git Bash)`, `(PowerShell)`, `(CMD)`, `(WSL)`, `(zsh/bash en macOS/Linux)`, `(Docker Desktop)`, `(navegador)`, `(Claude Code CLI)`. Si el paso es GUI (ej: crear PR en GitHub), decilo explícito: `(GitHub web)`.
 
-Ejemplo bien formateado:
-```
-### Cómo replicar en el ambiente
-1. (GitHub web) mergear PR → `https://github.com/xguilxr/foo/pull/123`
+Ejemplo bien formateado (Markdown real, sin fence exterior):
+
+**Cómo replicar en el ambiente**
+1. (GitHub web) mergear PR → https://github.com/xguilxr/foo/pull/123
 2. (Git Bash o WSL) `git pull origin main`
 3. (PowerShell, desde la raíz del proyecto) `pnpm install` si cambió el lockfile
 4. (Git Bash) `uv sync` si cambió `pyproject.toml`
 5. (PowerShell) `pnpm dev` para levantar el front (puerto 5173)
 6. (Claude Code CLI, en otra ventana) reiniciar sesión para recargar CLAUDE.md
-```
 
 Ejemplos de pasos típicos por situación:
 
