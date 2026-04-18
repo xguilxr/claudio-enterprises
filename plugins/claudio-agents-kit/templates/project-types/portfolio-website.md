@@ -52,8 +52,9 @@
 - [ ] Ninguno (contenido hardcoded)
 
 **Deploy:**
-- Cloudflare Pages (recomendado)
-- GitHub Actions para CI
+- Vercel (recomendado, current default de Claudio)
+- Alternativas aceptadas: Cloudflare Pages, Netlify
+- GitHub Actions para CI extra si hace falta (Vercel ya corre previews nativos)
 
 ## Agentes activos en este proyecto
 
@@ -69,7 +70,7 @@
 ### Expertos
 - [x] `design-researcher`       — CRÍTICO, arranca acá siempre
 - [x] `frontend-expert`
-- [x] `devops-expert`           — para Cloudflare Pages
+- [x] `devops-expert`           — para deploy a Vercel (o Cloudflare/Netlify si el proyecto lo pide)
 - [ ] `backend-expert`          — NO salvo que haya form handler custom
 - [ ] `db-architect`            — NO salvo blog con DB
 - [ ] `data-expert`             — NO
@@ -97,7 +98,7 @@
 5. Claudio elige uno
 6. frontend-expert implementa completo
 7. Lighthouse audit + ajustes
-8. devops-expert deploy a Cloudflare con custom domain
+8. devops-expert deploy a Vercel con custom domain (o alternativa según proyecto)
 9. client-reporter prepara manual de actualización
 10. Handoff al cliente
 ```

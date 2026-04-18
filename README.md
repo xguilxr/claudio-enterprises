@@ -4,7 +4,7 @@ Marketplace privado de Claude Code para la agencia Claudio-Enterprises.
 
 ## Contenido
 
-- **`claudio-agents-kit`** — equipo de 16 agentes + 12 skills + 5 templates de proyecto + meta-agente `agent-manager`
+- **`claudio-agents-kit`** — equipo de 16 agentes + 13 skills + 5 templates de proyecto + meta-agente `agent-manager`
 
 ## Cómo usar este marketplace
 
@@ -170,10 +170,14 @@ claude plugin marketplace add github:TU-USUARIO/claudio-enterprises
 # 2. Instalar el plugin
 claude plugin install claudio-agents-kit@claudio-enterprises
 
-# 3. Copiar el CLAUDE global (define cómo trabajás, qué agentes core corren)
+# 3. Linkear el CLAUDE global (recomendado: symlink para auto-update)
 mkdir -p ~/.claude
-cp ~/.claude/plugins/claudio-enterprises/claudio-agents-kit/templates/CLAUDE-global.md ~/.claude/CLAUDE.md
-# (o abrilo en el editor y copiá a mano lo que quieras)
+ln -sf ~/.claude/plugins/claudio-enterprises/claudio-agents-kit/templates/CLAUDE-global.md ~/.claude/CLAUDE.md
+# Con symlink, cada vez que corras "claude plugin update claudio-agents-kit"
+# el CLAUDE global se actualiza automáticamente. No hay paso manual.
+#
+# Alternativa (solo si pensás agregar reglas personales al CLAUDE.md):
+#   cp ~/.claude/plugins/claudio-enterprises/claudio-agents-kit/templates/CLAUDE-global.md ~/.claude/CLAUDE.md
 ```
 
 **Por cada proyecto nuevo**:
@@ -199,6 +203,7 @@ claude
 ```bash
 claude plugin marketplace update
 claude plugin update claudio-agents-kit
+# Si hiciste symlink, no hay más nada que copiar — el CLAUDE global ya se actualizó.
 ```
 
 **Agregar / modificar / remover agentes**: desde Claude Code, dentro del repo `claudio-enterprises`, pedí:

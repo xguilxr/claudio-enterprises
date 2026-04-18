@@ -5,6 +5,15 @@ description: Estructura para propuestas comerciales y cotizaciones de proyectos 
 
 # Propuestas comerciales — Estructura Claudio-Enterprises
 
+## Prerrequisitos (antes de escribir una línea)
+
+1. **Branding de la consultora** → invocar skill `consultora-branding-lookup`
+   y traer logo, paleta, tipografías, plantilla. Sin esto no se arranca.
+2. **Inspiración de formato** → invocar skill `presentation-inspiration-lookup`
+   para traer 2-3 refs del tipo de pieza (propuesta larga / cotización corta / deck).
+
+Con esos dos blocks en el contexto, se procede a escribir usando una de las estructuras de abajo.
+
 ## Los 4 tipos de documento comercial
 
 1. **Propuesta inicial** (larga, después del discovery)
