@@ -2,17 +2,23 @@
 
 Este doc describe cómo organizar el workspace de Notion de Claudio para que las skills del plugin (`consultora-branding-lookup`, `prospect-branding-lookup`, `design-inspiration-lookup`, `presentation-inspiration-lookup`) encuentren lo que buscan sin adivinar.
 
-> **Side gig**: el objetivo es que Claudio dedique poco tiempo a mantenimiento de Notion pero que cualquier propuesta o proyecto arranque con assets listos para usar.
+> **Cambio mayor (2026-04-18)**: `💡 Inspiración` dejó de ser un árbol de carpetas y ahora es una **base de datos central de Notion**. Los skills consultan la DB por propiedades, no navegan subpáginas. `📊 Proyectos` se eliminó como raíz (el trabajo por proyecto vive dentro del prospecto). `🧾 Inspiración — Presentaciones` se mudó bajo `🎨 Branding de Consultoras`.
+
+---
 
 ## Workspace root
 
 ```
 📓 Claudio-Enterprises
 ├── 🎨 Branding de Consultoras
-├── 💡 Inspiración
-├── 🧾 Inspiración — Presentaciones
-└── 📊 Proyectos
+│   ├── Consultoras socias
+│   ├── Prospectos
+│   └── Inspiración — Presentaciones
+└── 💡 Inspiración
+    └── [DATABASE: Inspiración]
 ```
+
+Solo dos raíces. Todo lo demás cuelga de una de estas dos.
 
 ---
 
@@ -23,54 +29,40 @@ Centraliza TODO lo necesario para homogeneizar artefactos de propuestas y docume
 ```
 🎨 Branding de Consultoras
 ├── Consultoras socias
+│   ├── _Template Consultora
 │   ├── Claudio-Enterprises            ← tu propia identidad
-│   ├── <Consultora A>
-│   ├── <Consultora B>
-│   └── ...
-└── Prospectos
-    ├── <Cliente X>
-    ├── <Cliente Y>
-    └── ...
+│   └── <Consultora A>
+├── Prospectos
+│   ├── _Template Prospecto
+│   ├── <Cliente X>
+│   │   ├── Current Site — <dominio>
+│   │   ├── Competitor — <Nombre 1>
+│   │   ├── Competitor — <Nombre 2>
+│   │   ├── Inspiration — <Nombre>   (opcional, refs específicas del rubro)
+│   │   └── Redesign Proposal & Demo
+│   └── <Cliente Y>
+│       └── ...
+└── Inspiración — Presentaciones
+    ├── Propuestas que cerraron deals
+    ├── Decks de pitch
+    ├── One-pagers ejecutivos
+    ├── Reportes de cierre
+    └── Referencias externas
 ```
 
 ### 1.1 Consultoras socias — estructura de cada subpágina
 
-Cada consultora (incluso Claudio-Enterprises como tu propia marca) tiene esta estructura uniforme:
+Cada consultora (incluso Claudio-Enterprises como tu propia marca) tiene esta estructura uniforme. La página `_Template Consultora` es la plantilla vacía que se duplica al agregar una consultora nueva.
 
 ```
 <Nombre Consultora>
-├── 📎 Logos
-│   ├── Logo principal (SVG)
-│   ├── Logo principal (PNG light)
-│   ├── Logo principal (PNG dark)
-│   ├── Isotipo solo
-│   └── Logo en fondo oscuro
-├── 🎨 Paleta
-│   ├── Primario (HEX, uso: CTA, headers)
-│   ├── Secundario (HEX, uso: acento)
-│   ├── Neutros (HEX x 3-5, uso: fondo, texto, borders)
-│   └── Semánticos (éxito, error, warning)
-├── 🔤 Tipografías
-│   ├── Titulares (familia + weight + tamaño recomendado)
-│   ├── Cuerpo (familia + weight + line-height)
-│   └── Monospace (si aplica)
-├── 📄 Especificaciones de documentos
-│   ├── Plantilla Word (.docx adjunto)
-│   ├── Plantilla PowerPoint (.pptx adjunto)
-│   ├── Plantilla Google Docs (link)
-│   ├── Plantilla Google Slides (link)
-│   └── Márgenes / grillas / layout base
-├── ✍️ Firma y footer
-│   ├── Texto exacto que va al pie
-│   ├── Mail del contacto comercial
-│   └── Disclaimer legal si aplica
-├── 🎯 Idioma y tono
-│   ├── Formal / cercano / técnico
-│   ├── Español / inglés / bilingüe
-│   └── Ejemplos de copy (hook, cierre)
-└── 📝 Notas
-    ├── Historia del cambio de brandbook
-    └── Do / Don't visuales
+├── 📎 Logos (SVG + PNG light/dark + isotipo)
+├── 🎨 Paleta (primario, secundario, neutros, semánticos — HEX + uso)
+├── 🔤 Tipografías (titulares, cuerpo, monospace)
+├── 📄 Especificaciones de documentos (plantillas Word, PPT, GDoc, GSlides)
+├── ✍️ Firma y footer (texto exacto, mail comercial, disclaimer)
+├── 🎯 Idioma y tono (formal/cercano/técnico, ES/EN, ejemplos de copy)
+└── 📝 Notas (historia de cambios, do/don't visuales)
 ```
 
 **Tags recomendados en la página raíz de cada consultora:**
@@ -79,180 +71,113 @@ Cada consultora (incluso Claudio-Enterprises como tu propia marca) tiene esta es
 
 ### 1.2 Prospectos — research de clientes potenciales
 
-Sección flexible. A veces solo tenés el nombre, a veces el website, a veces ya hiciste un brief. Se maneja con **tags de completitud**.
+Sección flexible. Cada prospecto es una página con subpáginas arbitrarias según lo que haya: sitio actual, competidores, referencias del rubro, propuesta. La página `_Template Prospecto` es el esqueleto recomendado.
 
-```
-Prospectos
-├── <Cliente X>  [tag: solo-nombre]
-├── <Cliente Y>  [tag: con-website, con-brief-inicial]
-└── <Cliente Z>  [tag: con-website, con-propuesta-enviada]
-```
+**Subpáginas típicas dentro de cada prospecto:**
 
-**Estructura esperada de cada prospecto** (rellená solo lo que tengas):
+| Subpágina | Qué contiene |
+|---|---|
+| `Current Site — <dominio>` | Captura y análisis del sitio actual del prospecto (lo que ellos tienen hoy) |
+| `Competitor — <Nombre>` | Sitio de un competidor directo o indirecto. Una subpágina por competidor. |
+| `Inspiration — <Nombre>` | Referencia del rubro que no es competidor pero inspira (opcional) |
+| `Redesign Proposal & Demo` | Propuesta concreta para este prospecto (links, decks, mockups) |
+| Otras | Claudio puede agregar sub-research libre bajo `🔍 Research adicional` |
 
-```
-<Cliente>
-├── 🌐 Website (URL)
-├── 🎨 Branding detectado del website (si hay scraping/manual)
-│   ├── Colores dominantes
-│   ├── Tipografías visibles
-│   └── Tono (formal / juvenil / técnico / etc.)
-├── 🏢 Industria
-├── 📝 Notas del discovery (si ya hablaste)
-├── 💰 Budget percibido
-├── 🔍 Competidores (research)
-│   ├── <Competidor 1>
-│   │   ├── URL
-│   │   ├── Qué hace similar / diferente al prospecto
-│   │   ├── Branding observado (colores, fonts, tono)
-│   │   ├── Posicionamiento y pricing visible
-│   │   └── Qué aprendemos para la propuesta
-│   └── <Competidor 2>
-└── 📎 Propuesta enviada (link si ya mandaste)
-```
-
-**Por qué separar competidores del prospecto**: el branding del prospecto es lo que *ellos ya tienen*; los competidores son el *paisaje del mercado* que usamos para posicionar la propuesta. Nunca se mezclan (confunden al redactar).
-
-**Tags útiles:**
-- `solo-nombre` — únicamente sabés cómo se llaman
+**Tags de completitud en la página raíz del prospecto:**
+- `solo-nombre` — solo conocés el nombre
 - `con-website` — tenés URL para research visual
 - `con-brief-inicial` — ya hubo llamada y hay notas
 - `con-propuesta-enviada` — propuesta ya fue
-- `cerrado-ganado` / `cerrado-perdido` — outcome
-- `archivado` — no tracking activo
+- `cerrado-ganado` / `cerrado-perdido` / `archivado`
 
-Las skills (`prospect-branding-lookup`) usan estos tags para decidir qué pueden extraer: si solo hay nombre, preguntan a Claudio; si hay website, scrapean colores/fonts.
+La skill `prospect-branding-lookup` recorre las subpáginas del prospecto **recursivamente, sin asumir un schema fijo** — se adapta a lo que haya. Los tags solo indican completitud general; las subpáginas son el contenido.
 
----
+**Por qué todo el research del prospecto vive bajo el prospecto y no disperso**: al armar una propuesta necesitás contexto + competidores + inspiración del rubro juntos. Si está disperso, se pierde la unidad narrativa.
 
-## 2. 💡 Inspiración
+### 1.3 Inspiración — Presentaciones
 
-Referencias visuales para websites y frontends. **Es inspiración propia para crear** — no research de competidores de un cliente concreto (eso va en `🎨 Branding de Consultoras → Prospectos → <Cliente> → 🔍 Competidores`).
-
-Centralizado (antes vivía disperso dentro de cada proyecto).
+Refs de **formato** de propuestas/decks/one-pagers. Vive bajo `🎨 Branding de Consultoras` porque el formato de presentación es parte del toolkit comercial (no inspiración de diseño digital).
 
 ```
-💡 Inspiración
-├── Websites
-├── Animaciones
-├── SaaS styling
-└── Snippets
-```
-
-### 2.1 Websites
-
-Páginas completas que te gustan. Organizadas por **tipo de pieza** (no por proyecto).
-
-```
-Websites
-├── Landing pages
-├── Portfolio sites
-├── Corporate / about
-├── E-commerce
-└── Editorial / blog
-```
-
-Cada página:
-- Screenshot full-page
-- URL
-- Notas de Claudio ("qué me gusta puntualmente")
-- Tags: `minimal`, `brutalist`, `editorial`, `playful`, `dark`, `serif`, etc.
-
-### 2.2 Animaciones
-
-Micro-interacciones, transiciones, scroll effects, loaders, hover states.
-
-```
-Animaciones
-├── Scroll-triggered
-├── Hover / micro-interactions
-├── Page transitions
-├── Loaders / skeletons
-└── Hero reveals
-```
-
-Cada página:
-- GIF o video corto
-- URL original
-- Tag de tecnología: `framer-motion`, `gsap`, `lottie`, `css-only`, `react-spring`
-
-### 2.3 SaaS styling
-
-Componentes de producto (dashboards, tablas, forms, settings) que funcionan bien.
-
-```
-SaaS styling
-├── Dashboards
-├── Tables / data grids
-├── Forms
-├── Settings / profile
-├── Empty states
-└── Pricing pages
-```
-
-### 2.4 Snippets
-
-Fragmentos de código pegables. **Taggeados por framework.**
-
-```
-Snippets
-├── <Snippet 1: Hero parallax con Framer Motion>
-├── <Snippet 2: Table con sort + filter TanStack>
-├── <Snippet 3: Card hover lift CSS only>
-└── ...
-```
-
-Cada snippet:
-- Código en bloque (copiable)
-- Screenshot o demo
-- Tag de framework/lib: `react`, `tailwind`, `framer-motion`, `gsap`, `astro`, `vanilla-css`, `tanstack-query`, `tanstack-table`
-- Tag de tipo: `component`, `hook`, `animation`, `layout`, `pattern`
-- Dependencias requeridas
-- Notas de uso / gotchas
-
----
-
-## 3. 🧾 Inspiración — Presentaciones
-
-(Esta sección ya existe según la skill `presentation-inspiration-lookup`.)
-
-```
-🧾 Inspiración — Presentaciones
+Inspiración — Presentaciones
 ├── Propuestas que cerraron deals
 ├── Decks de pitch
 ├── One-pagers ejecutivos
 ├── Reportes de cierre
-└── Referencias externas
+└── Referencias externas (McKinsey, Pitch, Tome, Linear, etc.)
 ```
+
+Cada página: screenshots de 2-5 slides clave + link original + notas de Claudio + tag de categoría. La consulta es por navegación (no DB).
 
 ---
 
-## 4. 📊 Proyectos
+## 2. 💡 Inspiración (Database)
 
-Las páginas que ya tenés por proyecto siguen existiendo, pero **sin duplicar inspiración**: si una ref visual aplica al proyecto, se linkea desde Proyectos → `[link]` a la página en `Inspiración`. No se pega la imagen dos veces.
+El corazón del research visual. **Es una sola base de datos de Notion**, no un árbol de carpetas. Los skills filtran por propiedades para encontrar refs.
 
-```
-📊 Proyectos
-├── <proyecto-1>
-│   ├── Brief
-│   ├── Referencias usadas → links a 💡 Inspiración
-│   ├── Moodboard (curaduría específica del proyecto)
-│   └── Decisiones visuales tomadas
-└── <proyecto-2>
-```
+**Ubicación**: `📓 Claudio-Enterprises → 💡 Inspiración → [DATABASE: Inspiración]`
 
----
+**IDs (para API de Notion):**
+- Database ID: `deae078a-ab7d-4d2a-97f9-00fdf23ddb86`
+- Data source (collection) ID: `7342e2aa-a312-42d6-a8b5-39b2443ca210`
 
-## Migración desde la estructura actual
+### 2.1 Schema
 
-1. Crear las 4 páginas raíz nuevas.
-2. Por cada proyecto existente, recorrer las refs que tengas adentro:
-   - Moverlas a `💡 Inspiración → <subsección correcta>`.
-   - Dejar un link en `📊 Proyectos → <proyecto> → Referencias usadas`.
-3. Unificar branding: si alguna consultora tenía assets desperdigados, moverlos a `🎨 Branding de Consultoras`.
-4. Crear `Claudio-Enterprises` como una "consultora" más (es tu default cuando no hay socio).
+| Propiedad | Tipo | Valores |
+|---|---|---|
+| `Site / Source` | `title` | free text |
+| `URL` | `url` | — |
+| `Asset Type` | `select` | `Website`, `Animation`, `Component`, `Snippet`, `Dashboard`, `Presentation` |
+| `Surface` | `multi_select` | `Hero`, `Portfolio Gallery`, `Landing`, `Dashboard`, `Form`, `Navigation`, `Magazine`, `Video Page`, `About`, `Contact`, `Pricing`, `Empty State`, `Settings / Profile`, `Tables / Data Grid`, `Sitewide` |
+| `Style Tags` | `multi_select` | `minimal`, `brutalist`, `editorial`, `playful`, `dark`, `serif`, `maximal`, `monochrome`, `colorful`, `corporate`, `experimental` |
+| `Library / Stack` | `multi_select` | `GSAP`, `ScrollTrigger`, `Framer Motion`, `Lenis`, `Three.js`, `CSS Only`, `Tailwind`, `TanStack Query`, `TanStack Table`, `React`, `Astro`, `Custom JS`, `Nuxt`, `Framer`, `Barba.js`, `Locomotive Scroll`, `Swup`, `react-spring`, `Lottie` |
+| `Project context` | `multi_select` | `Shutterexx`, `Integrity`, `DG`, `Claudio-Enterprises` (agregar nuevos valores cuando aparezca un prospecto nuevo) |
+| `Is Generic` | `checkbox` | `true` = reusable cross-project (library base) |
+| `Priority` | `select` | `Must Have`, `Nice to Have`, `Explore Later` |
+| `Difficulty` | `select` | `Easy`, `Medium`, `Complex` |
+| `Status` | `select` | `Researched`, `Code Extracted`, `Prototyped`, `Implemented`, `Rejected` |
+| `Technique` | `rich_text` | descripción libre de qué se encontró |
+| `Added` | `created_time` | auto |
 
-Esto toma ~1h si son 5-10 proyectos. Peor en backlog, mejor que seguir disperso.
+### 2.2 Views existentes
+
+Creadas manualmente en la UI de Notion:
+- `All` — todo sin filtro
+- `By Asset Type` — agrupado por `Asset Type`
+- `By Surface` — agrupado por `Surface`
+- `By Project` — agrupado por `Project context`
+- `Must-Haves only` — `Priority = Must Have`
+- `Generic library` — `Is Generic = true`
+
+Los skills no crean ni modifican views; solo leen la DB via API con filtros explícitos.
+
+### 2.3 Mapeo del layout viejo (carpetas) al nuevo (filtros)
+
+Cuando una skill o un flujo viejo pase un path tipo `Websites/Landing pages/`, se traduce a filtros así:
+
+| Path viejo | Filtro equivalente |
+|---|---|
+| `Websites/Landing pages/` | `Asset Type = Website` AND `Surface contains "Landing"` |
+| `Websites/Portfolio sites/` | `Asset Type = Website` AND `Surface contains "Portfolio Gallery"` |
+| `Websites/Corporate / about/` | `Asset Type = Website` AND `Surface contains "About"` |
+| `Websites/E-commerce/` | `Asset Type = Website` AND `Surface contains "Pricing"` (approx — agregar valor `E-commerce` a `Surface` si aparece recurrente) |
+| `Websites/Editorial / blog/` | `Asset Type = Website` AND `Style Tags contains "editorial"` |
+| `Animaciones/Scroll-triggered/` | `Asset Type = Animation` AND `Library / Stack contains "ScrollTrigger"` |
+| `Animaciones/Hover / micro-interactions/` | `Asset Type = Animation` AND `Technique contains "hover"` (approx — considerar agregar `Hover` a `Surface`) |
+| `Animaciones/Page transitions/` | `Asset Type = Animation` AND `Library / Stack contains "Barba.js"` OR `"Swup"` |
+| `Animaciones/Loaders / skeletons/` | `Asset Type = Animation` AND `Technique contains "loader"` OR `"skeleton"` |
+| `Animaciones/Hero reveals/` | `Asset Type = Animation` AND `Surface contains "Hero"` |
+| `SaaS styling/Dashboards/` | `Asset Type = Dashboard` AND `Surface contains "Dashboard"` |
+| `SaaS styling/Tables / data grids/` | `Asset Type = Component` AND `Surface contains "Tables / Data Grid"` |
+| `SaaS styling/Forms/` | `Asset Type = Component` AND `Surface contains "Form"` |
+| `SaaS styling/Settings / profile/` | `Asset Type = Component` AND `Surface contains "Settings / Profile"` |
+| `SaaS styling/Empty states/` | `Asset Type = Component` AND `Surface contains "Empty State"` |
+| `SaaS styling/Pricing pages/` | `Asset Type = Website` AND `Surface contains "Pricing"` |
+| `Snippets/` | `Asset Type = Snippet` |
+
+### 2.4 Inspiration Vault (legacy)
+
+La subpágina `Inspiration Vault` dentro de `Shutterexx — Portfolio Build` es legacy. Sus 6 filas se migraron a la DB central con `Project context = Shutterexx`, `Is Generic = false`. **No leas desde el Vault viejo** — queda ahí solo como backup histórico hasta deprecar.
 
 ---
 
@@ -262,31 +187,31 @@ Cuando Claudio lee un sitio con Claude Chrome (u otra herramienta de browsing) y
 
 | Tipo | Destino | Cuándo aplica |
 |---|---|---|
-| `inspiration` | `💡 Inspiración → <subsección>` | El sitio te gusta estéticamente o resuelve un patrón bien. Se guarda como ref reusable para cualquier proyecto futuro. |
-| `competitor-research` | `🎨 Branding de Consultoras → Prospectos → <Cliente> → 🔍 Competidores` | El sitio es de un competidor directo o indirecto de un prospecto concreto. Se guarda atado a ese prospecto para posicionar su propuesta. |
+| `inspiration` | Nueva fila en el DB `💡 Inspiración` (con `Project context` según aplique + `Is Generic` si es reusable) | El sitio te gusta estéticamente o resuelve un patrón bien. Se guarda como ref buscable por propiedades. |
+| `competitor-research` | Subpágina `Competitor — <Nombre>` dentro de `🎨 Branding de Consultoras → Prospectos → <Cliente>` | El sitio es de un competidor directo o indirecto de un prospecto concreto. Se guarda atado a ese prospecto para posicionar su propuesta. |
 
-El prompt [`chrome-site-classification-prompt.md`](./chrome-site-classification-prompt.md) automatiza esta decisión: al leer una página, pregunta a Claudio cómo clasificarla y hace la extracción adecuada según el tipo.
+El prompt [`chrome-site-classification-prompt.md`](./chrome-site-classification-prompt.md) automatiza esta decisión: al leer una página, pregunta a Claudio cómo clasificarla y genera el payload adecuado (fila de DB para inspiration, bloque Markdown para subpágina de prospecto en competitor-research).
 
-Regla: **si dudás, es `inspiration`** (se puede re-etiquetar después; pegarlo en el prospecto equivocado contamina el research).
+Regla: **si dudás, es `inspiration` con `Is Generic = true`**. Se puede re-etiquetar (cambiar `Project context` o desmarcar `Is Generic`) mucho más fácil que reubicar una subpágina.
 
 ---
 
 ## Cómo las skills del plugin usan esta estructura
 
-| Skill | Lee de |
-|---|---|
-| `consultora-branding-lookup` | `🎨 Branding de Consultoras → Consultoras socias → <nombre>` |
-| `prospect-branding-lookup` | `🎨 Branding de Consultoras → Prospectos → <cliente>` (flexible según tags) |
-| `design-inspiration-lookup` | `💡 Inspiración → Websites / Animaciones / SaaS styling / Snippets` |
-| `presentation-inspiration-lookup` | `🧾 Inspiración — Presentaciones → <categoría>` |
+| Skill | Fuente | Mecanismo |
+|---|---|---|
+| `consultora-branding-lookup` | `🎨 Branding de Consultoras → Consultoras socias → <nombre>` | Navegación de subpágina (MCP Notion) |
+| `prospect-branding-lookup` | `🎨 Branding de Consultoras → Prospectos → <cliente>` | Navegación recursiva de subpáginas (sin schema fijo) |
+| `design-inspiration-lookup` | DB `💡 Inspiración` | `databases.query` con filtros por `Asset Type`, `Surface`, `Style Tags`, `Library / Stack`, `Project context`, `Is Generic` |
+| `presentation-inspiration-lookup` | `🎨 Branding de Consultoras → Inspiración — Presentaciones → <categoría>` | Navegación de subpágina |
 
-Si alguna skill no encuentra la ruta (ej: falta la consultora pedida), avisa explícitamente y pide a Claudio que la cree antes de avanzar.
+Si alguna skill no encuentra lo que busca, **avisa explícitamente** qué filtros/path usó y sugiere cómo arreglar (agregar a la DB, crear la página del prospecto, ampliar filtros, etc.). Nunca devuelve vacío silenciosamente ni inventa refs.
 
 ---
 
 ## Mantenimiento mínimo
 
-- **Al arrancar un proyecto**: 5 min para confirmar que la consultora y el cliente están en Notion (crear si faltan).
-- **Al ver algo visual que te gusta**: 2 min para guardarlo en `💡 Inspiración` con 2-3 tags. No postergues.
-- **Al cerrar un proyecto**: mover refs útiles del proyecto a Inspiración (si todavía no estaban ahí).
-- **Cada 3 meses**: pasada de limpieza — archivar prospectos cerrados-perdidos, revisar que brandbooks de consultoras estén vigentes.
+- **Al arrancar un proyecto nuevo**: agregar el valor del prospecto a la propiedad `Project context` de la DB (si no existe), y crear su página en `Prospectos` con `_Template Prospecto` como base.
+- **Al ver algo visual que te gusta**: 2 min para agregarlo a la DB `💡 Inspiración` con `Asset Type`, 1-2 valores de `Surface`, 1-2 `Style Tags` y `Project context` (o `Is Generic = true` si es librería reusable). No postergues.
+- **Al cerrar un proyecto (cerrado-ganado)**: mover refs del prospecto que valgan cross-project a la DB central con `Is Generic = true`.
+- **Cada 3 meses**: pasada de limpieza — archivar prospectos cerrados-perdidos, marcar como `Status = Rejected` en la DB las refs que dejaron de gustarte, revisar vigencia de brandbooks de consultoras.

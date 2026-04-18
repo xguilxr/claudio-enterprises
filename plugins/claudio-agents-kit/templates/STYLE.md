@@ -3,7 +3,7 @@
 > Guía de estilo del proyecto. Define el look & feel default de lo que definamos y construyamos. Frontend-expert y design-researcher la consultan antes de generar UI.
 
 > **Jerarquía de decisión visual** (de mayor a menor prioridad):
-> 1. **Brandbook del cliente** (si existe) → ver `📊 Proyectos → <proyecto> → Brandbook`.
+> 1. **Brandbook del cliente** (si existe) → dentro de la página del prospecto en `🎨 Branding de Consultoras → Prospectos → <Cliente>` (subpágina o link al oficial del cliente).
 > 2. **Consultora socia** (si la propuesta se firma con una consultora) → skill `consultora-branding-lookup`.
 > 3. **Este STYLE.md** → defaults del proyecto.
 > 4. **Defaults del sistema** (abajo) → de Claudio-Enterprises.
@@ -108,7 +108,7 @@ Librerías preferidas por caso:
 - Scroll-triggered storytelling → **GSAP** + ScrollTrigger.
 - Ilustraciones animadas → **Lottie**.
 
-Ver `💡 Inspiración → Animaciones` en Notion para referencias específicas.
+Ver la DB `💡 Inspiración` en Notion con filtro `Asset Type = Animation` (y opcionalmente `Library / Stack` por tecnología) para referencias específicas.
 
 ---
 
