@@ -1,8 +1,11 @@
 #!/usr/bin/env bash
-# new-project.sh — Scaffoldea proyecto nuevo con template según tipo
+# setup.sh — Scaffoldea proyecto nuevo con template según tipo.
+# Invocado por el slash command /claudio-agents-kit:setup en la "Rama A" (repo vacío).
+# Para repos existentes (Rama B enriquecer, Rama C adoptar), el slash command
+# trabaja 100% con Read/Edit/Write sin tocar este script.
 #
 # Uso:
-#   bash new-project.sh <nombre> <tipo> [carpeta-destino]
+#   bash setup.sh <nombre> <tipo> [carpeta-destino]
 #
 # Tipos:
 #   platform   — PaaS full-stack (backend + frontend + db)
@@ -12,15 +15,15 @@
 #   data       — análisis de datos / reportes
 #
 # Ejemplos:
-#   bash new-project.sh farmax platform ~/projects
-#   bash new-project.sh juan-perez-portfolio portfolio
-#   bash new-project.sh cotizacion-farmax proposal
+#   bash setup.sh farmax platform ~/projects
+#   bash setup.sh juan-perez-portfolio portfolio
+#   bash setup.sh cotizacion-farmax proposal
 
 set -e
 
 if [ -z "$1" ] || [ -z "$2" ]; then
     cat <<EOF
-Uso: bash new-project.sh <nombre> <tipo> [carpeta-destino]
+Uso: bash setup.sh <nombre> <tipo> [carpeta-destino]
 
 Tipos disponibles:
   platform    — PaaS full-stack
@@ -30,8 +33,8 @@ Tipos disponibles:
   data        — data analysis
 
 Ejemplos:
-  bash new-project.sh farmax platform ~/projects
-  bash new-project.sh juan-portfolio portfolio
+  bash setup.sh farmax platform ~/projects
+  bash setup.sh juan-portfolio portfolio
 EOF
     exit 1
 fi

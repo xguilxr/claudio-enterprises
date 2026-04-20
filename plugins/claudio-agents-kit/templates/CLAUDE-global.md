@@ -207,7 +207,7 @@ Todos los agentes usan `memory: user` — acumulan aprendizajes entre sesiones (
 
 ## Tipos de proyecto y sus templates
 
-Al crear un proyecto nuevo con `new-project.sh`, elegís el tipo y se copia el template correcto:
+Al acoplar el kit a un proyecto con `/claudio-agents-kit:setup` (sea nuevo, con CLAUDE.md previo, o adoptando un repo existente con código), elegís o confirmás el tipo y se copia / enriquece el template correcto:
 
 | Tipo | Template | Agentes clave |
 |---|---|---|

@@ -7,6 +7,31 @@ y el versionado sigue [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ---
 
+## [4.0.0] — 2026-04-20
+
+### Changed (BREAKING)
+- **Slash command `/claudio-agents-kit:new-project` reemplazado por `/claudio-agents-kit:setup`**. El nuevo comando unifica 3 escenarios en un solo flujo:
+  - **Rama A — Proyecto nuevo**: mismo comportamiento que el viejo `new-project` (pregunta nombre/tipo/destino, scaffoldea estructura, `git init`, commit inicial).
+  - **Rama B — Enriquecer**: detecta `CLAUDE.md` existente, diagnostica secciones completas vs placeholders, contrasta stack declarado contra manifests reales (`pyproject.toml`, `package.json`, etc.), y propone `Edit` puntuales aprobados por Claudio. Nunca sobrescribe.
+  - **Rama C — Adoptar**: repo con código pero sin `CLAUDE.md`. Infere tipo desde señales (manifests + estructura de carpetas), propone tipo, genera `CLAUDE.md` con stack detectado (no el stack default del template si difiere).
+- **Script `scripts/new-project.sh` renombrado a `scripts/setup.sh`**. Lógica interna idéntica; el comando `/setup` lo invoca solo en Rama A.
+- **Marketplace pasa a ser público** — `claude plugin marketplace add github:xguilxr/claudio-enterprises` ya no requiere auth de GitHub.
+
+### Added
+- `plugins/claudio-agents-kit/commands/setup.md` con prompt completo para las 3 ramas (detección CWD, flujo interactivo, mapeo tipo→agentes, reporte final).
+- Tabla "tipo → agentes activos" en el prompt de `setup.md` como fuente canónica para generar/enriquecer la sección "Agentes activos en este proyecto" del CLAUDE.md del proyecto.
+
+### Removed
+- `plugins/claudio-agents-kit/commands/new-project.md`.
+- `plugins/claudio-agents-kit/scripts/new-project.sh` (reemplazado por `setup.sh`).
+
+### Migration notes
+- Si tenías scripts, docs o notas con `/claudio-agents-kit:new-project` → cambiar a `/claudio-agents-kit:setup`.
+- Si invocabas el script shell directo con `bash .../scripts/new-project.sh ...` → usar `bash .../scripts/setup.sh ...` (mismos argumentos posicionales).
+- Usuarios nuevos: el install pasa a ser un one-liner: `claude plugin marketplace add github:xguilxr/claudio-enterprises && claude plugin install claudio-agents-kit@claudio-enterprises`.
+
+---
+
 ## [3.1.0] — 2026-04-20
 
 ### Added
