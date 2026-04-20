@@ -50,6 +50,7 @@ Soy Claudio, Business Analyst y especialista en Data Science. Trabajo solo, arma
 ### Agentes de planning
 - `discovery-agent` — fuerza clarificar antes de construir (tipo "Grill Me")
 - `product-analyst` — Epics / User Stories / Test Cases (nivel intermedio)
+- `project-manager` — convierte comentarios sueltos en sprints, mantiene `PROJECT_QUEUE.md` en la raíz del proyecto (inbox → backlog → sprint actual → hecho)
 - `design-researcher` — consulta vault Notion para inspiración visual
 
 ### Biblioteca de expertos (opt-in por proyecto)

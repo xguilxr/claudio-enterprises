@@ -7,6 +7,14 @@ y el versionado sigue [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ---
 
+## [3.1.0] — 2026-04-20
+
+### Added
+- **Agente `project-manager`** — convierte comentarios sueltos de Claudio en un plan operativo. Mantiene un `PROJECT_QUEUE.md` en la raíz del proyecto con 5 secciones fijas (`📥 Inbox`, `🏃 Sprint actual`, `📋 Backlog`, `✅ Hecho histórico`, `🚫 Descartadas`). Opera con TASK IDs correlativos (nunca reusa números), timestamps obligatorios en cada movimiento, y confirmación antes de cerrar sprints. Complementa a `product-analyst` (él maneja Epic/US/TC a nivel producto; éste gestiona ejecución día a día). Commits del queue con prefix `chore(queue):`.
+- Mención de `project-manager` en `templates/CLAUDE-global.md` → sección "Agentes de planning".
+
+---
+
 ## [3.0.0] — 2026-04-18
 
 ### Changed (BREAKING)
