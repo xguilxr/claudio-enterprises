@@ -1,6 +1,6 @@
 # Claudio-Enterprises Marketplace
 
-Marketplace público de Claude Code para la agencia Claudio-Enterprises: **17 agentes + 14 skills + 5 templates de proyecto + comando unificado `/setup`**.
+Marketplace público de Claude Code para la agencia Claudio-Enterprises: **19 agentes + 14 skills + 5 templates de proyecto + comando unificado `/setup` + sistema de prompts de 6 modos**.
 
 ## Instalación (one-liner)
 
@@ -14,10 +14,10 @@ claude plugin install claudio-agents-kit@claudio-enterprises
 Verificá:
 
 ```bash
-claude plugin list   # debe mostrar claudio-agents-kit con versión 4.0.0+
+claude plugin list   # debe mostrar claudio-agents-kit con versión 4.1.0+
 ```
 
-Dentro de Claude Code, `/agents` debería listar los 17 agentes.
+Dentro de Claude Code, `/agents` debería listar los 19 agentes.
 
 ### (Recomendado) Linkear el CLAUDE.md global
 
@@ -50,13 +50,15 @@ o directo:
 
 ## Contenido del kit
 
-### 17 agentes
+### 19 agentes
 
 **Core (siempre activos)**: `orquestador`, `documentador`, `limpiador`, `optimizador`.
 
 **Planning**: `discovery-agent`, `product-analyst`, `project-manager`, `design-researcher`.
 
 **Expertos técnicos (opt-in por proyecto)**: `data-expert`, `backend-expert`, `frontend-expert`, `devops-expert`, `qa-expert`, `db-architect`, `client-reporter`, `security-auditor`.
+
+**Productividad y revisión**: `prompt-optimizer` — convierte prompts en crudo a prompts optimizados según el sistema de 6 modos. `code-council` — convoca consejo de expertos técnicos para evaluar cambios complejos o decisiones de arquitectura cruzadas.
 
 **Meta**: `agent-manager` — gestiona el ciclo de vida de agentes/skills del marketplace (crear/modificar/remover con bump + CHANGELOG + commit). Solo opera dentro de este repo.
 
@@ -151,4 +153,4 @@ git commit -m "fix: restore executable bit"
 
 El CHANGELOG sigue [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Cada release incluye migration notes cuando rompe algo.
 
-Versión actual: **4.0.0** (ver `CHANGELOG.md`).
+Versión actual: **4.1.0** (ver `CHANGELOG.md`).

@@ -7,6 +7,27 @@ y el versionado sigue [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ---
 
+## [4.1.0] — 2026-04-23
+
+### Added
+- **Agente `prompt-optimizer`** (modelo `sonnet`) — recibe prompts en crudo y devuelve prompts optimizados listos para copiar/pegar, siguiendo el sistema de 6 modos (INTAKE / BUG_FIX / FEATURE / REFACTOR / AUDIT / GREENFIELD). Detecta cuándo partir un prompt en sub-prompts (audit + implement separados, intakes con >5 items, US con >3 criterios complejos). Output siempre es prompt(s) listos para copiar, nunca explicaciones genéricas.
+- **Agente `code-council`** (modelo `opus`) — convoca a un consejo de expertos técnicos (`backend-expert`, `frontend-expert`, `db-architect`, `devops-expert`, `security-auditor`, `qa-expert`, `optimizador`) para evaluar cambios complejos o decisiones arquitectónicas que cruzan múltiples dominios. Cada experto vota independientemente (✅/⚠️/❌/🔄) con pros, cons y riesgos; el consejo emite veredicto consolidado (🟢 APROBADO / 🟡 APROBADO CON CONDICIONES / 🔴 RECHAZADO / 🔵 REFINAR / ⚖️ ESCALAR). Veto de seguridad: si `security-auditor` vota ❌ por riesgo crítico, el veredicto es 🔴 aunque el resto apruebe.
+- **`templates/prompt-system-reference.md`** — sistema completo de prompts en 3 capas (sistema/template/input) con templates por modo, reglas transversales, guía de selección rápida y spec original del agente `prompt-optimizer`. Reemplaza al `claude-code-prompt-system.md` que estaba en la raíz del repo.
+- **Scaffold `docs/project-management/`** en `scripts/setup.sh` (Rama A — proyecto nuevo): genera `SPRINT.md` con la estructura de 5 secciones del sistema de prompts (CONTADORES / INBOX / QUEUE / IN-PROGRESS / DONE) y `DECISIONS.md` (ADR liviano para registrar decisiones arquitectónicas). Aplica a todos los tipos de proyecto excepto `proposal`.
+- Menciones de los 2 agentes nuevos en `templates/CLAUDE-global.md` (sección "Mi equipo de agentes") y en el README del marketplace.
+
+### Changed
+- `plugin.json` description actualizada: "17 agentes" → "19 agentes" y referencia al nuevo scaffold de `docs/project-management/` y al sistema de prompts.
+
+### Removed
+- `claude-code-prompt-system.md` de la raíz del repo (movido a `plugins/claudio-agents-kit/templates/prompt-system-reference.md`).
+
+### Notas para Claudio
+- **Tensión `SPRINT.md` vs `PROJECT_QUEUE.md`**: el agente `project-manager` sigue manteniendo `PROJECT_QUEUE.md` en la raíz del proyecto (introducido en 3.1.0). El nuevo scaffold genera `docs/project-management/SPRINT.md` con un formato distinto, inspirado en el sistema de prompts. En cada proyecto, **elegí uno como fuente de verdad y borrá el otro** para evitar inconsistencias. Una unificación más profunda (que `project-manager` apunte directo a `docs/project-management/SPRINT.md`) queda para una versión futura, con su propio bump.
+- **Slash command no aparece en Claude Code Desktop**: si tenés el plugin instalado y enabled (verificable con `claude plugin list`) pero no ves `/claudio-agents-kit:setup`, **reiniciá Claude Code Desktop completamente** (cerrar la ventana y abrir de nuevo). El Desktop no refresca slash commands de plugins instalados vía CLI hasta reiniciar.
+
+---
+
 ## [4.0.0] — 2026-04-20
 
 ### Changed (BREAKING)

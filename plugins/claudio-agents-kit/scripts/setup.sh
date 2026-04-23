@@ -249,6 +249,59 @@ case "$PROJECT_TYPE" in
         ;;
 esac
 
+# docs/project-management — SPRINT.md y DECISIONS.md (todos los tipos salvo proposal)
+if [ "$PROJECT_TYPE" != "proposal" ]; then
+    mkdir -p "$PROJECT_DIR/docs/project-management"
+
+    cat > "$PROJECT_DIR/docs/project-management/SPRINT.md" <<'EOF'
+# SPRINT ACTUAL
+
+> Tracking del sprint en curso. Inspirado en el sistema de prompts del kit
+> (`templates/prompt-system-reference.md` § 3). Si usás `project-manager` con
+> `PROJECT_QUEUE.md` en la raíz, mantené UNO de los dos como fuente de verdad
+> y borrá el otro para no tener inconsistencias.
+
+## CONTADORES
+BUG: 000 | ENH: 000 | US: 000
+
+## INBOX
+<!-- Items sin clasificar llegan acá. Vos o el agente los movés a QUEUE cuando estén triados. -->
+
+## QUEUE
+<!-- Ordenado: bugs críticos primero → ENH agrupados por epic. -->
+
+## IN-PROGRESS
+<!-- Máximo 1 item a la vez. -->
+
+## DONE
+| ID | Título | SHA | Fecha |
+|----|--------|-----|-------|
+EOF
+
+    cat > "$PROJECT_DIR/docs/project-management/DECISIONS.md" <<'EOF'
+# DECISIONES DE ARQUITECTURA
+
+> Registro de decisiones técnicas tomadas en este proyecto (ADR liviano).
+> Una entrada por decisión, ordenadas cronológicamente con la más reciente arriba.
+> Lo escribe `code-council` cuando hay veredicto ⚖️ ESCALAR, o vos directamente.
+
+## Template
+
+### YYYY-MM-DD — <Título corto>
+**Contexto**: qué problema o situación motivó la decisión.
+
+**Decisión**: qué se decidió hacer.
+
+**Alternativas consideradas**: opciones descartadas y por qué.
+
+**Consecuencias**: impacto esperado (positivo y negativo).
+
+---
+
+<!-- Agregá nuevas decisiones acá arriba, siguiendo el template. -->
+EOF
+fi
+
 # Git init (salvo que sea proposal, que no suele ir a git)
 if [ "$PROJECT_TYPE" != "proposal" ]; then
     cd "$PROJECT_DIR"
