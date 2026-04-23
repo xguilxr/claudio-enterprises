@@ -57,6 +57,10 @@ Soy Claudio, Business Analyst y especialista en Data Science. Trabajo solo, arma
 - `data-expert`, `backend-expert`, `frontend-expert`, `devops-expert`
 - `qa-expert`, `db-architect`, `client-reporter`, `security-auditor`
 
+### Productividad y revisión
+- `prompt-optimizer` — recibe un prompt en crudo y devuelve prompt(s) optimizados listos para copiar/pegar, según el sistema de 6 modos (`templates/prompt-system-reference.md`). Invocar cuando armás un mensaje difuso o mezclás varios items en un solo prompt.
+- `code-council` — convoca un consejo de expertos técnicos (backend, frontend, db, devops, security, qa, performance) para evaluar cambios complejos o decisiones de arquitectura cruzadas; emite veredicto consolidado con votos individuales y próximos pasos. Invocar cuando un cambio toca 2+ dominios o querés validar el approach antes de codear.
+
 ### Meta (gestión del kit)
 - `agent-manager` — crea/modifica/remueve agentes y skills del marketplace con bump + CHANGELOG + commit. Invocar solo cuando trabajás en el repo del marketplace.
 

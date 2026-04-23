@@ -249,6 +249,73 @@ case "$PROJECT_TYPE" in
         ;;
 esac
 
+# docs/project-management — SPRINT.md, CHANGE_LOG.md y DECISIONS.md (todos los tipos salvo proposal)
+if [ "$PROJECT_TYPE" != "proposal" ]; then
+    mkdir -p "$PROJECT_DIR/docs/project-management"
+
+    cat > "$PROJECT_DIR/docs/project-management/SPRINT.md" <<'EOF'
+# SPRINT ACTUAL
+
+> Tracking del sprint en curso. Formato inspirado en el sistema de prompts
+> (`templates/prompt-system-reference.md` § 3). Cuando una tarea se completa,
+> se mueve a `CHANGE_LOG.md` (no se queda acá).
+>
+> Si usás `project-manager` con `PROJECT_QUEUE.md` en la raíz, mantené UNO de
+> los dos como fuente de verdad y borrá el otro.
+
+## CONTADORES
+BUG: 000 | ENH: 000 | US: 000
+
+## INBOX
+<!-- Items sin clasificar llegan acá. Vos o el agente los movés a QUEUE cuando estén triados. -->
+
+## QUEUE
+<!-- Ordenado: bugs críticos primero → ENH agrupados por epic. -->
+
+## IN-PROGRESS
+<!-- Máximo 1 item a la vez. -->
+EOF
+
+    cat > "$PROJECT_DIR/docs/project-management/CHANGE_LOG.md" <<'EOF'
+# Registro de actividades completadas
+
+> A medida que una tarea se completa en `SPRINT.md`, se mueve acá.
+> Ordenado cronológicamente: sprint más reciente arriba, dentro de cada sprint
+> las tareas más recientes arriba.
+
+## Sprint actual
+
+| ID | Título | SHA | Fecha | Tipo | Notas |
+|----|--------|-----|-------|------|-------|
+
+<!-- Cuando cierres el sprint, renombrá este encabezado a `## Sprint YYYY-MM` y
+     abrí uno nuevo "## Sprint actual" arriba para el próximo. -->
+EOF
+
+    cat > "$PROJECT_DIR/docs/project-management/DECISIONS.md" <<'EOF'
+# DECISIONES DE ARQUITECTURA
+
+> Registro de decisiones técnicas tomadas en este proyecto (ADR liviano).
+> Una entrada por decisión, ordenadas cronológicamente con la más reciente arriba.
+> Lo escribe `code-council` cuando hay veredicto ⚖️ ESCALAR, o vos directamente.
+
+## Template
+
+### YYYY-MM-DD — <Título corto>
+**Contexto**: qué problema o situación motivó la decisión.
+
+**Decisión**: qué se decidió hacer.
+
+**Alternativas consideradas**: opciones descartadas y por qué.
+
+**Consecuencias**: impacto esperado (positivo y negativo).
+
+---
+
+<!-- Agregá nuevas decisiones acá arriba, siguiendo el template. -->
+EOF
+fi
+
 # Git init (salvo que sea proposal, que no suele ir a git)
 if [ "$PROJECT_TYPE" != "proposal" ]; then
     cd "$PROJECT_DIR"
