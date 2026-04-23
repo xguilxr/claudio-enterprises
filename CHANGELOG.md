@@ -7,6 +7,21 @@ y el versionado sigue [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ---
 
+## [4.1.1] — 2026-04-23
+
+### Changed
+- **Scaffold de `docs/project-management/` ampliado**: ahora `scripts/setup.sh` genera 3 archivos (antes eran 2):
+  - `SPRINT.md` — solo sprint en curso (sección `DONE` removida).
+  - `CHANGE_LOG.md` — **nuevo**: registro de actividades completadas. Cuando una tarea se completa en `SPRINT.md`, se mueve acá en lugar de quedar en la sección `DONE` del sprint.
+  - `DECISIONS.md` — sin cambios respecto a 4.1.0.
+- `SPRINT.md` pierde la sección `## DONE` (la función quedó en `CHANGE_LOG.md`). El comentario cabecera ahora explica el flujo sprint → changelog.
+- `plugin.json` description actualizada para mencionar los 3 archivos del scaffold.
+
+### Migration notes
+- Proyectos scaffoldeados con 4.1.0 tienen `SPRINT.md` con sección `DONE` y sin `CHANGE_LOG.md`. Para migrar a mano: crear `docs/project-management/CHANGE_LOG.md` con el template de 4.1.1, mover filas de la sección `DONE` de `SPRINT.md` a la tabla del nuevo archivo, y borrar la sección `## DONE` del `SPRINT.md`.
+
+---
+
 ## [4.1.0] — 2026-04-23
 
 ### Added
