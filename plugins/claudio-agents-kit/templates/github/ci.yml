@@ -1,0 +1,210 @@
+# Template de CI de referencia — claudio-agents-kit.
+#
+# Copiar a `.github/workflows/ci.yml` del proyecto y adaptar:
+# - Comentar/descomentar los bloques de Python o Node según stack real.
+# - Ajustar versiones (python-version, node-version) al lock file.
+# - Cambiar package manager (pnpm/npm/yarn, pip/uv/poetry) según el proyecto.
+#
+# Objetivo: `lint + typecheck + test-smoke` < 1 min con caché tibio en runner
+# estándar `ubuntu-latest`. Jobs heavy y e2e van en `.github/workflows/nightly.yml`.
+#
+# Reglas implementadas (ver skill `github-actions-ci`):
+# 1. Caching obligatorio de deps + caches por stack (.next/cache, .mypy_cache).
+# 2. Lock file + --frozen-lockfile / npm ci / uv sync --frozen.
+# 3. Jobs paralelos independientes (lint, typecheck, test-smoke).
+# 4. `build` espera a `lint` y `typecheck`.
+# 5. `concurrency` con `cancel-in-progress: true`.
+# 6. Tests heavy excluidos del gate (`-m "not heavy"`).
+
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  PYTHON_VERSION: "3.12"
+  NODE_VERSION: "20"
+  PNPM_VERSION: "9"
+
+jobs:
+  # ---------------------------------------------------------------------
+  # Lint — el gate más rápido (5-15s con caché).
+  # ---------------------------------------------------------------------
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # --- Python ---
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: pip
+          cache-dependency-path: |
+            requirements.txt
+            requirements-dev.txt
+
+      - name: Install Python deps
+        run: pip install -r requirements-dev.txt
+
+      - name: ruff
+        run: ruff check .
+
+      # --- Node (descomentar si hay frontend) ---
+      # - uses: pnpm/action-setup@v4
+      #   with:
+      #     version: ${{ env.PNPM_VERSION }}
+      # - uses: actions/setup-node@v4
+      #   with:
+      #     node-version: ${{ env.NODE_VERSION }}
+      #     cache: pnpm
+      #     cache-dependency-path: pnpm-lock.yaml
+      # - run: pnpm install --frozen-lockfile
+      # - run: pnpm lint
+
+  # ---------------------------------------------------------------------
+  # Typecheck — paralelo con lint (15-40s con caché).
+  # ---------------------------------------------------------------------
+  typecheck:
+    name: Typecheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # --- Python ---
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: pip
+          cache-dependency-path: |
+            requirements.txt
+            requirements-dev.txt
+
+      - uses: actions/cache@v4
+        with:
+          path: .mypy_cache
+          key: mypy-${{ runner.os }}-${{ hashFiles('pyproject.toml', 'requirements*.txt') }}
+          restore-keys: mypy-${{ runner.os }}-
+
+      - name: Install Python deps
+        run: pip install -r requirements-dev.txt
+
+      - name: mypy
+        run: mypy app tests
+
+      # --- Node (descomentar si hay frontend) ---
+      # - uses: pnpm/action-setup@v4
+      #   with:
+      #     version: ${{ env.PNPM_VERSION }}
+      # - uses: actions/setup-node@v4
+      #   with:
+      #     node-version: ${{ env.NODE_VERSION }}
+      #     cache: pnpm
+      # - run: pnpm install --frozen-lockfile
+      # - run: pnpm tsc --noEmit
+
+  # ---------------------------------------------------------------------
+  # Test smoke — gate de PR, excluye heavy.
+  # pytest -n auto para paralelismo, --dist loadfile para cohesión por archivo.
+  # ---------------------------------------------------------------------
+  test-smoke:
+    name: Test (smoke)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # --- Python ---
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: pip
+          cache-dependency-path: |
+            requirements.txt
+            requirements-dev.txt
+
+      - name: Install Python deps
+        run: pip install -r requirements-dev.txt
+
+      - name: pytest (smoke)
+        run: |
+          pytest -n auto --dist loadfile \
+            -m "not heavy" \
+            --durations=10 \
+            -q
+        env:
+          ENV: test
+
+      # --- Node (descomentar si hay frontend) ---
+      # - uses: pnpm/action-setup@v4
+      #   with:
+      #     version: ${{ env.PNPM_VERSION }}
+      # - uses: actions/setup-node@v4
+      #   with:
+      #     node-version: ${{ env.NODE_VERSION }}
+      #     cache: pnpm
+      # - run: pnpm install --frozen-lockfile
+      # - run: pnpm test:smoke
+
+  # ---------------------------------------------------------------------
+  # Build — solo si lint + typecheck pasan. Valida artefacto listo para deploy.
+  # ---------------------------------------------------------------------
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    needs: [lint, typecheck]
+    steps:
+      - uses: actions/checkout@v4
+
+      # --- Python (si hay paquete instalable) ---
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: pip
+
+      - name: Build Python package
+        run: |
+          pip install build
+          python -m build
+
+      # --- Node / Next.js (descomentar si aplica) ---
+      # - uses: pnpm/action-setup@v4
+      #   with:
+      #     version: ${{ env.PNPM_VERSION }}
+      # - uses: actions/setup-node@v4
+      #   with:
+      #     node-version: ${{ env.NODE_VERSION }}
+      #     cache: pnpm
+      # - uses: actions/cache@v4
+      #   with:
+      #     path: .next/cache
+      #     key: nextjs-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}-${{ hashFiles('**/*.ts', '**/*.tsx') }}
+      #     restore-keys: nextjs-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}-
+      # - run: pnpm install --frozen-lockfile
+      # - run: pnpm build
+
+# ---------------------------------------------------------------------
+# NOTAS
+# ---------------------------------------------------------------------
+# 1. uv en vez de pip (opt-in, 10-100× más rápido):
+#    reemplazar setup-python + pip install por:
+#
+#    - uses: astral-sh/setup-uv@v4
+#      with:
+#        enable-cache: true
+#        cache-dependency-glob: uv.lock
+#    - run: uv sync --frozen
+#
+# 2. Heavy + E2E: crear `.github/workflows/nightly.yml` separado con
+#    `on: [schedule, workflow_dispatch]` y los jobs:
+#    - test-heavy: pytest -m heavy
+#    - e2e: pnpm test:e2e (Playwright)
+#
+# 3. Deploy: no va acá. Crear `.github/workflows/deploy.yml` que corra
+#    en push a main / tag, y solo si CI pasó.

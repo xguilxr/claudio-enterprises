@@ -8,8 +8,8 @@ Equipo reutilizable de agentes, skills y templates para Claude Code. Empaquetado
 - Core (7): `orquestador`, `documentador`, `limpiador`, `optimizador`, `discovery-agent`, `product-analyst`, `design-researcher`
 - Expertos (8): `data-expert`, `backend-expert`, `frontend-expert`, `devops-expert`, `qa-expert`, `db-architect`, `client-reporter`, `security-auditor`
 
-**11 skills reutilizables**
-`pandas-conventions`, `postgres-query-patterns`, `fastapi-structure`, `pytest-style`, `react-query-patterns`, `git-flow`, `docstring-google-style`, `commit-message-format`, `epic-user-story-format`, `design-inspiration-lookup`, `proposal-writing`
+**16 skills reutilizables**
+`pandas-conventions`, `postgres-query-patterns`, `fastapi-structure`, `pytest-style`, `vitest-patterns`, `github-actions-ci`, `react-query-patterns`, `git-flow`, `docstring-google-style`, `commit-message-format`, `epic-user-story-format`, `design-inspiration-lookup`, `proposal-writing`, `presentation-inspiration-lookup`, `prospect-branding-lookup`, `consultora-branding-lookup`
 
 **5 templates de proyecto** (via slash command)
 `platform` · `proposal` · `portfolio` · `automation` · `data`
@@ -107,6 +107,68 @@ Cada vez que haya versión nueva en el marketplace de GitHub:
 ```bash
 claude plugin update claudio-agents-kit
 ```
+
+## Performance Requirements (tests + CI)
+
+El kit impone estándares no negociables para generación de tests y workflows de CI. Los agents `qa-expert`, `backend-expert` y `devops-expert` aplican estas reglas por default a través de los skills `pytest-style`, `vitest-patterns` y `github-actions-ci`.
+
+### Números objetivo
+
+| Métrica | Target |
+|---|---|
+| Suite de tests Python (<500 tests) | **< 60s** con `pytest -n auto` |
+| Test individual (sin marker) | **< 2s** |
+| Suite de tests JS/TS (<300 tests) | **< 30s** con Vitest |
+| Gate de PR (`lint + typecheck + test-smoke`) | **< 1 min** con caché tibio, runner `ubuntu-latest` |
+| Test heavy (render real / LLM / S3) | Fuera del gate de PR, corre en `nightly.yml` o `workflow_dispatch` |
+| E2E (Playwright) | Fuera del gate de PR, job separado |
+
+### Reglas que los skills aplican por default
+
+**Python / pytest (`pytest-style`)**
+1. Engine session-scoped + `create_all` UNA vez por worker. Nunca `drop_all` per-test.
+2. `db_session` function-scoped con **SAVEPOINT (nested transaction) + rollback**.
+3. `pytest-xdist` por default: `pytest -n auto --dist loadfile`.
+4. Mocks `autouse=True` para PDF/LLM/S3/email; tests que quieran el real usan `@pytest.mark.heavy`.
+5. `BCRYPT_ROUNDS=4`, JWT hardcodeado de test, Celery eager, Redis fake.
+6. Markers registrados: `heavy`, `slow`, `integration`.
+7. Cero `time.sleep` / `asyncio.sleep` real — `freezegun` o monkeypatch del reloj.
+8. Template de referencia: `templates/pytest/conftest.py`.
+
+**JS/TS / Vitest (`vitest-patterns`)**
+1. Vitest preferido para proyectos nuevos (no migrar Jest existente).
+2. MSW con `onUnhandledRequest: "error"` — falla si hay fetch no mockeado.
+3. Mocks globales de SDKs (`vi.mock("openai")`, `vi.mock("@/lib/analytics")`) en `tests/setup.ts`.
+4. Nunca levantar `next dev` en tests — usar RTL, `renderHook`, imports directos de route handlers.
+5. Playwright siempre en job aparte (`tests/e2e/` excluido del runner principal).
+
+**GitHub Actions (`github-actions-ci`)**
+1. Caching obligatorio: `cache:` en `setup-python`/`setup-node` + `actions/cache` para `.next/cache`, `.mypy_cache`, `.turbo`.
+2. Lock file commiteado + `--frozen-lockfile` / `npm ci` / `uv sync --frozen`.
+3. Jobs paralelos: `lint`, `typecheck`, `test-smoke` independientes. `build` depende de lint+typecheck.
+4. `concurrency` con `cancel-in-progress: true` en todos los workflows.
+5. Heavy y E2E separados en `nightly.yml` o `workflow_dispatch`.
+6. Template de referencia: `templates/github/ci.yml`.
+
+### Checklist de validación (qa-expert lo corre antes de cerrar tarea)
+
+Antes de declarar "tests listos":
+
+1. `pytest --collect-only -q` → reportar total de tests.
+2. `time pytest -n auto --durations=10 -q` → reportar duración total + top-10 más lentos.
+3. **Bloqueos duros** (NO cerrar si alguno aplica):
+   - Test > 2s sin marker `heavy` / `slow` → propuesta concreta (mockear X, fixture Y, o mover a `@pytest.mark.heavy`).
+   - Suite > 60s para <500 tests → revisar fixtures, SAVEPOINT, xdist.
+   - `pytest -n auto` falla pero single-worker pasa → fixture no es thread-safe.
+4. Para frontend: `vitest run` con `onUnhandledRequest: "error"` pasa — si no, hay fetches reales escondidos.
+
+### Detección de stack (regla transversal)
+
+Los skills **no imponen** stack. Antes de scaffoldear, leen:
+- `pyproject.toml` / `requirements*.txt` / `uv.lock` / `poetry.lock` para Python.
+- `package.json` / `pnpm-lock.yaml` / `package-lock.json` para Node.
+
+Si el proyecto ya usa pip, no se introduce uv sin pedir permiso. Si ya usa Jest, no se migra a Vitest. Si ya usa npm, no se impone pnpm. Los skills se adaptan; la migración es decisión del humano.
 
 ## Changelog
 
