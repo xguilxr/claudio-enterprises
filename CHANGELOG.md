@@ -7,6 +7,28 @@ y el versionado sigue [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ---
 
+## [4.2.0] — 2026-04-24
+
+### Added
+- **Skill nuevo `vitest-patterns`** — convenciones para tests JS/TS con Vitest (preferido) o Jest, React Testing Library, MSW y Playwright. Reglas: MSW con `onUnhandledRequest: "error"` para detectar fetches no mockeados, mocks globales de SDKs externos (`openai`, `analytics`), nunca levantar `next dev` en tests (usar RTL + `renderHook` + imports directos de route handlers), Playwright siempre en job separado del gate de PR. Incluye config de `vitest.config.ts` que excluye `tests/e2e/`, scripts canónicos de `package.json` y checklist de validación.
+- **Skill nuevo `github-actions-ci`** — convenciones para workflows de CI con caching agresivo y jobs paralelos. Define 4 jobs del gate de PR (`lint`, `typecheck`, `test-smoke`, `build`), caching obligatorio en `setup-python`/`setup-node` + caches por stack (`.next/cache`, `.mypy_cache`, `.turbo`), lock file + `--frozen-lockfile` / `npm ci` / `uv sync --frozen`, `concurrency: cancel-in-progress: true`, separación heavy/E2E en `nightly.yml` o `workflow_dispatch`. Objetivo explícito: `lint + typecheck + test-smoke` < 1 min con caché tibio.
+- **Template `templates/pytest/conftest.py`** — conftest de referencia con engine session-scoped (schema UNA vez por worker de xdist), `db_session` function-scoped con SAVEPOINT + rollback (nunca `drop_all`), fixtures compartidas (`sample_tenant`, `admin_user`, `authed_client`), mocks `autouse=True` para PDF/LLM/S3/email que se saltean con `@pytest.mark.heavy`, config rápida (`BCRYPT_ROUNDS=4`, JWT hardcodeado, Celery eager) y `asyncio.sleep` neutralizado.
+- **Template `templates/github/ci.yml`** — workflow de CI de referencia con los 4 jobs paralelos, caching pip/pnpm/mypy, comentarios opt-in para `uv` y para jobs de Node/frontend, y notas para crear `nightly.yml` separado para tests heavy + E2E.
+- **Sección "Performance Requirements"** en `plugins/claudio-agents-kit/README.md` con números objetivo (suite <60s para <500 tests, gate PR <1 min), reglas aplicadas por default en cada skill (pytest / vitest / CI), checklist de validación obligatorio y regla transversal de detección de stack (no migrar pip→uv / jest→vitest / npm→pnpm sin permiso del humano).
+
+### Changed
+- **`skills/pytest-style/SKILL.md` extendido con 7 reglas de performance** (antes solo cubría naming + AAA + parametrize). Nuevas reglas: (1) schema UNA vez por worker + SAVEPOINT, (2) paralelismo por default con `pytest-xdist` (`-n auto --dist loadfile`), (3) mocks obligatorios para renderers/SDKs externos con tabla por área (PDF, LLM, Cloud, Email, HTTP, Celery), (4) fixtures de setup compartidas en vez de `_setup()` helpers, (5) config de seguridad rápida (`BCRYPT_ROUNDS=4`, JWT test), (6) markers registrados (`heavy`, `slow`, `integration`), (7) prohibición de `time.sleep` / `asyncio.sleep` reales. Incluye checklist de validación que bloquea el cierre si hay tests >2s sin marker o suite >60s para <500 tests.
+- **`agents/qa-expert.md`** — stack actualizado (agrega `pytest-xdist`, marca Playwright como "nunca en gate de PR"), workflow extendido con paso de detección de stack y checklist de validación, skills que usa siempre ahora incluye `vitest-patterns` y `github-actions-ci`. Reglas estrictas nuevas: nunca `create_all`/`drop_all` por test, nunca sleep real, mocks por default, Playwright siempre en job aparte.
+- **`agents/devops-expert.md`** — principio #4 de CI rápido ahora tiene target concreto (<1 min para gate de PR con caché tibio), entregables típicos incluyen `nightly.yml` separado para heavy+E2E, skills que usa siempre agrega `github-actions-ci`, reglas estrictas nuevas: lock file commiteado, caching obligatorio, tests heavy/E2E nunca en gate, `concurrency: cancel-in-progress` en todo workflow.
+- **`agents/backend-expert.md`** — testing stack explicita `pytest-asyncio` + `pytest-xdist`, workflow de endpoint nuevo menciona fixtures compartidas con SAVEPOINT en vez de `_setup()` helpers, skills usadas remarca reglas de performance del `pytest-style`, reglas estrictas nuevas prohíben `create_all`/`drop_all` por test y establecen mocks por default para PDF/LLM/S3/email.
+- **`plugins/claudio-agents-kit/README.md`** — cuenta de skills actualizada de "11 skills" a "16 skills" (incluye los 3 de branding/presentación que ya existían desde 2.1.0 + los 2 nuevos de 4.2.0).
+- **`plugin.json` description** — menciona los skills nuevos y los templates de conftest + ci.yml.
+
+### Notas
+- Proyectos existentes no se migran automáticamente. Para adoptar las reglas: invocar al `qa-expert` sobre la suite, que detecta el stack y propone reemplazar fixtures en `conftest.py` + actualizar `.github/workflows/ci.yml` siguiendo los templates. El paso es incremental — el cambio mayor es reemplazar `create_all`/`drop_all` por engine session-scoped + SAVEPOINT, que típicamente recupera 70-80% del tiempo de suite.
+
+---
+
 ## [4.1.1] — 2026-04-23
 
 ### Changed
