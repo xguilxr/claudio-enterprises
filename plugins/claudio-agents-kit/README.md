@@ -4,12 +4,15 @@ Equipo reutilizable de agentes, skills y templates para Claude Code. Empaquetado
 
 ## Qué trae
 
-**15 agentes**
+**21 agentes**
 - Core (7): `orquestador`, `documentador`, `limpiador`, `optimizador`, `discovery-agent`, `product-analyst`, `design-researcher`
 - Expertos (8): `data-expert`, `backend-expert`, `frontend-expert`, `devops-expert`, `qa-expert`, `db-architect`, `client-reporter`, `security-auditor`
+- UX/UI review (2): `navigator` (flujo entre páginas, links, back/refresh), `ui-reviewer` (crítica visual de una página: espacio, jerarquía, densidad)
+- Productividad y planning (3): `project-manager`, `prompt-optimizer`, `code-council`
+- Meta (1): `agent-manager` (gestión del kit)
 
-**16 skills reutilizables**
-`pandas-conventions`, `postgres-query-patterns`, `fastapi-structure`, `pytest-style`, `vitest-patterns`, `github-actions-ci`, `react-query-patterns`, `git-flow`, `docstring-google-style`, `commit-message-format`, `epic-user-story-format`, `design-inspiration-lookup`, `proposal-writing`, `presentation-inspiration-lookup`, `prospect-branding-lookup`, `consultora-branding-lookup`
+**17 skills reutilizables**
+`karpathy-principles`, `pandas-conventions`, `postgres-query-patterns`, `fastapi-structure`, `pytest-style`, `vitest-patterns`, `github-actions-ci`, `react-query-patterns`, `git-flow`, `docstring-google-style`, `commit-message-format`, `epic-user-story-format`, `design-inspiration-lookup`, `proposal-writing`, `presentation-inspiration-lookup`, `prospect-branding-lookup`, `consultora-branding-lookup`
 
 **5 templates de proyecto** (via slash command)
 `platform` · `proposal` · `portfolio` · `automation` · `data`
@@ -21,8 +24,8 @@ Equipo reutilizable de agentes, skills y templates para Claude Code. Empaquetado
 
 | Modelo | Agentes |
 |---|---|
-| Opus | data-expert, backend-expert, frontend-expert, devops-expert |
-| Sonnet | orquestador, optimizador, qa-expert, db-architect, security-auditor, discovery-agent, product-analyst, design-researcher |
+| Opus | data-expert, backend-expert, frontend-expert, devops-expert, code-council, ui-reviewer |
+| Sonnet | orquestador, optimizador, qa-expert, db-architect, security-auditor, discovery-agent, product-analyst, design-researcher, navigator, project-manager, prompt-optimizer, agent-manager |
 | Haiku | documentador, limpiador, client-reporter |
 
 ## Uso
