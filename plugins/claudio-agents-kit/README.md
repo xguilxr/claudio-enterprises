@@ -11,8 +11,8 @@ Equipo reutilizable de agentes, skills y templates para Claude Code. Empaquetado
 - Productividad y planning (3): `project-manager`, `prompt-optimizer`, `code-council`
 - Meta (1): `agent-manager` (gestión del kit)
 
-**16 skills reutilizables**
-`pandas-conventions`, `postgres-query-patterns`, `fastapi-structure`, `pytest-style`, `vitest-patterns`, `github-actions-ci`, `react-query-patterns`, `git-flow`, `docstring-google-style`, `commit-message-format`, `epic-user-story-format`, `design-inspiration-lookup`, `proposal-writing`, `presentation-inspiration-lookup`, `prospect-branding-lookup`, `consultora-branding-lookup`
+**17 skills reutilizables**
+`karpathy-principles`, `pandas-conventions`, `postgres-query-patterns`, `fastapi-structure`, `pytest-style`, `vitest-patterns`, `github-actions-ci`, `react-query-patterns`, `git-flow`, `docstring-google-style`, `commit-message-format`, `epic-user-story-format`, `design-inspiration-lookup`, `proposal-writing`, `presentation-inspiration-lookup`, `prospect-branding-lookup`, `consultora-branding-lookup`
 
 **5 templates de proyecto** (via slash command)
 `platform` · `proposal` · `portfolio` · `automation` · `data`

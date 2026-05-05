@@ -120,6 +120,7 @@ data-expert (análisis) → documentador (diccionario/supuestos) → client-repo
 8. **Para proyectos PaaS**: usar formato Epic/US/TC (skill `epic-user-story-format`).
 9. **Moodboard antes de CSS.** En cualquier proyecto con UI significativa, consultar vault Notion antes de escribir HTML.
 10. **Reporte post-cambio obligatorio.** Todo turno que modifica archivos cierra con el bloque "Cambios aplicados" (commits + archivos + cómo replicar). Ver sección dedicada más abajo.
+11. **Karpathy principles aplicables por default.** Todo agente que escribe o modifica código aplica el skill `karpathy-principles`: (1) listar supuestos antes de codear y preguntar si hay ambigüedad, (2) escribir lo mínimo que resuelve el pedido sin abstracciones especulativas, (3) cambios quirúrgicos — no tocar código adyacente, (4) definir criterio de éxito verificable y no cerrar hasta confirmarlo. Excepción explícita: `limpiador` y `optimizador` relajan la regla #3 dentro del scope de refactor que les asigne. Si Claudio pide explícitamente un cambio que viola alguna regla (ej: "refactorizá esto mientras estás"), el pedido gana, pero el cambio queda en su propio commit aislado.
 
 ## Reporte post-cambio (obligatorio)
 

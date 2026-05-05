@@ -7,6 +7,22 @@ y el versionado sigue [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ---
 
+## [4.4.0] — 2026-05-05
+
+### Added
+- **Skill nuevo `karpathy-principles`** — cuatro principios transversales que aplica todo agente que escribe o modifica código: (1) **Think Before Coding** (listar supuestos, preguntar antes de adivinar), (2) **Simplicity First** (mínimo código, sin abstracciones especulativas, sin try/except defensivo), (3) **Surgical Changes** (no tocar código adyacente, no reformatear, no "mejorar de paso"), (4) **Goal-Driven Execution** (criterio de éxito verificable antes de empezar; no cerrar hasta confirmar que se cumple). Excepción explícita: `limpiador` y `optimizador` se relajan en regla #3 dentro del scope de refactor que Claudio les asigna. Adaptación libre al contexto Claudio-Enterprises de los principios sintetizados por Andrej Karpathy sobre fallos típicos de LLMs al codear; skill original de Forrest Chang ([forrestchang/andrej-karpathy-skills](https://github.com/forrestchang/andrej-karpathy-skills), MIT) con atribución en el archivo.
+- Regla global #11 nueva en `templates/CLAUDE-global.md` que hace al skill `karpathy-principles` aplicable por default a todos los agentes técnicos, con la excepción explícita para `limpiador`/`optimizador` documentada.
+
+### Changed
+- `plugin.json` description: "16 skills" → "17 skills" e incluye mención al skill nuevo.
+- README del plugin: count de skills 16 → 17 con `karpathy-principles` en la lista.
+
+### Notas
+- Por default no se actualizó la sección "Skills que usás" de cada agente individual (serían 21 archivos para una regla que ya aplica vía CLAUDE-global). Si en uso intensivo se detecta que un agente específico ignora los principios, el fix es agregar la referencia explícita en su archivo en un PATCH posterior.
+- `discovery-agent` ya cubría parcialmente la regla #1 a nivel de proyecto entero; `karpathy-principles` la baja al nivel de cada commit individual y suma las otras 3.
+
+---
+
 ## [4.3.0] — 2026-05-05
 
 ### Added
