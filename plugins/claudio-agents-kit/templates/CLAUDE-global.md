@@ -57,6 +57,10 @@ Soy Claudio, Business Analyst y especialista en Data Science. Trabajo solo, arma
 - `data-expert`, `backend-expert`, `frontend-expert`, `devops-expert`
 - `qa-expert`, `db-architect`, `client-reporter`, `security-auditor`
 
+### UX/UI review (opt-in en proyectos con UI)
+- `navigator` — audita el flujo de navegación entre páginas: mapa de rutas (declaradas vs alcanzables vs huérfanas), recorrido de flujos críticos, prueba de "back" y "refresh", detección de dead-ends, loops, breadcrumbs rotos, profundidad excesiva. Output: lista priorizada de recomendaciones accionables. Invocar cuando un proyecto con UI llega a estado funcional, antes del QA final.
+- `ui-reviewer` — crítico visual de una página individual (screenshot, URL o código JSX). Evalúa uso del espacio, densidad informativa, jerarquía visual, consistencia de tokens. Detecta cosas como "panel gigante con 2 KPIs adentro" o "5 niveles de gris arbitrarios" y propone reorganización concreta del layout. Una página por invocación.
+
 ### Productividad y revisión
 - `prompt-optimizer` — recibe un prompt en crudo y devuelve prompt(s) optimizados listos para copiar/pegar, según el sistema de 6 modos (`templates/prompt-system-reference.md`). Invocar cuando armás un mensaje difuso o mezclás varios items en un solo prompt.
 - `code-council` — convoca un consejo de expertos técnicos (backend, frontend, db, devops, security, qa, performance) para evaluar cambios complejos o decisiones de arquitectura cruzadas; emite veredicto consolidado con votos individuales y próximos pasos. Invocar cuando un cambio toca 2+ dominios o querés validar el approach antes de codear.

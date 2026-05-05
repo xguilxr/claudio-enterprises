@@ -7,6 +7,22 @@ y el versionado sigue [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ---
 
+## [4.3.0] — 2026-05-05
+
+### Added
+- **Agente `navigator`** (modelo `sonnet`) — audita el flujo de navegación de una app/sitio: mapea sitemap real (rutas declaradas vs alcanzables vs huérfanas), recorre flujos críticos end-to-end, prueba "back" y "refresh" en cada paso, detecta dead-ends, loops, breadcrumbs rotos, back que pierde estado, profundidad excesiva (>3 clics) e inconsistencias de patrón. Output: lista priorizada (🔴/🟡/🟢) de recomendaciones accionables, no toca código. Se invoca cuando un proyecto con UI llega a estado funcional, antes del QA final.
+- **Agente `ui-reviewer`** (modelo `opus`) — crítico visual de una página individual a partir de screenshot, URL navegable o código JSX. Evalúa en capas: layout macro, densidad informativa, jerarquía visual, consistencia y detalles. Detecta patrones como "panel gigante con dos KPIs adentro", botón secundario más prominente que el primario, niveles de gris arbitrarios, paddings fuera de escala. Output: diagnóstico con causa raíz + reorganización propuesta (con ASCII art del layout alternativo) + lista de cambios accionables para `frontend-expert`. Una página por invocación.
+- Menciones de los 2 agentes nuevos en `templates/CLAUDE-global.md` (sección "Mi equipo de agentes" → biblioteca de expertos opt-in) y en el README del plugin.
+
+### Changed
+- `plugin.json` description: "19 agentes" → "21 agentes" e incluye `navigator` y `ui-reviewer` en el listado.
+
+### Notas
+- `navigator` y `ui-reviewer` son complementarios pero NO se solapan: navigator audita el grafo entre páginas (links, flujos, back/refresh), ui-reviewer audita una página por dentro (espacio, jerarquía, densidad). Si un proyecto necesita revisión completa de UX visual, invocar ambos en serie: primero `navigator` (mapa global), después `ui-reviewer` página por página sobre las críticas.
+- Ninguno de los dos toca código. Los fixes los implementa `frontend-expert` consumiendo el reporte.
+
+---
+
 ## [4.2.0] — 2026-04-24
 
 ### Added

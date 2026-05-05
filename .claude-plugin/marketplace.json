@@ -9,7 +9,7 @@
       "name": "claudio-agents-kit",
       "source": "./plugins/claudio-agents-kit",
       "description": "Equipo reutilizable de agentes + skills + templates + meta-agente agent-manager",
-      "version": "4.2.0",
+      "version": "4.3.0",
       "category": "workflow",
       "tags": ["agents", "consulting", "pandas", "fastapi", "spanish"]
     }
