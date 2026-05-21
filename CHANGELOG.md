@@ -7,6 +7,22 @@ y el versionado sigue [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ---
 
+## [4.5.0] — 2026-05-21
+
+### Changed
+- **`/claudio-agents-kit:setup` redefinido.** Ya no genera el `CLAUDE.md` del proyecto en 3 ramas (nuevo / enriquecer / adoptar). Ahora se enfoca en **bootstrappear agentes y skills LOCALES del proyecto** — los que viven en `.claude/agents/` y `.claude/skills/` del CWD y sobrescriben o complementan al kit global. Casos típicos: forkear un agente del kit para customizarlo en un proyecto puntual, o crear un agente/skill específico del proyecto (ej: `vault-curator` del vault de Obsidian de David).
+- **Razón del cambio:** existían dos pipelines paralelos de "crear proyecto nuevo": `/claudio-agents-kit:setup` del plugin y `/scaffold` del vault de David (que invoca `portfolio-mgmt/scaffolding/scaffold.py` y crea atómicamente repo + vault + clone local + inventario). El `/scaffold` es más completo para proyectos del portafolio de David; tener un segundo entry point en el plugin era fuente de confusión. El plugin se queda con lo que el vault no cubre: bootstrap de agentes/skills LOCALES por proyecto.
+- **Para crear proyectos nuevos**: en el vault de David, usar `/scaffold`; en proyectos externos, copiar manualmente desde `templates/project-types/<tipo>.md` y editar.
+
+### Deprecated
+- **`scripts/setup.sh`** — quedó orphan. El nuevo `commands/setup.md` no lo invoca (todo el flujo es Read/Write/Edit en `.claude/` del CWD). Se conserva por ahora para no romper instalaciones que lo invoquen externamente; se removerá en un MAJOR futuro.
+
+### Notas
+- Para alinear el `~/.claude/CLAUDE.md` global de David con esta versión del plugin: copiar `plugins/claudio-agents-kit/templates/CLAUDE-global.md` al global y corregir la sección "Quién soy" para que diga "David" en vez de "Claudio" (David es el humano dueño; Claudio es el colectivo de agentes del kit).
+- El vault de David usa la convención `## Para David` en cada `portfolio-mgmt/projects/<slug>/README.md`. Es vault-specific y no se documenta en el plugin (cada usuario del kit puede tener su propia convención de "items que solo el humano puede destrabar").
+
+---
+
 ## [4.4.0] — 2026-05-05
 
 ### Added
