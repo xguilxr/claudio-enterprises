@@ -7,6 +7,21 @@ y el versionado sigue [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ---
 
+## [5.0.0] — 2026-05-21
+
+### Added
+- **Skill `obsidian-vault-conventions`** — pointer + quick-reference to the canonical vault spec at `99-meta/conventions.md`. Teaches agents where the vault lives, the 2 macro processes, default write locations, and project/note frontmatter conventions.
+- **Skill `warroom-task-contract`** — YAML schema for the planner→executor contract used by the warroom desktop app under design (`goal / context_files / constraints / definition_of_done / model / report_back`).
+- **Skill `executor-discipline`** — 5 behavioral rules for headless `claude -p` executors: atomicity, constraint respect, DoD as sole termination criterion, vigilado (non-interactive) mode, structured report-back format.
+- **Skill `github-repo-inventory`** — pointer to `99-meta/repos-inventario.md` as the single source of truth for GitHub repos and their vault-project mapping. Documents canonical writers (`scaffold.py` + manual `gh repo create`).
+- **Agent `task-executor`** — persona for warroom-spawned `claude -p` sessions. Default model `opus` for autonomous code-quality. Parses task contracts, loads context, works to DoD, emits structured report-back. Never asks (no human present), never crosses scope.
+
+### Notes
+- v5.0.0 marks the start of the ecosystem-aware era. The kit now codifies how Claude integrates with Claudio's Obsidian vault (`~/Documents/Obsidian Vault/`), the warroom desktop app, and the GitHub repo inventory. Per-project plugins (Phase 2+) will build on this contract.
+- Net-additive: no agents or skills renamed or removed. SemVer MAJOR bump reflects the framing of a new architectural era for the kit, not a breaking API change.
+
+---
+
 ## [4.4.0] — 2026-05-05
 
 ### Added
