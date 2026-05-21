@@ -7,6 +7,29 @@ y el versionado sigue [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ---
 
+## [5.1.0] — 2026-05-21
+
+### Changed
+- **`/claudio-agents-kit:setup` redefinido.** Ya no genera el `CLAUDE.md` del proyecto en 3 ramas (nuevo / enriquecer / adoptar). Ahora se enfoca en **bootstrappear agentes y skills LOCALES del proyecto** — los que viven en `.claude/agents/` y `.claude/skills/` del CWD y sobrescriben o complementan al kit global. Casos típicos: forkear un agente del kit para customizarlo en un proyecto puntual, o crear un agente/skill específico del proyecto (ej: `vault-curator` del vault de Obsidian de David).
+- **Razón del cambio:** existían dos pipelines paralelos de "crear proyecto nuevo": `/claudio-agents-kit:setup` del plugin y `/scaffold` del vault de David (que invoca `portfolio-mgmt/scaffolding/scaffold.py` y crea atómicamente repo + vault + clone local + inventario). El `/scaffold` es más completo para proyectos del portafolio de David; tener un segundo entry point en el plugin era fuente de confusión. El plugin se queda con lo que el vault no cubre: bootstrap de agentes/skills LOCALES por proyecto.
+- **Para crear proyectos nuevos**: en el vault de David, usar `/scaffold`; en proyectos externos, copiar manualmente desde `templates/project-types/<tipo>.md` y editar.
+
+### Fixed
+- **Skills de ecosistema (introducidas en v5.0.0) alineadas con la realidad post-refactor del vault de David:**
+  - `obsidian-vault-conventions/SKILL.md` — paths `scaffolding/` → `portfolio-mgmt/` con sus 3 subprocesos (`templates/`, `archetypes/`, `scaffolding/`). Mención de la convención `## Para David` (sección obligatoria en READMEs de proyectos). Distinción David (humano dueño) vs Claudio (colectivo de agentes) aplicada.
+  - `github-repo-inventory/SKILL.md` — paths `scaffolding/` → `portfolio-mgmt/`. Identidad "Claudio" → "David" cuando refería al humano.
+  - `warroom-task-contract/SKILL.md` — identidad: "desktop app de Claudio" → "desktop app de David".
+  - `executor-discipline/SKILL.md` — identidad: "Claudio pide" → "David pide".
+
+### Deprecated
+- **`scripts/setup.sh`** — quedó orphan. El nuevo `commands/setup.md` no lo invoca (todo el flujo es Read/Write/Edit en `.claude/` del CWD). Se conserva por ahora para no romper instalaciones que lo invoquen externamente; se removerá en un MAJOR futuro.
+
+### Notas
+- v5.1 codifica una distinción de identidad: **David** = el ser humano dueño del vault y de Claudio-Enterprises; **Claudio** = el colectivo de agentes del marketplace. Toda referencia a "Claudio" que indicaba al humano se renombró a "David". "Claudio-Enterprises" (la agencia) y "claudio-agents-kit" (el plugin) se mantienen.
+- `~/.claude/CLAUDE.md` global de David ya fue sincronizado con `templates/CLAUDE-global.md` v4.4.0 con identidad David — alineación cerrada del lado de David.
+
+---
+
 ## [5.0.0] — 2026-05-21
 
 ### Added

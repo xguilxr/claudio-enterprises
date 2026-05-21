@@ -1,6 +1,6 @@
 ---
 name: github-repo-inventory
-description: Pointer al inventario único de repos GitHub de Claudio (99-meta/repos-inventario.md del vault). Invocar al mapear un repo a su proyecto vault, clasificar repos para analytics, o crear un repo nuevo.
+description: Pointer al inventario único de repos GitHub de David (99-meta/repos-inventario.md del vault). Invocar al mapear un repo a su proyecto vault, clasificar repos para analytics, o crear un repo nuevo.
 ---
 
 # GitHub Repo Inventory
@@ -16,7 +16,7 @@ El inventario de repos es la fuente de verdad para saber qué existe, en qué es
 
 | Estado | Significado |
 |---|---|
-| `activo-proyecto` | Ligado a `scaffolding/projects/<slug>/`. Foco diario de trabajo. |
+| `activo-proyecto` | Ligado a `portfolio-mgmt/projects/<slug>/`. Foco diario de trabajo. |
 | `activo-personal` | Corriendo, sin folder de proyecto vault todavía. |
 | `activo-cliente` | Trabajo de cliente, sin folder de proyecto vault todavía. |
 | `meta` | Infra del sistema (marketplace, scripts, dotfiles). No es un entregable. |
@@ -28,7 +28,7 @@ El inventario de repos es la fuente de verdad para saber qué existe, en qué es
 El inventario tiene una tabla principal con columnas:
 
 - **Repo** — URL o nombre corto del repo GitHub.
-- **Proyecto vault** — wikilink `[[../scaffolding/projects/<slug>/README]]`.
+- **Proyecto vault** — wikilink `[[../portfolio-mgmt/projects/<slug>/README]]`.
 - **Rol** — para qué sirve el repo dentro del proyecto.
 - **Estado** — uno de los estados de la tabla de arriba.
 - **Última actividad** — fecha aproximada del último commit relevante.
@@ -41,7 +41,7 @@ Hay dos caminos válidos. Solo estos dos.
 
 **Camino 1 — operación atómica via script (preferido)**:
 ```
-scaffolding/scripts/scaffold.py
+portfolio-mgmt/scaffolding/scaffold.py
 ```
 Crea el repo en GitHub, genera el folder del proyecto en vault, y hace append automático al inventario en la misma operación.
 
@@ -56,7 +56,7 @@ NUNCA editar el inventario a mano sin haber creado o movido el repo en GitHub pr
 El campo "Proyecto vault" usa formato de wikilink relativo al inventario:
 
 ```
-[[../scaffolding/projects/warroom/README]]
+[[../portfolio-mgmt/projects/warroom/README]]
 ```
 
 No usar URLs absolutas ni paths de sistema en este campo.
@@ -67,7 +67,7 @@ El submódulo `repo-analytics` lee el inventario para clasificar repos en report
 
 ## Cuándo usar
 
-- Al hablar de cualquier repo de Claudio y necesitar su estado o proyecto asociado.
+- Al hablar de cualquier repo de David y necesitar su estado o proyecto asociado.
 - Al diseñar o revisar el módulo de analytics mensual.
 - Al planificar un proyecto nuevo que requiera un repo GitHub.
 - Al decidir si un repo es archivable (cruzar con estado y última actividad).
@@ -99,4 +99,4 @@ El submódulo `repo-analytics` lee el inventario para clasificar repos en report
 ## Ver también
 
 - `obsidian-vault-conventions` — naming y estructura del vault donde vive el inventario.
-- `scaffold.py` en `scaffolding/scripts/` del vault — operación atómica de creación repo+proyecto.
+- `scaffold.py` en `portfolio-mgmt/scaffolding/` del vault — operación atómica de creación repo+proyecto.

@@ -61,7 +61,7 @@ assumptions:
 ## Cuándo NO invocar
 
 - Sesiones interactivas de Claude Code CLI donde el humano está presente.
-- Turnos donde Claudio pide algo directamente (usar el flujo normal).
+- Turnos donde David pide algo directamente (usar el flujo normal).
 
 ## Ejemplo de report-back bueno
 
@@ -97,7 +97,7 @@ next_step_suggested: no sé
 assumptions: []
 ```
 
-El report-back malo fuerza al planner a relanzar el executor o a pedirle a Claudio que revise manualmente.
+El report-back malo fuerza al planner a relanzar el executor o a pedirle a David que revise manualmente.
 
 ## Ver también
 

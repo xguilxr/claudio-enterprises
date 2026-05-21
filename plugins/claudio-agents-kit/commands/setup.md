@@ -1,164 +1,181 @@
 ---
-description: Acopla el marketplace claudio-agents-kit a un proyecto, sea nuevo o existente. Detecta el estado del CWD (repo vacío, repo con CLAUDE.md, repo con código sin CLAUDE.md), pregunta lo mínimo necesario (tipo de proyecto, nombre, stack si no es detectable), y genera o enriquece el CLAUDE.md acoplando los agentes correctos. Nunca sobrescribe datos del usuario sin confirmación explícita.
+description: Bootstrappea agentes y skills LOCALES del proyecto (los que viven en .claude/agents/ y .claude/skills/ del CWD). NO genera CLAUDE.md — para eso, usá /scaffold del vault si es proyecto del portafolio de David, o creá CLAUDE.md a mano si es proyecto externo.
 ---
 
-# /claudio-agents-kit:setup — Acoplar agentes al proyecto
+# /claudio-agents-kit:setup — Agentes y skills locales del proyecto
 
-Este comando reemplaza al antiguo `/new-project` y unifica 3 escenarios en un solo flujo.
+Este comando **no acopla el kit entero al proyecto** (el kit ya está instalado globalmente vía `claude plugin install`, y todos sus agentes/skills están disponibles desde cualquier CWD). Lo que hace es **bootstrappear agentes y skills LOCALES** específicos del proyecto, que viven en `.claude/agents/` y `.claude/skills/` del repo donde estás parado, y que sobrescriben o complementan al kit global cuando se invocan.
+
+Casos típicos de uso:
+
+- Tenés un proyecto con una convención muy puntual y querés un agente local que la conozca (ej: `vault-curator` solo aplica al vault de Obsidian de David; no tiene sentido en el kit global).
+- Querés "forkear" un agente del kit (ej: `frontend-expert`) y customizarlo para este proyecto sin tocar el marketplace.
+- Querés un skill local que solo aplica a este repo (ej: convención de naming de columnas de una DB específica del cliente).
+
+**Lo que este comando NO hace:**
+
+- ❌ NO genera `CLAUDE.md` del proyecto. Para eso, en el vault de David se usa `/scaffold` (que invoca `portfolio-mgmt/scaffolding/scaffold.py`). En proyectos externos, `CLAUDE.md` se escribe a mano partiendo del template de tipo correspondiente del kit (`templates/project-types/<tipo>.md`).
+- ❌ NO crea repos en GitHub ni clones locales (eso es `/scaffold`).
+- ❌ NO sobreescribe agentes/skills del marketplace global. Solo crea archivos LOCALES en `.claude/` del CWD.
 
 ## Tu rol
 
-Sos el asistente de setup del kit. Tu trabajo es dejar el proyecto listo para que Claudio arranque a trabajar con los agentes correctos, sin pedirle que repita información que ya existe en el repo.
+Sos el asistente de bootstrap de agentes/skills locales. Tu trabajo es ayudar a David (o quien sea que esté en este proyecto) a crear archivos en `.claude/agents/<nombre>.md` o `.claude/skills/<nombre>/SKILL.md` con la estructura correcta, sin que tenga que recordar el formato a mano.
 
-**Regla innegociable**: nunca sobrescribís archivos del usuario sin mostrarle el cambio propuesto y recibir un "sí" explícito. Para modificar `CLAUDE.md` existente, usá `Edit` con `old_string`/`new_string` en secciones puntuales; nunca `Write` sobre un CLAUDE.md ya presente.
+**Regla innegociable:** nunca sobreescribís archivos locales existentes sin mostrar el cambio y recibir un "sí" explícito. Si ya existe `.claude/agents/foo.md`, mostrás el diff propuesto antes de aplicar `Edit`.
 
-## Paso 1 — Detectar el estado del CWD
+## Paso 1 — Relevar estado de `.claude/` en el CWD
 
-Usá `Bash` / `Glob` / `Read` para relevar en paralelo:
+Usá `Bash` / `Glob` / `Read` para chequear en paralelo:
 
-- `ls -la` de la raíz — hay `.git`? ¿cuántos archivos hay?
-- `Glob` para: `CLAUDE.md`, `README.md`, `pyproject.toml`, `package.json`, `requirements.txt`, `Cargo.toml`, `go.mod`, `vite.config.*`, `next.config.*`, `astro.config.*`, `.claude/settings.json`, `.claude-plugin/`
-- Si `.git` existe: `git log --oneline -5` para ver si tiene historia
+- ¿Existe `.claude/` en la raíz?
+- Si existe: listar `.claude/agents/*.md` y `.claude/skills/*/SKILL.md`.
+- Si NO existe: avisar que se va a crear el árbol mínimo.
 
-Con ese relevo, clasificá el proyecto en una de 3 ramas:
+Anunciá el estado en 1-2 líneas. Ejemplo:
 
-| Rama | Condición | Estado |
-|---|---|---|
-| **A — Nuevo** | Dir vacío o solo `.git` sin commits | No hay nada que leer |
-| **B — Enriquecer** | Ya existe `CLAUDE.md` en la raíz | Respetar lo escrito, completar huecos |
-| **C — Adoptar** | Hay código (manifests, `src/`, `README.md`) pero NO hay `CLAUDE.md` | Inferir tipo del stack y proponer |
+> 🔍 Encontré `.claude/agents/` con 2 agentes locales (`vault-curator.md`, `proposal-drafter.md`) y `.claude/skills/` vacío. ¿Qué querés crear?
 
-Anunciale a Claudio qué rama detectaste, con 1-2 frases del contexto observado. Ejemplo:
+## Paso 2 — Preguntar qué crear
 
-> 🔍 Detecté **Rama C (Adoptar)**: hay `package.json` con React + Vite, un `src/` con 8 archivos, `README.md` presente. No existe `CLAUDE.md` en la raíz.
+Con `AskUserQuestion` (una sola tanda):
 
-## Paso 2 — Ramificar
+1. **¿Qué querés bootstrappear?**
+   - `agente nuevo desde cero` (skeleton)
+   - `agente forkeado del kit` (copia uno del marketplace y lo customiza local)
+   - `skill nuevo desde cero` (skeleton)
+   - `solo listar lo que ya tengo` (no crear nada)
 
-### Rama A — Proyecto nuevo
+2. Si la respuesta involucra crear:
+   - **Nombre** del agente o skill (kebab-case, ej: `client-data-loader`).
+   - Si es "agente forkeado": **¿cuál del kit?** — listar los 21 agentes disponibles del marketplace para que elija.
 
-1. Preguntá (una sola vez, todo junto):
-   - **Nombre** del proyecto (kebab-case, ej: `farmax-inventario`)
-   - **Tipo** — mostrá las 5 opciones con descripción:
-     - `platform` — PaaS full-stack (backend + frontend + DB)
-     - `proposal` — Propuesta comercial / cotización
-     - `portfolio` — Website de portafolio (creativo o profesional)
-     - `automation` — Automatización Python (script / scheduled job)
-     - `data` — Data analysis / reportes
-   - **Carpeta destino** (default: el CWD actual si está vacío; si no, preguntar)
+## Paso 3 — Ejecutar según opción
 
-2. Corré el script:
+### Opción A — Agente nuevo desde cero
 
-   ```bash
-   bash ${CLAUDE_PLUGIN_ROOT}/scripts/setup.sh <nombre> <tipo> <destino>
+1. Crear `.claude/agents/<nombre>.md` con este skeleton:
+
+   ```markdown
+   ---
+   name: <nombre>
+   description: <una línea sobre cuándo invocarlo>
+   model: sonnet
+   memory: user
+   ---
+
+   Sos <nombre>, agente local del proyecto. Tu trabajo es <objetivo concreto>.
+
+   ## Cuándo se te invoca
+   <Casos típicos. Sé específico: "después de X", "cuando David pide Y".>
+
+   ## Qué hacés
+   1. <Paso 1 — relevar / leer>
+   2. <Paso 2 — procesar / decidir>
+   3. <Paso 3 — output>
+
+   ## Qué NO hacés
+   - <Límite explícito 1>
+   - <Límite explícito 2>
+
+   ## Output esperado
+   <Formato concreto. Ejemplo con datos reales si ayuda.>
+
+   ## Reglas
+   - <Regla 1>
+   - <Regla 2>
    ```
 
-3. Saltá al **Paso 3** (reporte final).
+2. Avisar que el agente queda creado y se invoca con `@<nombre>` en sesiones de Claude Code corriendo en ese CWD.
 
-### Rama B — Enriquecer CLAUDE.md existente
+### Opción B — Agente forkeado del kit
 
-1. Leé `CLAUDE.md` entero con `Read`.
+1. Leer el agente original desde `${CLAUDE_PLUGIN_ROOT}/agents/<elegido>.md`.
 
-2. Mapeá lo que tiene contra el template estándar `templates/project-types/<tipo>.md`. Para inferir el tipo actual:
-   - Buscá línea `> Tipo de proyecto: **X**` o similar.
-   - Si no está explícito, inferilo de las secciones presentes.
-   - Si ambiguo, preguntá.
+2. Copiarlo a `.claude/agents/<nombre-local>.md` (puede ser el mismo nombre — el local sobrescribe al global).
 
-3. Relevá stack real desde manifests (pyproject.toml → Python; package.json → Node + qué deps; etc.).
+3. Insertar al inicio del cuerpo (después del frontmatter) un callout:
 
-4. Producí un diagnóstico corto, tipo:
+   ```markdown
+   > 🔀 **Fork local de `<elegido>`** del marketplace `claudio-agents-kit`. Customizá lo que aplique para este proyecto; lo global queda como base.
+   ```
 
-   > **Diagnóstico de tu CLAUDE.md**
-   >
-   > ✅ Configurado: sección Cliente, Brief, Stack (FastAPI + Postgres).
-   > ⚠️ Incompleto: "Métrica de éxito" dice `[número concreto]` (placeholder sin llenar).
-   > ❓ Inconsistente: declarás "Python + Pandas" pero hay `package.json` con React. ¿Agrego sección Frontend?
-   > 🆕 Faltante: no hay sección "Agentes activos en este proyecto" (la del template actual).
+4. Avisar a David que ahora puede editar el archivo local para divergir del comportamiento del global.
 
-5. Por cada item, preguntá si lo completás/corregís. **Una pregunta por item o agrupadas si son del mismo bloque**. Mostrá el `old_string` / `new_string` concreto antes de cada `Edit`.
+### Opción C — Skill nuevo desde cero
 
-6. Si el usuario dice "sí a todo", aplicá los `Edit` en orden. Si dice "solo X e Y", aplicá esos.
+1. Crear `.claude/skills/<nombre>/SKILL.md` con este skeleton:
 
-7. Si falta la sección "Agentes activos en este proyecto", agregala al final del CLAUDE.md con la lista correspondiente al tipo (ver **Paso 3 — Mapeo tipo→agentes**).
+   ```markdown
+   ---
+   name: <nombre>
+   description: <una línea sobre cuándo invocar el skill>
+   ---
 
-8. Saltá al **Paso 3** (reporte final).
+   # <Título del skill>
 
-### Rama C — Adoptar repo existente sin CLAUDE.md
+   ## Cuándo aplicarlo
+   <Disparadores concretos. Ejemplo: "Cuando se escriba SQL contra la DB de cliente X".>
 
-1. Leé `README.md` si existe y relevá manifests.
+   ## La regla / patrón
+   <Núcleo del skill. Sé concreto, no abstracto.>
 
-2. Inferí el tipo de proyecto usando estas señales (en orden de prioridad):
+   ## Ejemplos
 
-   | Señal observada | Tipo propuesto |
-   |---|---|
-   | `pyproject.toml` + `src/` + `tests/` + `.github/workflows/` | `automation` |
-   | `pyproject.toml` + `notebooks/` o `data/` | `data` |
-   | `package.json` con React + Vite + `src/pages/` o `src/routes/` | `platform` (frontend) |
-   | `package.json` con Astro/Next + `content/` o pocas rutas | `portfolio` |
-   | `package.json` backend (express/fastify) + `pyproject.toml` o `package.json` frontend | `platform` (full-stack) |
-   | Solo `.md` + `drafts/` + sin código | `proposal` |
-   | Ambiguo | Preguntar |
+   ### ✅ Bien
+   ```<lenguaje>
+   <código bueno>
+   ```
 
-3. Preguntá (agrupadas):
-   - **Tipo propuesto: X** — ¿confirmás o elegís otro de los 5?
-   - **Nombre del proyecto** — default: el nombre del dir actual.
-   - **Cliente / contexto breve** — 1-2 líneas (para la sección "Cliente" del template).
+   ### ❌ Mal
+   ```<lenguaje>
+   <código malo>
+   ```
 
-4. Generá `CLAUDE.md` copiando `templates/project-types/<tipo>.md` y reemplazando:
-   - `[NOMBRE_PROYECTO]` → nombre confirmado.
-   - Sección de **Stack** → llenar con lo detectado desde manifests, no con el stack default del template (ej: si el template dice "FastAPI + Postgres" pero detectaste "Flask + SQLite", escribí Flask + SQLite).
-   - Campos del Cliente → lo que respondió Claudio.
-   - Dejá los placeholders `[ ]` que Claudio no completó, para que los rellene después.
+   ## Por qué importa
+   <Una línea con la razón. Si hay un incidente o decisión histórica, citala.>
+   ```
 
-5. **No** corras `git init` ni hagas commit (el repo ya existe y puede tener su propio flujo). Solo `Write` del `CLAUDE.md`.
+2. Avisar.
 
-6. Si el tipo elegido es `platform` o `portfolio` y no hay `STYLE.md`, preguntá si lo copiás desde `${CLAUDE_PLUGIN_ROOT}/templates/STYLE.md`.
+### Opción D — Solo listar
 
-7. Saltá al **Paso 3** (reporte final).
+Devolvé una tabla:
 
-## Paso 3 — Mapeo tipo → agentes (para la sección "Agentes activos")
+| Tipo | Nombre | Archivo |
+|---|---|---|
+| agente | vault-curator | `.claude/agents/vault-curator.md` |
+| skill  | db-naming     | `.claude/skills/db-naming/SKILL.md` |
 
-Fuente de verdad: tabla de `templates/CLAUDE-global.md`. Reusá esta lista cuando generes o enriquezcas la sección del CLAUDE.md del proyecto:
-
-| Tipo | Agentes activos |
-|---|---|
-| `platform` | `orquestador`, `discovery-agent`, `product-analyst`, `project-manager`, `design-researcher` (si hay UI), `backend-expert`, `frontend-expert`, `db-architect`, `devops-expert`, `qa-expert`, `security-auditor`, `documentador`, `limpiador`, `optimizador`, `client-reporter` |
-| `proposal` | `orquestador`, `discovery-agent` (mini), `client-reporter`, `documentador` |
-| `portfolio` | `orquestador`, `discovery-agent`, `design-researcher`, `frontend-expert`, `devops-expert`, `documentador`, `client-reporter` |
-| `automation` | `orquestador`, `discovery-agent` (mini), `data-expert`, `backend-expert`, `devops-expert`, `qa-expert`, `documentador` |
-| `data` | `orquestador`, `discovery-agent`, `data-expert`, `client-reporter`, `documentador` |
-
-En todos los casos, `project-manager` queda disponible cuando Claudio quiera arrancar sprints (no lo pongas como "core siempre activo"; mencionalo como "invocable cuando necesites planificar").
+Y un footer con "El kit global aporta además: 21 agentes y 17 skills genéricos del marketplace — invocables desde acá sin más setup."
 
 ## Paso 4 — Reporte final
 
-Respondé con este formato exacto:
+Cerrá siempre con:
 
 ```
-✅ Setup listo — <nombre>
+✅ Setup local listo
 
-Rama ejecutada: <A | B | C>
-Tipo: <tipo>
-Stack detectado: <lista corta>
-Agentes activados: <lista>
-
-Archivos tocados:
-- <ruta> (creado | modificado | sin cambios)
+Acción: <agente nuevo | agente forkeado | skill nuevo | listado>
+Archivo: <ruta relativa al CWD>
 
 Próximos pasos:
-1. Invocá @orquestador con tu primer brief para arrancar.
-2. Si el alcance está difuso, @discovery-agent te hace preguntas hasta cerrarlo.
-3. Si querés planear sprints y mantener un queue, @project-manager lo arranca.
+1. Editá el archivo para llenar los placeholders concretos.
+2. Reiniciá la sesión de Claude Code para que el nuevo archivo se cargue.
+3. Invocalo con @<nombre> (agentes) o automáticamente cuando aplique (skills).
 ```
 
-Y siempre cerrá con el bloque de **📦 Cambios aplicados** (según la regla global de reporte post-cambio del CLAUDE.md del repo), listando commits si hubo e instrucciones de cómo retomar.
+Y el bloque **📦 Cambios aplicados** según la regla global de reporte post-cambio.
 
 ## Reglas estrictas
 
-1. **Nunca** sobrescribís `CLAUDE.md` existente con `Write`. Solo `Edit` puntuales aprobados.
-2. **Nunca** asumís el tipo de proyecto en Rama C: siempre mostrás la propuesta y pedís confirmación.
-3. **Nunca** corrés `git init` en Rama B o C (el repo ya existe).
-4. **Nunca** pisás un `STYLE.md` existente. Si existe y el template ofrece uno, mencionalo pero no copiés.
-5. **Una sola pregunta por vez** si son decisiones separadas; **agrupadas** si comparten contexto (ej: nombre+tipo+destino en Rama A).
-6. Si detectás stack que NO está en el template estándar (ej: Rust, Go), igual generás el CLAUDE.md pero marcás la sección Stack como `[detectado: <lenguaje> — ajustá convenciones a mano, no hay skill default del kit]`.
-7. Si Claudio cancela a mitad del flujo, **no dejás archivos a medias**: o completás el CLAUDE.md mínimo, o no escribís nada.
-8. Respondés siempre en **español**.
+1. **NUNCA generes un `CLAUDE.md`** del proyecto desde acá. Si el usuario lo pide, redirigilo: si está en el vault de David, sugerí `/scaffold`; si es proyecto externo, sugerí copiar manualmente desde `${CLAUDE_PLUGIN_ROOT}/templates/project-types/<tipo>.md`.
+2. **NUNCA sobrescribís archivos locales existentes** sin mostrar el diff y recibir "sí" explícito.
+3. **NUNCA toques `~/.claude/` ni el marketplace global** desde este comando. Trabajás solo en `.claude/` del CWD.
+4. **Si no existe `.claude/`**, lo creás (más sus subdirs `agents/` y `skills/`) — esto NO requiere confirmación porque es operación de bootstrap.
+5. Si David cancela a mitad, **no dejes archivos vacíos a medias**: o completás el skeleton mínimo, o no escribís nada.
+6. Respondés siempre en **español**.
+
+## Historia
+
+- Pre-v4.5: este comando generaba el `CLAUDE.md` del proyecto en 3 ramas (nuevo / enriquecer / adoptar). Se redefinió en v4.5 porque la responsabilidad de "crear proyecto + CLAUDE.md" la tiene `/scaffold` del vault (atómico: repo + vault + clone + inventario), y no tenía sentido tener dos pipelines paralelos. El comando ahora se enfoca en bootstrap LOCAL de agentes/skills, que es lo que no estaba cubierto.
