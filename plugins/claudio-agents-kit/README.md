@@ -4,21 +4,26 @@ Equipo reutilizable de agentes, skills y templates para Claude Code. Empaquetado
 
 ## Qué trae
 
-**21 agentes**
+**22 agentes**
 - Core (7): `orquestador`, `documentador`, `limpiador`, `optimizador`, `discovery-agent`, `product-analyst`, `design-researcher`
 - Expertos (8): `data-expert`, `backend-expert`, `frontend-expert`, `devops-expert`, `qa-expert`, `db-architect`, `client-reporter`, `security-auditor`
 - UX/UI review (2): `navigator` (flujo entre páginas, links, back/refresh), `ui-reviewer` (crítica visual de una página: espacio, jerarquía, densidad)
 - Productividad y planning (3): `project-manager`, `prompt-optimizer`, `code-council`
+- Ejecución headless (1): `task-executor` (persona para `claude -p` spawneados por warroom)
 - Meta (1): `agent-manager` (gestión del kit)
 
-**17 skills reutilizables**
-`karpathy-principles`, `pandas-conventions`, `postgres-query-patterns`, `fastapi-structure`, `pytest-style`, `vitest-patterns`, `github-actions-ci`, `react-query-patterns`, `git-flow`, `docstring-google-style`, `commit-message-format`, `epic-user-story-format`, `design-inspiration-lookup`, `proposal-writing`, `presentation-inspiration-lookup`, `prospect-branding-lookup`, `consultora-branding-lookup`
+**21 skills reutilizables**
+- Convenciones: `pandas-conventions`, `postgres-query-patterns`, `fastapi-structure`, `pytest-style`, `vitest-patterns`, `github-actions-ci`, `react-query-patterns`, `git-flow`, `docstring-google-style`, `commit-message-format`
+- Producto: `epic-user-story-format`, `proposal-writing`
+- Inspiración: `design-inspiration-lookup`, `presentation-inspiration-lookup`, `prospect-branding-lookup`, `consultora-branding-lookup`
+- Principios transversales: `karpathy-principles`
+- Integración con ecosistema de David (v5.0+): `obsidian-vault-conventions`, `github-repo-inventory`, `warroom-task-contract`, `executor-discipline`
 
-**5 templates de proyecto** (via slash command)
+**5 templates de proyecto** (CLAUDE.md por tipo, NO usan el slash command)
 `platform` · `proposal` · `portfolio` · `automation` · `data`
 
 **1 slash command**
-`/claudio-agents-kit:new-project` — scaffolda proyecto nuevo por tipo
+`/claudio-agents-kit:setup` — bootstrappea agentes/skills LOCALES del proyecto (en `.claude/agents/` y `.claude/skills/` del CWD). **No crea proyectos nuevos** — para eso, usá `/scaffold` del vault de David o copiá los templates a mano.
 
 ## Distribución de modelos
 
@@ -41,10 +46,16 @@ Equipo reutilizable de agentes, skills y templates para Claude Code. Empaquetado
 Los agentes se activan solos cuando el contexto matchea con su `description`. Por ejemplo, si pedís "diseñá un schema de PostgreSQL", Claude Code invoca `db-architect`.
 
 ### Crear proyecto nuevo
+
+Para proyectos del portafolio de David, usar `/scaffold` del vault (operación atómica: repo + vault folder + clone). Para proyectos externos, copiar `templates/project-types/<tipo>.md` a mano. El plugin **NO** tiene comando de scaffolding propio (era `/new-project` hasta v4.4 y `/setup` con generación de CLAUDE.md hasta v5.0 — redefinido en v5.1).
+
+### Bootstrappear agentes/skills locales de un proyecto
+
 ```
-/claudio-agents-kit:new-project
+/claudio-agents-kit:setup
 ```
-Te pregunta nombre, tipo y destino, y scaffolda todo.
+
+Cuatro opciones: agente nuevo desde cero, agente forkeado del kit (para customizar uno existente local sin tocar el kit global), skill nuevo desde cero, o listar lo que ya hay en `.claude/agents/` y `.claude/skills/`.
 
 ## Flujos por tipo de proyecto
 
@@ -57,7 +68,7 @@ security-auditor → documentador → client-reporter
 
 **Proposal**
 ```
-discovery-agent (mini) → client-reporter (redacta) → Claudio revisa → envía
+discovery-agent (mini) → client-reporter (redacta) → David revisa → envía
 ```
 
 **Portfolio**
@@ -81,15 +92,19 @@ discovery-agent → data-expert (EDA) → supuestos aprobados → data-expert (a
 claudio-agents-kit/
 ├── .claude-plugin/
 │   └── plugin.json
-├── agents/                    ← 15 agentes
-├── skills/                    ← 11 skills
+├── agents/                    ← 22 agentes
+├── skills/                    ← 21 skills
 ├── commands/
-│   └── new-project.md         ← slash command
+│   └── setup.md               ← único slash command (bootstrap local)
 ├── scripts/
-│   └── new-project.sh
+│   └── setup.sh               ← orphan desde v5.1.0 (no invocado)
 ├── templates/
 │   ├── CLAUDE-global.md       ← referencia para ~/.claude/CLAUDE.md
-│   └── project-types/         ← 5 templates
+│   ├── STYLE.md
+│   ├── prompt-system-reference.md
+│   ├── project-types/         ← 5 templates de proyecto
+│   ├── pytest/conftest.py
+│   └── github/ci.yml
 └── README.md
 ```
 
