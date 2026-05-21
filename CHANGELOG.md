@@ -7,19 +7,41 @@ y el versionado sigue [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ---
 
-## [4.5.0] — 2026-05-21
+## [5.1.0] — 2026-05-21
 
 ### Changed
 - **`/claudio-agents-kit:setup` redefinido.** Ya no genera el `CLAUDE.md` del proyecto en 3 ramas (nuevo / enriquecer / adoptar). Ahora se enfoca en **bootstrappear agentes y skills LOCALES del proyecto** — los que viven en `.claude/agents/` y `.claude/skills/` del CWD y sobrescriben o complementan al kit global. Casos típicos: forkear un agente del kit para customizarlo en un proyecto puntual, o crear un agente/skill específico del proyecto (ej: `vault-curator` del vault de Obsidian de David).
 - **Razón del cambio:** existían dos pipelines paralelos de "crear proyecto nuevo": `/claudio-agents-kit:setup` del plugin y `/scaffold` del vault de David (que invoca `portfolio-mgmt/scaffolding/scaffold.py` y crea atómicamente repo + vault + clone local + inventario). El `/scaffold` es más completo para proyectos del portafolio de David; tener un segundo entry point en el plugin era fuente de confusión. El plugin se queda con lo que el vault no cubre: bootstrap de agentes/skills LOCALES por proyecto.
 - **Para crear proyectos nuevos**: en el vault de David, usar `/scaffold`; en proyectos externos, copiar manualmente desde `templates/project-types/<tipo>.md` y editar.
 
+### Fixed
+- **Skills de ecosistema (introducidas en v5.0.0) alineadas con la realidad post-refactor del vault de David:**
+  - `obsidian-vault-conventions/SKILL.md` — paths `scaffolding/` → `portfolio-mgmt/` con sus 3 subprocesos (`templates/`, `archetypes/`, `scaffolding/`). Mención de la convención `## Para David` (sección obligatoria en READMEs de proyectos). Distinción David (humano dueño) vs Claudio (colectivo de agentes) aplicada.
+  - `github-repo-inventory/SKILL.md` — paths `scaffolding/` → `portfolio-mgmt/`. Identidad "Claudio" → "David" cuando refería al humano.
+  - `warroom-task-contract/SKILL.md` — identidad: "desktop app de Claudio" → "desktop app de David".
+  - `executor-discipline/SKILL.md` — identidad: "Claudio pide" → "David pide".
+
 ### Deprecated
 - **`scripts/setup.sh`** — quedó orphan. El nuevo `commands/setup.md` no lo invoca (todo el flujo es Read/Write/Edit en `.claude/` del CWD). Se conserva por ahora para no romper instalaciones que lo invoquen externamente; se removerá en un MAJOR futuro.
 
 ### Notas
-- Para alinear el `~/.claude/CLAUDE.md` global de David con esta versión del plugin: copiar `plugins/claudio-agents-kit/templates/CLAUDE-global.md` al global y corregir la sección "Quién soy" para que diga "David" en vez de "Claudio" (David es el humano dueño; Claudio es el colectivo de agentes del kit).
-- El vault de David usa la convención `## Para David` en cada `portfolio-mgmt/projects/<slug>/README.md`. Es vault-specific y no se documenta en el plugin (cada usuario del kit puede tener su propia convención de "items que solo el humano puede destrabar").
+- v5.1 codifica una distinción de identidad: **David** = el ser humano dueño del vault y de Claudio-Enterprises; **Claudio** = el colectivo de agentes del marketplace. Toda referencia a "Claudio" que indicaba al humano se renombró a "David". "Claudio-Enterprises" (la agencia) y "claudio-agents-kit" (el plugin) se mantienen.
+- `~/.claude/CLAUDE.md` global de David ya fue sincronizado con `templates/CLAUDE-global.md` v4.4.0 con identidad David — alineación cerrada del lado de David.
+
+---
+
+## [5.0.0] — 2026-05-21
+
+### Added
+- **Skill `obsidian-vault-conventions`** — pointer + quick-reference to the canonical vault spec at `99-meta/conventions.md`. Teaches agents where the vault lives, the 2 macro processes, default write locations, and project/note frontmatter conventions.
+- **Skill `warroom-task-contract`** — YAML schema for the planner→executor contract used by the warroom desktop app under design (`goal / context_files / constraints / definition_of_done / model / report_back`).
+- **Skill `executor-discipline`** — 5 behavioral rules for headless `claude -p` executors: atomicity, constraint respect, DoD as sole termination criterion, vigilado (non-interactive) mode, structured report-back format.
+- **Skill `github-repo-inventory`** — pointer to `99-meta/repos-inventario.md` as the single source of truth for GitHub repos and their vault-project mapping. Documents canonical writers (`scaffold.py` + manual `gh repo create`).
+- **Agent `task-executor`** — persona for warroom-spawned `claude -p` sessions. Default model `opus` for autonomous code-quality. Parses task contracts, loads context, works to DoD, emits structured report-back. Never asks (no human present), never crosses scope.
+
+### Notes
+- v5.0.0 marks the start of the ecosystem-aware era. The kit now codifies how Claude integrates with Claudio's Obsidian vault (`~/Documents/Obsidian Vault/`), the warroom desktop app, and the GitHub repo inventory. Per-project plugins (Phase 2+) will build on this contract.
+- Net-additive: no agents or skills renamed or removed. SemVer MAJOR bump reflects the framing of a new architectural era for the kit, not a breaking API change.
 
 ---
 
