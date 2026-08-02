@@ -3,7 +3,7 @@ id: MFB-ERRATAS
 titulo: Erratas verificadas contra MFB-CORE v1.0.0
 marco: MFB
 capa: operativa
-version: 1.0.0
+version: 1.1.0
 estado: vigente
 reemplazado_por: null
 idioma: es
@@ -16,12 +16,13 @@ depende_de: [MFB-CORE, INDICE, ORQUESTADOR]
 
 # Erratas · MFB-CORE v1.0.0
 
-Registradas sin aplicar: VER-05 exige reemplazo, no edición silenciosa. Corregirlas es
-emitir v1.0.1 (PARCHE: ninguna altera un requisito).
+F-01 y F-02 se cerraron al emitir **v1.1.0**, que registraba los dominios de MCC y aprovechó
+para corregir la aritmética del anexo. F-03 a F-05 siguen abiertas: exigen decisión, no
+corrección. Ninguna altera un requisito.
 
 ---
 
-## F-01 · MFB declara tres cifras distintas de requisitos — MEDIA
+## F-01 · MFB declaraba tres cifras distintas de requisitos — CERRADA en v1.1.0
 
 Conteo verificado, requisito por requisito:
 
@@ -51,22 +52,22 @@ refleja.
 
 El 34 es de otra generación del documento: ni coincide con el Anexo A ni con el contenido.
 
-**Consecuencia:** MFB exige en NIV-07 un anexo con la distribución por nivel y dominio.
-El suyo propio no cuadra. Es el mismo defecto que MCS-CORE tiene en su fila DAT (errata
+**Consecuencia:** MFB exige en NIV-07 un anexo con la distribución por nivel y dominio, y el
+suyo no cuadraba. Era el mismo defecto que MCS-CORE tiene en su fila DAT (errata
 E-01), lo que sugiere que el conteo manual de anexos necesita un control automático, no
 más cuidado.
 
 ---
 
-## F-02 · Los totales de la familia se arrastran — BAJA
+## F-02 · Los totales de la familia se arrastran — CERRADA 2026-08-02
 
 `ORQUESTADOR.md` §El problema que resuelve: «Un cuerpo normativo de **237 requisitos**».
 
-237 = 203 (MCS publicado) + 34 (MFB publicado). Con los conteos verificados:
-204 + 52 = **256**.
+237 = 203 (MCS publicado) + 34 (MFB publicado). Con los conteos verificados y con MCC
+incorporado: 204 + 52 + 92 = **348**. Corregido en ORQUESTADOR v1.1.0.
 
-El argumento del orquestador no cambia — sigue siendo demasiado para cargar siempre—,
-pero la cifra es citable y hoy es falsa.
+El argumento del orquestador no cambia: sigue siendo demasiado para cargar siempre, y con
+MCC lo es un 47 % más.
 
 ---
 

@@ -3,7 +3,7 @@ id: CONOCIMIENTO
 titulo: Eje común — glosario canónico y su verificación
 marco: —
 capa: operativa
-version: 1.0.0
+version: 1.1.0
 estado: vigente
 reemplazado_por: null
 idioma: es
@@ -17,7 +17,7 @@ depende_de: [glosario, MFB-CORE, MCS-CORE, CONVENCIONES]
 # Eje común
 
 `glosario.yaml` es el **único** artefacto compartido por toda la familia (MFB §2.5).
-15 términos. Ningún marco es su propietario.
+**21 términos** en v1.1.0. Ningún marco es su propietario.
 
 Tres requisitos dependen de él: TRZ-04 (ningún marco mantiene glosario propio), RED-02
 (un concepto se nombra siempre con el término del glosario) y LEN-01 (glosario canónico
@@ -47,6 +47,10 @@ sustituir el resto por una referencia. Es cambio de PARCHE —no toca requisitos
 a un normativo, así que exige emitir versión.
 
 ### G-02 · Tres términos definidos en los normativos y ausentes del glosario
+
+> **Parcialmente resuelto en v1.1.0.** La incorporación de MCC añadió seis términos
+> —encargo, inmersión sectorial, subsegmento, hallazgo, tanda, kit de reunión— y `hallazgo`
+> cubre un concepto que MCS ya usaba sin definir. Los tres de abajo siguen ausentes.
 
 | Término | Definido en | Por qué importa |
 |---|---|---|
@@ -78,6 +82,14 @@ Un verificador de terminología (LEN-04) marcaría hoy decenas de falsos positiv
 Ninguno de esos 40 usos es un sinónimo de lo vetado. El caso de `competencia` es el más
 grave porque el glosario se contradice: veta la palabra y a la vez define
 `frontera-competencia` con ella.
+
+v1.1.0 añade dos choques más, de los términos de MCC: `entrega` vetado como sinónimo de
+`tanda` pero usado 5 veces en MCS-CORE con su sentido propio —entrega a producción, CFG-07—
+y `contrato` vetado como sinónimo de `encargo` y usado con sentido jurídico.
+
+**Contraste que importa:** los documentos de MCC **sí respetan los vetos**. Cero usos de
+`proyecto`, `fase` o `sprint` en MCC-CORE y MCC-G01. La disciplina terminológica existe
+donde el glosario se escribió antes que el documento; falla donde se escribió después.
 
 **Corrección:** renombrar el campo a `no_usar_como_sinonimo_es`, o añadir los conceptos
 homónimos como términos propios. Sin esto, LEN-04 no puede automatizarse: el primer informe
@@ -114,6 +126,6 @@ mejor, así que la corrección va en el normativo:
 
 ## Pendiente
 
-El glosario cubre MFB y MCS. Cuando se construya **MCC**, sus términos —encargo, hallazgo,
-transferencia, alcance— entran aquí antes de escribir su normativo, no después. Es la
-puerta de calidad de MFB-G01 §7: *«el glosario canónico absorbió los términos nuevos»*.
+La puerta de calidad de MFB-G01 §7 —*«el glosario canónico absorbió los términos nuevos»*—
+se cumplió para MCC. El siguiente marco entra igual: sus términos primero, su normativo
+después.

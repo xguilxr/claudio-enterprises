@@ -4,7 +4,7 @@
 # Regla: ningún marco mantiene glosario propio para conceptos definidos aquí (TRZ-04).
 
 meta:
-  version: 1.0.0
+  version: 1.1.0
   revisado: 2026-08-02
   responsable: propietario
   revisar_cada: 90d
@@ -36,7 +36,7 @@ terminos:
       Grado de cumplimiento de un marco en la escala N1 a N5. Los niveles son
       acumulativos y se declaran por producto y por marco.
     no_usar_es: [nivel de madurez, grado, tier]
-    marcos: [MFB, MCS]
+    marcos: [MFB, MCS, MCC]
 
   - id: puerta-calidad
     es: puerta de calidad
@@ -91,7 +91,7 @@ terminos:
       Valor numérico cuya vigencia depende del momento de consulta. No constituye
       conocimiento estable y no forma parte de ningún corpus ni documento.
     no_usar_es: [dato dinámico, valor volátil]
-    marcos: [MCS]
+    marcos: [MCS, MCC]
 
   - id: frontera-competencia
     es: frontera de competencia
@@ -100,7 +100,7 @@ terminos:
       Límite declarado más allá del cual un sistema no emite juicio propio y
       deriva a persona profesional cualificada, por tratarse de actividad regulada.
     no_usar_es: [límite de responsabilidad, disclaimer]
-    marcos: [MCS]
+    marcos: [MCS, MCC]
 
   - id: skill
     es: skill
@@ -111,7 +111,7 @@ terminos:
       un rol.
     nota: Anglicismo aceptado por ser estándar de la industria.
     no_usar_es: [habilidad, competencia, capacidad]
-    marcos: [MCS, MFB]
+    marcos: [MCS, MFB, MCC]
 
   - id: agente
     es: agente
@@ -149,3 +149,58 @@ terminos:
       sirve de referencia y solo se altera mediante control de cambios.
     no_usar_es: [snapshot, versión congelada]
     marcos: [MCS]
+
+  - id: encargo
+    es: encargo
+    en: engagement
+    definicion_es: >
+      Unidad de trabajo consultivo con un solo cliente, una pregunta central y un
+      criterio de éxito declarado y comprobable al cierre.
+    no_usar_es: [proyecto, contrato, trabajo, cuenta]
+    marcos: [MCC]
+
+  - id: inmersion-sectorial
+    es: inmersión sectorial
+    en: sector immersion
+    definicion_es: >
+      Estudio acotado en tiempo del subsegmento del cliente, previo al
+      descubrimiento, orientado a conducir la conversación con solvencia y a
+      detectar anomalías operativas.
+    no_usar_es: [research, investigación de mercado, onboarding]
+    marcos: [MCC]
+
+  - id: subsegmento
+    es: subsegmento
+    en: subsegment
+    definicion_es: >
+      Nivel de desagregación de un rubro en el que la operación y los sistemas
+      son homogéneos. «Restaurantes» no lo es; «comida rápida con franquicia» sí.
+    no_usar_es: [nicho, vertical, sector]
+    marcos: [MCC]
+
+  - id: hallazgo
+    es: hallazgo
+    en: finding
+    definicion_es: >
+      Afirmación sobre la situación del cliente, sostenida por evidencia
+      identificable y registrada durante el descubrimiento o el diagnóstico.
+    no_usar_es: [observación, insight, conclusión]
+    marcos: [MCC, MCS]
+
+  - id: tanda
+    es: tanda
+    en: increment
+    definicion_es: >
+      Agrupación de trabajo que produce un resultado observable por sí misma, sin
+      depender de la siguiente para aportar valor.
+    no_usar_es: [fase, sprint, entrega, milestone]
+    marcos: [MCC]
+
+  - id: kit-reunion
+    es: kit de reunión
+    en: meeting kit
+    definicion_es: >
+      Salida de la inmersión sectorial: tarjeta de una pantalla, preguntas de
+      descubrimiento e hipótesis de necesidad con su criterio de descarte.
+    no_usar_es: [briefing, one-pager]
+    marcos: [MCC]

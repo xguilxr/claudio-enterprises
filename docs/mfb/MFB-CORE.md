@@ -3,7 +3,7 @@ id: MFB-CORE
 titulo: Marco de Construcción de Marcos — Documento normativo
 marco: MFB
 capa: normativa
-version: 1.0.0
+version: 1.1.0
 estado: vigente
 idioma: es
 responsable: propietario
@@ -23,7 +23,7 @@ depende_de: [INDICE, CONVENCIONES, glosario]
 | Campo | Valor |
 |---|---|
 | Identificador | MFB-CORE |
-| Versión | 1.0.0 |
+| Versión | 1.1.0 |
 | Estado | Vigente |
 | Emisión | 2026-08-02 |
 | Próxima revisión | 2026-11-02 |
@@ -34,6 +34,7 @@ depende_de: [INDICE, CONVENCIONES, glosario]
 | Versión | Fecha | Naturaleza del cambio |
 |---|---|---|
 | 1.0.0 | 2026-08-02 | Emisión inicial. 34 requisitos en 7 dominios, derivados de la construcción de MCS |
+| 1.1.0 | 2026-08-02 | Registro de los nueve códigos de dominio de MCC en el anexo B. Corrección de la fila TRZ y de los totales del anexo A: el conteo real es 52 requisitos, no 34 ni 51 (errata F-01). Versión menor: actualiza registros y corrige aritmética, no altera requisitos |
 
 ## Convenciones de lenguaje normativo
 
@@ -205,13 +206,14 @@ después.
 | EST | 5 | 3 | 2 | 10 |
 | NOM | 6 | 1 | — | 7 |
 | NIV | 6 | 3 | — | 9 |
-| TRZ | 2 | 5 | 1 | 8* |
+| TRZ | 2 | 6 | 1 | 9 |
 | RED | 2 | 3 | — | 5 |
 | VER | 4 | — | 2 | 6 |
 | ACT | 2 | 4 | — | 6 |
-| **Total** | **27** | **19** | **5** | **51** |
+| **Total** | **27** | **20** | **5** | **52** |
 
-\* TRZ-08 y TRZ-09 se contabilizan en sus niveles respectivos.
+Conteo verificado requisito por requisito en v1.1.0. La emisión inicial declaraba 34 en
+el historial y 51 en este anexo; ambas cifras eran incorrectas.
 
 Los niveles N4 y N5 de MFB no tienen requisitos propios en esta versión: se
 alcanzan mediante los requisitos de gobierno del marco de contenido
@@ -227,9 +229,12 @@ Los códigos son únicos en toda la familia. Verificar aquí antes de asignar un
 |---|---|---|
 | EST, NOM, NIV, TRZ, RED, VER, ACT | MFB | Construcción de marcos |
 | GOB, CFG, REQ, ARQ, DIS, LEN, DAT, DEV, INT, SUM, INF, DES, OPS, SEG, IA, DOC, CON | MCS | Calidad de software |
+| CTR, INV, ANA, PRO, ECO, ESF, PLA, ENT, CLI | MCC | Consultoría de tecnología |
 
-**Disponibles y sugeridos para marcos futuros:** ADQ, ANA, CAL, CLI, COM, CTR, ECO, EDU, ENT, EQP, EVA, FIN, GES, INV, JUR, MER, ODC, PER, PLA, PRO, RSG, SRV, TAL, VTA.
+**Disponibles y sugeridos para marcos futuros:** ADQ, CAL, COM, EDU, EQP, EVA, FIN, GES, JUR, MER, ODC, PER, RSG, SRV, TAL, VTA.
+
+Retirados de la lista por el registro de MCC: ANA, CLI, CTR, ECO, ENT, INV, PLA, PRO. **ESF** es código nuevo, no figuraba entre los sugeridos; verificado como único.
 
 ---
 
-**Fin del documento MFB-CORE v1.0.0**
+**Fin del documento MFB-CORE v1.1.0**

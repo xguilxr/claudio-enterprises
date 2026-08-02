@@ -3,7 +3,7 @@ id: MCS-ERRATAS
 titulo: Erratas verificadas contra MCS-CORE v2.0.0
 marco: MCS
 capa: operativa
-version: 1.1.0
+version: 1.2.0
 estado: vigente
 reemplazado_por: null
 idioma: es
@@ -225,7 +225,12 @@ no corrección.
 
 ---
 
-## E-07 · La estructura que propone P04 quedó superada por CONVENCIONES — BAJA
+## E-07 · La estructura que proponía P04 quedó superada — CERRADA 2026-08-02
+
+> **Cerrada.** La entrega oficial sustituye MCS-P04 por **MCS-OP02**, con contenido
+> idéntico verificado por diff, e incorpora `MFB-T04` como plantilla de documento
+> operativo. El identificador MCS-P04 nunca llegó a publicarse, así que NOM-04 no
+> aplica. Se conserva el registro por trazabilidad.
 
 **Ubicación:** `prompts/MCS-P04-reabsorcion.md`, Etapa 3.
 

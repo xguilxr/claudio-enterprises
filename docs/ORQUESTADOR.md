@@ -3,20 +3,20 @@ id: ORQUESTADOR
 titulo: Orquestador entre marcos
 marco: —
 capa: operativa
-version: 1.0.0
+version: 1.1.0
 estado: vigente
 idioma: es
 responsable: propietario
 revisado: 2026-08-02
 revisar_cada: 90d
-depende_de: [INDICE, MFB-CORE, MCS-CORE]
+depende_de: [INDICE, MFB-CORE, MCS-CORE, MCC-CORE]
 ---
 
 # Orquestador entre marcos
 
 ## El problema que resuelve
 
-Un cuerpo normativo de 237 requisitos aplicado a todo momenta la operación
+Un cuerpo normativo de 348 requisitos aplicado a todo momenta la operación
 diaria y termina abandonado. El riesgo real de este proyecto no es que los
 marcos sean insuficientes: es que estorben.
 
@@ -62,7 +62,12 @@ Qué cargar según lo que estás haciendo. Nada más.
 | Construir una funcionalidad de IA | MCS-G03 capas A0, AC, A6, A7 | L2 |
 | Definir un indicador o dashboard | MCS-G04 track M | L2 |
 | Nombrar conceptos, escribir textos de UI | MCS-G04 track L + glosario | L2 |
-| Conducir un encargo de cliente | MCS-P02 | L2 |
+| Conducir un encargo de cliente | MCC-P01 | L2 |
+| Entrar a un rubro que no conozco | MCC-P02 | L2 |
+| Preparar una propuesta con costos | MCC-G03 + MCC-P03 | L2 |
+| Estimar esfuerzo de un alcance | MCC-G03 §2 | L2 |
+| Planificar por fases un encargo aprobado | MCC-G01 §5 | L2 |
+| Auditar la conducción de un encargo | MCC-CORE | L3 |
 | Crear un marco nuevo | MFB-P01 + MFB-CORE | L3 |
 | Revisar la coherencia entre marcos | MFB-P02 | L3 |
 
@@ -104,6 +109,10 @@ Cuando dos marcos aplican a la vez:
    resolver caso por caso.
 4. **El glosario canónico prevalece sobre cualquier marco** en materia de
    terminología. Es el único eje compartido.
+5. **MCC gobierna el encargo; MCS gobierna el producto.** Cuando ambos
+   aplican, MCC determina qué se acuerda y MCS qué se construye. El nivel de
+   conformidad del producto se propone en MCC-ANA-08 y se declara en
+   MCC-ENT-07, pero su contenido lo define MCS-CORE.
 
 ---
 
@@ -115,6 +124,7 @@ Un producto declara un nivel **por marco**, y pueden ser distintos:
 conformidad:
   MCS: { objetivo: N2, alcanzado: N1 }
   MFB: { objetivo: N1, alcanzado: N1 }
+  MCC: { objetivo: N1, alcanzado: N1 }
 ```
 
 Un producto puede ser N3 en calidad de software y N1 en otro marco. Es normal y

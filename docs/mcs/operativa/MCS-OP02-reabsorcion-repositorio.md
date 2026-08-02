@@ -1,17 +1,16 @@
 ---
-id: MCS-P04
-titulo: Reabsorción y empaquetado
+id: MCS-OP02
+titulo: Reabsorción del repositorio
 marco: MCS
-capa: prompt
+capa: operativa
 version: 1.0.0
 estado: vigente
-reemplazado_por: null
 idioma: es
 responsable: propietario
 revisado: 2026-08-02
-revisar_cada: 180d
+revisar_cada: 365d
 uso: un solo uso
-depende_de: [MCS-CORE, MFB-CORE, CONVENCIONES, glosario]
+depende_de: [MCS-CORE, MFB-CORE]
 ---
 
 # MCS-P04 — Prompt de Reabsorción y Empaquetado

@@ -3,13 +3,13 @@ id: INDICE
 titulo: Índice maestro de marcos
 marco: —
 capa: indice
-version: 1.2.0
+version: 1.3.0
 estado: vigente
 idioma: es
 responsable: propietario
 revisado: 2026-08-02
 revisar_cada: 90d
-depende_de: [ORQUESTADOR, CONVENCIONES, MFB-CORE, MCS-CORE]
+depende_de: [ORQUESTADOR, CONVENCIONES, glosario, MFB-CORE, MCS-CORE, MCC-CORE]
 ---
 
 # claudio-enterprises — Índice maestro
@@ -29,20 +29,19 @@ Este índice dice qué existe; el orquestador dice cuándo usarlo.
 |---|---|---|---|---|---|
 | **MFB** | Construcción de Marcos | Vigente | 1.0.0 | 7 | 52 |
 | **MCS** | Calidad de Software | Vigente | 2.0.0 | 17 | 204 |
+| **MCC** | Consultoría de Tecnología | Vigente | 1.0.0 | 9 | 92 |
 
-Los requisitos son conteos **verificados uno a uno**, no los publicados en los anexos de
-cada normativo. MFB declara 34 y su Anexo A suma 51; MCS declara 203. Ver
-`mfb/MFB-ERRATAS-1.0.0.md` (F-01) y `mcs/MCS-ERRATAS-2.0.0.md` (E-01, E-02).
+Conteos **verificados uno a uno**. MFB corrigió los suyos en v1.1.0 (errata F-01). MCS
+publica 203 y su fila DAT no cuadra: ver `mcs/MCS-ERRATAS-2.0.0.md` E-01 y E-02. MCC es el
+único cuyo anexo cuadró a la primera.
+
+**Total de la familia: 348 requisitos.** Por eso existe `ORQUESTADOR.md`: no se cargan
+nunca todos.
 
 ### Marcos previstos
 
-Candidatos identificados, aún sin construir. Antes de crear cualquiera, aplicar
-la rúbrica de MFB-G01 §3: puede que sea un dominio dentro de un marco existente,
-no una familia nueva.
-
-| Prefijo | Marco | Origen | Decisión pendiente |
-|---|---|---|---|
-| MCC | Consultoría | MCS-P02 sugiere que el proceso consultivo excede el marco de software | Rúbrica ya aplicada en MFB-G01 §3: **8–9 → familia nueva**. Falta construirlo |
+Ninguno. Antes de crear el siguiente, aplicar la rúbrica de MFB-G01 §3: casi siempre lo
+que parece un marco nuevo es un dominio dentro de uno existente.
 
 ---
 
@@ -58,20 +57,26 @@ docs/
 ├── CONVENCIONES.md            ← nomenclatura, estructura, front-matter
 │
 ├── conocimiento/
-│   ├── glosario.yaml          ← eje comun de TODA la familia
-│   └── README.md              ← verificacion contra los normativos
+│   ├── glosario.yaml          ← eje común de TODA la familia (21 términos)
+│   └── README.md              ← su verificación contra los normativos
 │
-├── mfb/
-│   ├── MFB-CORE.md
-│   ├── MFB-ERRATAS-1.0.0.md
-│   └── guias/MFB-G01-diseno-de-marcos.md
+├── mfb/                       ← Construcción de Marcos · COMPLETO
+│   ├── MFB-CORE.md · MFB-ERRATAS-1.0.0.md
+│   ├── guias/     MFB-G01
+│   ├── prompts/   MFB-P01 crear · MFB-P02 auditar
+│   └── plantillas/ MFB-T01..T06
 │
-├── mcs/
-│   ├── MCS-CORE.md
-│   ├── MCS-ERRATAS-2.0.0.md
-│   └── prompts/MCS-P0{1,2,3,4}-*.md
+├── mcs/                       ← Calidad de Software · sin guías
+│   ├── MCS-CORE.md · MCS-ERRATAS-2.0.0.md
+│   ├── prompts/   MCS-P01 auditoría · MCS-P02 (reemplazado) · MCS-P03 quick scan
+│   └── operativa/ MCS-OP01 arranque · MCS-OP02 reabsorción · MCS-OP03 evidencia
 │
-└── migracion/                 ← salida de MCS-P04, no es documento de marco
+├── mcc/                       ← Consultoría de Tecnología · MFB-N2
+│   ├── MCC-CORE.md · MCC-PARCHES-ENTORNO.md
+│   ├── guias/     MCC-G01 proceso · MCC-G02 inmersión · MCC-G03 economía
+│   └── prompts/   MCC-P01 conducción del encargo
+│
+└── migracion/                 ← salida de MCS-OP02, no es documento de marco
     ├── 01-inventario.md
     └── 02-arquitectura-multimarco.md   (REEMPLAZADO por MFB)
 ```
@@ -84,45 +89,53 @@ dependen del paquete.
 
 | Falta | Consecuencia | Bloquea |
 |---|---|---|
-| `conocimiento/glosario.yaml` | Es el **único eje común** de la familia (MFB §2.5). Sin él, TRZ-04 y RED-02 son inverificables y cada marco derivará por su cuenta | Todo lo demás |
-| `INSTRUCCIONES-PROYECTO.md` | Es el nivel L1 del orquestador, lo único permanente en contexto. Sin él no hay activación por disparador | La operación diaria |
-| MFB-P01, MFB-P02 | Crear y auditar marcos. MFB-G01 §4 paso 10 exige P02 antes de publicar | Construir MCC |
-| MFB-T01…T06 | Plantillas de cada tipo de documento (EST-09) | Construir MCC |
-| MCS-G01…G04 | **No existen y nunca se crearon.** MCS-CORE §0.3 las declara como parte del marco | La rúbrica del Track E, y con ella la clasificación rol/skill |
-| MCS-OP01, MCS-OP02 | El INDICE los lista; MCS-P04 cubre lo de OP02 con otro identificador | — |
+| `INSTRUCCIONES-PROYECTO.md` | Es el nivel L1 del orquestador, lo único permanente en contexto. Sin él no hay activación por disparador y la tabla de ruteo hay que consultarla a mano | La operación diaria |
+| **MCS-G01…G04** | **No existen y nunca se crearon.** MCS-CORE §0.3 las declara como parte del marco. Dejan a MCS incumpliendo EST-03, que es N1 | Que MCS alcance MFB-N1, y la rúbrica del Track E |
+| MCC-P02, P03, P04 | Inmersión sectorial, propuesta y costeo, estimación | Operar los dominios INV, ECO y ESF sin leer las guías |
+| MCC-T01, T02 | Ficha de encargo y propuesta (EST-09) | Que MCC llegue a MFB-N3 |
+| Skills | 17 propuestas, ninguna construida (EST-10) | Que el sistema funcione sin consultar la tabla de ruteo |
 
 ### 2.1 MFB — Marco de Construcción de Marcos
 
 | ID | Documento | Capa | Para qué | Estado |
 |---|---|---|---|---|
-| MFB-CORE | Documento normativo | Normativa | 52 requisitos que todo marco de la familia debe cumplir | ✅ |
+| MFB-CORE | Documento normativo | Normativa | 52 requisitos que todo marco de la familia debe cumplir | ✅ v1.1.0 |
 | MFB-G01 | Diseño de marcos | Guía | Cómo se decide, estructura y redacta un marco | ✅ |
-| MFB-ERRATAS | Erratas v1.0.0 | Operativa | Defectos verificados pendientes de emitir v1.0.1 | ✅ |
-| MFB-P01 | Crear marco | Prompt | Construye un marco nuevo de principio a fin | ❌ |
-| MFB-P02 | Auditar marco | Prompt | Verifica homogeneidad y conformidad con MFB | ❌ |
-| MFB-T01..T06 | Plantillas | Plantilla | Esqueletos de cada tipo de documento | ❌ |
+| MFB-P01 | Crear marco | Prompt | Construye un marco nuevo de principio a fin | ✅ |
+| MFB-P02 | Auditar marco | Prompt | Verifica homogeneidad y conformidad con MFB | ✅ |
+| MFB-T01..T06 | Plantillas | Plantilla | Normativa, guía, prompt, operativa, skill, ADR | ✅ |
+| MFB-ERRATAS | Erratas v1.0.0 | Operativa | Cinco defectos; F-01 cerrado en v1.1.0 | ✅ |
 
 ### 2.2 MCS — Marco de Calidad de Software
 
 | ID | Documento | Capa | Para qué | Estado |
 |---|---|---|---|---|
 | MCS-CORE | Documento normativo | Normativa | 204 requisitos, 17 dominios, niveles N1–N5 | ✅ |
-| MCS-ERRATAS | Erratas v2.0.0 | Operativa | Seis defectos verificados pendientes de emitir v2.0.1 | ✅ |
 | MCS-P01 | Auditoría | Prompt | Auditoría formal de conformidad, seis etapas | ✅ |
-| MCS-P02 | Consultoría | Prompt | Encargo consultivo completo, siete fases | ✅ |
 | MCS-P03 | Quick scan | Prompt | Reconocimiento rápido, una página, quick wins | ✅ |
-| MCS-P04 | Reabsorción | Prompt | Un solo uso: migrar los activos previos a esta estructura | ✅ |
-| MCS-G01 | Ciclo de vida | Guía | Fases 0–11: repositorio, arquitectura, CI/CD, infraestructura, operación | ❌ |
-| MCS-G02 | Diseño e interacción | Guía | Fases D0–D7: tokens, sistema de diseño, accesibilidad | ❌ |
-| MCS-G03 | IA y agentes | Guía | Capas A0–A9 y AC: tools, MCP, orquestación, evals | ❌ |
-| MCS-G04 | Disciplinas transversales | Guía | Tracks L, M, E, K. **Contiene la rúbrica del Track E** | ❌ |
-| MCS-OP01 | Arranque de auditorías | Operativa | Poner en marcha las auditorías de la cartera | ❌ |
+| MCS-OP01 | Arranque de auditorías | Operativa | Poner en marcha las auditorías de la cartera | ✅ |
+| MCS-OP02 | Reabsorción del repositorio | Operativa | Un solo uso: migrar los activos previos | ✅ |
+| MCS-OP03 | Evidencia y certificación | Operativa | Conservación de evidencia y control de cambios | ✅ |
+| MCS-ERRATAS | Erratas v2.0.0 | Operativa | Siete defectos pendientes de emitir v2.0.1 | ✅ |
+| MCS-P02 | Consultoría | Prompt | **Reemplazado por MCC-P01** | ⛔ |
+| MCS-G01…G04 | Guías | Guía | Ciclo de vida, diseño, IA, disciplinas transversales | ❌ |
 
-**Dos discrepancias con el mapa original.** El INDICE listaba MCS-OP02 «Reabsorción del
-repositorio»; el documento entregado se autoidentifica como **MCS-P04**. Se conserva su
-identificador propio: renombrarlo rompería las referencias, que TRZ-03 exige hacer por
-identificador. Y las cuatro guías G01–G04 se listaban como existentes: **nunca fueron
-creadas**. Ambas cosas están registradas como erratas.
+### 2.3 MCC — Marco de Consultoría de Tecnología
+
+| ID | Documento | Capa | Para qué | Estado |
+|---|---|---|---|---|
+| MCC-CORE | Documento normativo | Normativa | 92 requisitos, 9 dominios, niveles N1–N5 | ✅ |
+| MCC-G01 | El proceso consultivo | Guía | Etapas E0–E5, del encuadre a la transferencia | ✅ |
+| MCC-G02 | Inmersión sectorial | Guía | Dominar un rubro desconocido contra reloj | ✅ |
+| MCC-G03 | Economía del encargo | Guía | Costeo y estimación de esfuerzos | ✅ |
+| MCC-P01 | Conducción del encargo | Prompt | Reemplaza a MCS-P02 | ✅ v2.0.0 |
+| MCC-PARCHES | Incorporación al entorno | Operativa | Un solo uso: los parches aplicados aquí | ✅ |
+| MCC-P02 | Inmersión sectorial | Prompt | Ejecuta MCC-G02 con presupuesto de tiempo | ❌ |
+| MCC-P03 / P04 | Propuesta y costeo · Estimación | Prompt | Cierran ECO, PRO y ESF | ❌ |
+| MCC-T01 / T02 | Ficha de encargo · Propuesta | Plantilla | Cierran EST-09 | ❌ |
+
+**Dominios de MCC:** CTR contratación · INV inmersión · ANA análisis · PRO propuesta ·
+ECO economía · ESF esfuerzo · PLA planificación · ENT entrega · CLI relación con el cliente.
 
 ---
 
@@ -159,6 +172,11 @@ Una **skill** es un procedimiento repetible, cargado bajo demanda.
 | MCS | auditar-deriva | Detecta deriva de unidades y conceptos | DAT-01..08 | Propuesta |
 | MFB | crear-marco | Ejecuta MFB-P01 | EST-01..05 | Propuesta |
 | MFB | auditar-marco | Ejecuta MFB-P02 | Todos los de MFB | Propuesta |
+| MCC | encuadrar-encargo | Produce la ficha de encargo y clasifica el tipo | CTR-01..06 | Propuesta |
+| MCC | inmersion-sectorial | Dossier y kit de reunión de un rubro nuevo | INV-01..09 | Propuesta |
+| MCC | estimar-esfuerzo | Descompone, estima en rango y declara supuestos | ESF-01..07 | Propuesta |
+| MCC | costear-solucion | Cuatro capas de costo con cifras vivas fechadas | ECO-01..09 | Propuesta |
+| MCC | plan-por-tandas | Convierte alcance en tandas con resultado observable | PLA-01..05 | Propuesta |
 
 Estados: Propuesta · En construcción · Vigente · Retirada.
 
@@ -171,25 +189,28 @@ Este repositorio se somete a sus propios marcos. Ver `mcs.yaml` en la raíz.
 | Marco | Nivel objetivo | Nivel alcanzado | Última evaluación |
 |---|---|---|---|
 | MCS | N1 | Pendiente | — |
-| MFB | N2 | **No alcanza N1** | 2026-08-02, parcial |
+| MFB | N2 | Pendiente | — |
+| MCC | N1 | Pendiente | — |
 
 Un repositorio que aloja los marcos y no los cumple carece de autoridad.
 
-**Por qué MFB no alcanza su propio N1 hoy**, con el conteo hecho durante el montaje de la
-estructura y pendiente de ejecutar MFB-P02 en forma:
+**Estado por marco**, verificado durante el montaje. Pendiente de ejecutar MFB-P02 en forma
+sobre cada uno:
 
-| Requisito | Estado | Motivo |
+| Marco | Bloqueo para su propio N1 | Gravedad |
 |---|---|---|
-| EST-03 (toda marco DEBE tener ≥1 guía) | **NO CONFORME** en MCS | MCS no tiene ninguna guía. G01–G04 nunca se crearon |
-| TRZ-01 (declarar dependencias en el encabezado) | CONFORME | Front-matter añadido a los seis documentos de MCS durante el montaje |
-| TRZ-09 (no inventar normas ni identificadores) | CONFORME | Lo no verificado va marcado |
-| NOM-05 (patrón de nombre de archivo) | PARCIAL | Los registros de erratas no tienen tipo admitido. Ver F-05 |
-| NIV-07 (anexo de distribución) | **NO CONFORME** en ambos | Los dos anexos tienen cifras que no cuadran. Ver E-01 y F-01 |
-| VER-04 (responsable y periodicidad) | CONFORME | — |
+| **MFB** | Ninguno conocido. Tiene normativo, guía, prompts y plantillas | — |
+| **MCS** | **EST-03: no tiene ninguna guía.** G01–G04 nunca se crearon | Bloqueante |
+| **MCC** | Ninguno. Su autoauditoría declara MFB-N2; N3 exige T01, T02 y skills | — |
 
-La carencia que más pesa es **EST-03**: el marco de software no tiene guía, y MFB-G01 §4
-paso 4 explica por qué importa —los requisitos se descubren al explicar, no al legislar—.
-MCS se escribió en el orden inverso al que MFB prescribe.
+**Ambos anexos de distribución fallan NIV-07** salvo el de MCC: MFB corrigió el suyo en
+v1.1.0; MCS sigue con la fila DAT descuadrada (E-01).
+
+La carencia que más pesa es EST-03 en MCS. MFB-G01 §4 paso 4 explica por qué: los
+requisitos se descubren al explicar, no al legislar. MCS se escribió en el orden inverso al
+que MFB prescribe, y ese es su antipatrón 9 — se detecta porque nadie sabe explicar por qué
+existe cada requisito. MCC sí se escribió en el orden correcto, y su anexo cuadró a la
+primera; no es coincidencia.
 
 ---
 
