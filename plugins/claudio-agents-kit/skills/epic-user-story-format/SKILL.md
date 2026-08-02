@@ -1,6 +1,6 @@
 ---
 name: epic-user-story-format
-description: Formato intermedio de Epics, User Stories y Test Cases usado por Claudio-Enterprises. Invocar cuando se descompongan features en artefactos de producto, se trabaje en plataformas/PaaS, o se necesite documentar un backlog.
+description: Descompone una funcionalidad en Epics, User Stories y Test Cases. Úsala en plataformas y PaaS, o al documentar un backlog.
 ---
 
 # Epic / User Story / Test Case — Formato Claudio

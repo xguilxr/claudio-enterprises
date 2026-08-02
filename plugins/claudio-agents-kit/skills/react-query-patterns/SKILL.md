@@ -1,6 +1,6 @@
 ---
 name: react-query-patterns
-description: Patrones de TanStack Query (React Query) para consumo de APIs. Invocar al trabajar en frontend que consume datos del backend.
+description: Patrones de TanStack Query — hooks por recurso, keys, mutations y paginación. Úsala en frontend que consume APIs.
 ---
 
 # TanStack Query — Patrones

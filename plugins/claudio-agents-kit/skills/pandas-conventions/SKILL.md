@@ -1,6 +1,6 @@
 ---
 name: pandas-conventions
-description: Convenciones para código Pandas mantenible y performante. Invocar cuando se escriba transformación de DataFrames, ETL, o análisis con Pandas.
+description: Escribe Pandas mantenible y rápido con vectorización, tipos explícitos y merges validados. Úsala al transformar DataFrames o armar un ETL.
 ---
 
 # Pandas — Convenciones de Claudio-Enterprises

@@ -1,6 +1,6 @@
 ---
 name: obsidian-vault-conventions
-description: Pointer al spec canónico del vault de Obsidian de David (99-meta/conventions.md). Invocar al inicio de cualquier turno que lea o escriba notas del vault, o que necesite mapear un proyecto/repo a su contexto cualitativo. NO duplica el spec; lo referencia + minimum quick-reference.
+description: Estructura y convenciones del vault de Obsidian de David. Úsala antes de leer o escribir una nota, o de mapear un proyecto a su contexto.
 ---
 
 # Obsidian Vault Conventions

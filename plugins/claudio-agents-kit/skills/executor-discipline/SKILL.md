@@ -1,6 +1,6 @@
 ---
 name: executor-discipline
-description: Reglas de comportamiento para sesiones Claude headless (executors) que reciben un task contract. Invocar al arranque de cualquier claude -p spawneado por warroom o scripts de fan-out. Cubre modo vigilado, atomicidad, criterio de cierre, formato del report-back.
+description: Reglas de una sesión Claude headless que recibe un task contract — alcance, atomicidad, criterio de cierre y formato del report-back. Úsala al arrancar un claude -p de warroom.
 ---
 
 # Executor Discipline

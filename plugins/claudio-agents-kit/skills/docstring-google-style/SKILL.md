@@ -1,6 +1,6 @@
 ---
 name: docstring-google-style
-description: Formato Google style para docstrings en Python. Invocar cuando se documenten funciones, clases o módulos en Python.
+description: Escribe docstrings de Python en formato Google. Úsala al documentar funciones, clases o módulos.
 ---
 
 # Docstrings — Google Style

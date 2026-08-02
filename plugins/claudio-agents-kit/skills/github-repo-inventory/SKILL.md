@@ -1,6 +1,6 @@
 ---
 name: github-repo-inventory
-description: Pointer al inventario único de repos GitHub de David (99-meta/repos-inventario.md del vault). Invocar al mapear un repo a su proyecto vault, clasificar repos para analytics, o crear un repo nuevo.
+description: Consulta el inventario de repos del vault antes de mapear, clasificar o crear un repositorio. Úsala para no asumir en qué estado está un repo.
 ---
 
 # GitHub Repo Inventory

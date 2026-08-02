@@ -1,6 +1,6 @@
 ---
 name: pytest-style
-description: Convenciones y reglas de performance para tests con pytest. Invocar cuando se escriban tests unitarios o de integración en Python, se configure pytest en un proyecto nuevo, o se audite una suite que tarda más de lo esperado. Cubre naming, AAA, SAVEPOINT-per-test, paralelismo con xdist, mocks obligatorios de renderers/SDKs y checklist de validación antes de declarar "tests listos".
+description: Convenciones y reglas de performance para pytest — SAVEPOINT por test, xdist, mocks obligatorios y markers. Úsala al escribir tests en Python o cuando la suite tarda de más.
 ---
 
 # pytest — Convenciones + Performance

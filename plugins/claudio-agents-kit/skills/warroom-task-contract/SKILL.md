@@ -1,6 +1,6 @@
 ---
 name: warroom-task-contract
-description: Formato YAML del task contract que warroom (desktop app de David bajo diseño) emite a un executor Claude headless. Invocar cuando se diseña la API planner↔executor, cuando se redacta un contrato, o cuando un executor debe parsearlo.
+description: Formato YAML del contrato que el planner de warroom emite a un executor headless. Úsala al diseñar, redactar o parsear un contrato.
 ---
 
 # Warroom Task Contract

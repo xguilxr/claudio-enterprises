@@ -1,6 +1,6 @@
 ---
 name: postgres-query-patterns
-description: Patrones de queries eficientes en PostgreSQL. Invocar cuando se escriba SQL, se diseñe un query para endpoint, o se investigue performance de DB.
+description: Patrones de query eficientes en PostgreSQL — índices, CTEs, ventanas y lectura de EXPLAIN. Úsala al escribir SQL o investigar una query lenta.
 ---
 
 # PostgreSQL — Patrones de Queries

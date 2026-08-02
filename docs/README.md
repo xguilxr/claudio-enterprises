@@ -3,7 +3,7 @@ id: INDICE
 titulo: Índice maestro de marcos
 marco: —
 capa: indice
-version: 1.3.0
+version: 1.4.0
 estado: vigente
 idioma: es
 responsable: propietario
@@ -90,7 +90,8 @@ dependen del paquete.
 | Falta | Consecuencia | Bloquea |
 |---|---|---|
 | `INSTRUCCIONES-PROYECTO.md` | Es el nivel L1 del orquestador, lo único permanente en contexto. Sin él no hay activación por disparador y la tabla de ruteo hay que consultarla a mano | La operación diaria |
-| **MCS-G01…G04** | **No existen y nunca se crearon.** MCS-CORE §0.3 las declara como parte del marco. Dejan a MCS incumpliendo EST-03, que es N1 | Que MCS alcance MFB-N1, y la rúbrica del Track E |
+| **MCS-G01…G03** | No existen. MCS-CORE §0.3 las declara como parte del marco | El razonamiento tras los requisitos de ciclo de vida, diseño e IA |
+| Validación de MCS-G04 | La rúbrica del Track E se redactó desde §3.7, §3.8 e IA-06. CON-08 exige que la certifique una persona experta | Que la clasificación rol/skill sea autoritativa |
 | MCC-P02, P03, P04 | Inmersión sectorial, propuesta y costeo, estimación | Operar los dominios INV, ECO y ESF sin leer las guías |
 | MCC-T01, T02 | Ficha de encargo y propuesta (EST-09) | Que MCC llegue a MFB-N3 |
 | Skills | 17 propuestas, ninguna construida (EST-10) | Que el sistema funcione sin consultar la tabla de ruteo |
@@ -118,7 +119,8 @@ dependen del paquete.
 | MCS-OP03 | Evidencia y certificación | Operativa | Conservación de evidencia y control de cambios | ✅ |
 | MCS-ERRATAS | Erratas v2.0.0 | Operativa | Siete defectos pendientes de emitir v2.0.1 | ✅ |
 | MCS-P02 | Consultoría | Prompt | **Reemplazado por MCC-P01** | ⛔ |
-| MCS-G01…G04 | Guías | Guía | Ciclo de vida, diseño, IA, disciplinas transversales | ❌ |
+| MCS-G04 | Disciplinas transversales | Guía | **Track E, rúbrica de autonomía.** v0.1.0 pendiente de validación | ⚠️ |
+| MCS-G01…G03 | Guías | Guía | Ciclo de vida, diseño, IA | ❌ |
 
 ### 2.3 MCC — Marco de Consultoría de Tecnología
 
@@ -146,11 +148,15 @@ autonomía de MCS-G04 track E. Todo lo que no lo supera es una skill, no un rol.
 
 | Marco | Rol | Puntuación rúbrica | Estado |
 |---|---|---|---|
-| — | — | — | Pendiente de MCS-OP02 |
+| MCS | `task-executor` | **11/12**, dim4 = 2 | Propuesto |
 
-> El inventario se poblará al ejecutar MCS-OP02 sobre el repositorio previo.
-> Expectativa declarada: la mayoría de los "agentes-rol" existentes se
-> convertirán en skills. Eso es el resultado correcto.
+Rúbrica aplicada a los 22 agentes previos en `migracion/03-disposicion.md`: **uno pasa el
+umbral**. Los otros 21 se descomponen en 34 skills y 5 corpus. Es el resultado que MCS-OP02
+anticipaba.
+
+Antes de declarar `task-executor` vigente hay que cerrar las puertas de MCS-G04 §4: ADR con
+la puntuación (IA-06), evaluación con umbral (IA-07, IA-08), límites de iteración y coste
+(IA-03) y confirmación humana en acciones irreversibles (IA-10).
 
 ---
 
@@ -200,7 +206,7 @@ sobre cada uno:
 | Marco | Bloqueo para su propio N1 | Gravedad |
 |---|---|---|
 | **MFB** | Ninguno conocido. Tiene normativo, guía, prompts y plantillas | — |
-| **MCS** | **EST-03: no tiene ninguna guía.** G01–G04 nunca se crearon | Bloqueante |
+| **MCS** | EST-03 cerrado con MCS-G04 v0.1.0. Faltan G01–G03 | Media |
 | **MCC** | Ninguno. Su autoauditoría declara MFB-N2; N3 exige T01, T02 y skills | — |
 
 **Ambos anexos de distribución fallan NIV-07** salvo el de MCC: MFB corrigió el suyo en

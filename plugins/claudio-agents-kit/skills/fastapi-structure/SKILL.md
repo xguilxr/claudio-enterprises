@@ -1,6 +1,6 @@
 ---
 name: fastapi-structure
-description: Estructura y convenciones para proyectos FastAPI. Invocar cuando se arranca un backend nuevo, se agrega un router, o se diseña la organización de un proyecto REST.
+description: Estructura un proyecto FastAPI con routers finos, servicios gruesos y schemas por recurso. Úsala al arrancar un backend o agregar un router.
 ---
 
 # FastAPI — Estructura estándar

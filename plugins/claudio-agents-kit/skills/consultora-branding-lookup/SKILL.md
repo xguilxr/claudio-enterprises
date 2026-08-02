@@ -1,6 +1,6 @@
 ---
 name: consultora-branding-lookup
-description: Consulta los assets de branding de la consultora con la que Claudio esté presentando una propuesta (logo, paleta, tipografías, plantilla de slides, plantilla de propuesta). Invocar SIEMPRE al inicio de un proyecto tipo `proposal` antes de escribir cualquier contenido, y en cualquier proyecto que genere material presentable ante cliente (deck, cotización, SOW).
+description: Trae el branding de la consultora con la que se presenta una propuesta — logo, paleta, tipografías y plantillas. Úsala antes de escribir un deck, una cotización o un SOW.
 ---
 
 # Consultora Branding Lookup

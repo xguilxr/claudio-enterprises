@@ -1,6 +1,6 @@
 ---
 name: design-inspiration-lookup
-description: Consulta la base de datos central "Inspiración" del workspace de Notion de Claudio via `databases.query` con filtros por Asset Type, Surface, Style Tags, Library/Stack, Project context e Is Generic. Reemplaza la navegación por carpetas que había antes. Invocar cuando cualquier agente necesite referencias visuales antes de proponer UI, o código pegable para resolver un patrón concreto.
+description: Busca referencias visuales y código pegable en la base Inspiración de Notion, filtrando por tipo, superficie, estilo y stack. Úsala antes de proponer UI.
 ---
 
 # Cómo consultar la DB `Inspiración` de Notion

@@ -1,6 +1,6 @@
 ---
 name: github-actions-ci
-description: Convenciones para workflows de GitHub Actions de CI con caching agresivo, jobs paralelos (lint / typecheck / test-smoke / build) y separación del gate de PR vs jobs nightly (test-heavy, e2e). Invocar cuando se genere o audite `.github/workflows/*.yml`, se agregue un gate de PR, o se optimice un CI lento. Objetivo: el path `lint + typecheck + test-smoke` corre en <1 min con caché tibio.
+description: Arma un CI de GitHub Actions con caché agresiva y jobs paralelos que corra en menos de un minuto. Úsala al crear o auditar workflows, o cuando el CI tarda demasiado.
 ---
 
 # GitHub Actions — CI performante

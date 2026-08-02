@@ -1,6 +1,6 @@
 ---
 name: proposal-writing
-description: Estructura para propuestas comerciales y cotizaciones de proyectos para PyMES. Invocar cuando Claudio necesita generar una propuesta, cotización, SOW (Statement of Work) o follow-up comercial. Segundo tipo de proyecto más frecuente.
+description: Estructura una propuesta comercial, cotización, SOW o follow-up para PyME. Úsala cuando haya que cotizar o presentar un alcance.
 ---
 
 # Propuestas comerciales — Estructura Claudio-Enterprises

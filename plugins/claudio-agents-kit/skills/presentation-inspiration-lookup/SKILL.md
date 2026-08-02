@@ -1,6 +1,6 @@
 ---
 name: presentation-inspiration-lookup
-description: Consulta el vault de Notion de Claudio para extraer inspiración de FORMATO de presentaciones y propuestas (layouts de slides, jerarquía visual, hooks narrativos, cierres, dashboards tipo one-pager). Distinto de `design-inspiration-lookup` (que cubre sitios y productos) y de `consultora-branding-lookup` (que cubre identidad corporativa). Invocar antes de escribir una propuesta larga, un deck, o un informe visual para cliente.
+description: Trae ideas de formato de presentaciones y propuestas — layouts, jerarquía visual, hooks y cierres. Úsala antes de escribir un deck o un informe visual.
 ---
 
 # Presentation Inspiration Lookup

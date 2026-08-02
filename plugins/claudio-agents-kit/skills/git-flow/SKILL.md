@@ -1,6 +1,6 @@
 ---
 name: git-flow
-description: Flujo de branches y PRs estándar para proyectos de Claudio-Enterprises. Invocar cuando se arranca un proyecto nuevo, se hace un commit, o se abre un PR.
+description: Modelo de ramas, PRs, protección y tags. Úsala al arrancar un proyecto o al abrir un PR.
 ---
 
 # Git Flow — Claudio-Enterprises

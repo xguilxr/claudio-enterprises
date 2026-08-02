@@ -7,6 +7,21 @@ y el versionado sigue [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ---
 
+## [5.2.0] — 2026-08-02
+
+### Changed
+- **Descripciones de las 21 skills reescritas conforme a MFB ACT-04**: en las palabras de quien las necesita, no con terminología interna. De 5 697 a 2 941 caracteres. Ahorra ~689 tokens de contexto permanente en cada turno de cada sesión. La descripción es el campo que determina la activación de una skill, por eso el cambio es MENOR y no PATCH: altera cuándo se activa cada una.
+- **`plugin.json` → `description`**: de 1 310 a 164 caracteres. El campo contenía el historial de versiones en prosa y los conteos de agentes, skills y templates — cifras vivas dentro de un manifiesto, que CON-04 prohíbe y que derivan al primer cambio. El historial vive en este archivo.
+
+### Added
+- Nada. Ningún agente ni skill nuevo.
+
+### Notas
+- El repositorio aloja ahora los tres marcos en `docs/`: **MFB** construcción de marcos, **MCS** calidad de software y **MCC** consultoría de tecnología. El paquete implementa los marcos; los marcos no dependen del paquete.
+- La reabsorción de los 22 agentes está diseñada en `docs/migracion/03-disposicion.md` y **no ejecutada**: exige aprobación conforme a MCS-OP02.
+
+---
+
 ## [5.1.0] — 2026-05-21
 
 ### Changed

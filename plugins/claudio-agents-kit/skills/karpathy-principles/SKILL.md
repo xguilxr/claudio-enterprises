@@ -1,6 +1,6 @@
 ---
 name: karpathy-principles
-description: Cuatro principios transversales (Think Before Coding / Simplicity First / Surgical Changes / Goal-Driven Execution) que aplica todo agente que escribe o modifica código. Surfacea supuestos antes de implementar, escribe lo mínimo que resuelve el pedido, no toca código adyacente sin permiso, y no cierra hasta verificar el criterio de éxito. Aplicar siempre que se vaya a editar/escribir código; excepción explícita para `limpiador` y `optimizador` cuando se los invoca para refactor.
+description: Cuatro reglas antes de escribir código — explicitar supuestos, escribir lo mínimo, no tocar código adyacente y verificar antes de cerrar. Úsala siempre que edites código.
 ---
 
 # Karpathy Principles

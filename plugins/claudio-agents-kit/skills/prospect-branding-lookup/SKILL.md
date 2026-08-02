@@ -1,6 +1,6 @@
 ---
 name: prospect-branding-lookup
-description: Consulta la sección "Prospectos" del workspace de Notion de Claudio para traer lo que se conozca sobre un cliente potencial (sitio actual, competidores, inspiración del rubro, notas de discovery, propuesta enviada). Recorre subpáginas recursivamente sin asumir schema fijo. Invocar cuando se arranca un proyecto tipo `proposal` y el cliente todavía no es un cliente activo, o cuando design-researcher necesita inferir branding/posicionamiento desde el material de research del prospecto.
+description: Trae lo que se sepa de un cliente potencial — sitio actual, competidores, notas de discovery y propuesta enviada. Úsala al arrancar una propuesta con un prospecto.
 ---
 
 # Prospect Branding Lookup

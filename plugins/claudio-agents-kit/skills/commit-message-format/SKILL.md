@@ -1,6 +1,6 @@
 ---
 name: commit-message-format
-description: Formato de mensajes de commit siguiendo Conventional Commits. Invocar en cada commit para mantener historia limpia y permitir CHANGELOG automático.
+description: Escribe el mensaje de un commit con formato Conventional Commits. Úsala en cada commit y antes de abrir un PR.
 ---
 
 # Commit Messages — Conventional Commits

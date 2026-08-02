@@ -1,6 +1,6 @@
 ---
 name: vitest-patterns
-description: Convenciones y reglas de performance para tests en JS/TS con Vitest (preferido) o Jest, React Testing Library, MSW y Playwright. Invocar cuando se escriban o scaffoldeen tests de frontend/Node, se configure un runner nuevo, o se audite una suite lenta. Cubre mocks de SDKs externos, renderHook/RTL en vez de servidor real, separación de Playwright y detección de stack.
+description: Convenciones y performance para tests en JS/TS con Vitest, RTL y MSW. Úsala al escribir tests de frontend o cuando la suite es lenta.
 ---
 
 # Vitest / Jest — Convenciones + Performance
