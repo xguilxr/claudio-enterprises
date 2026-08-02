@@ -3,7 +3,7 @@ id: INDICE
 titulo: Índice maestro de marcos
 marco: —
 capa: indice
-version: 1.5.0
+version: 1.6.0
 estado: vigente
 idioma: es
 responsable: propietario
@@ -56,6 +56,7 @@ docs/
 ├── README.md                  ← este archivo: qué existe
 ├── ORQUESTADOR.md             ← cuándo cargar cada cosa
 ├── CONVENCIONES.md            ← nomenclatura, estructura, front-matter
+├── AUDITORIA.md               ← cómo se audita un proyecto: orden, nivel, registro
 │
 ├── conocimiento/
 │   ├── glosario.yaml          ← eje común de TODA la familia (27 términos)
@@ -70,11 +71,12 @@ docs/
 ├── mcs/                       ← Calidad de Software · sin guías
 │   ├── MCS-CORE.md · MCS-ERRATAS-2.0.0.md
 │   ├── prompts/   MCS-P01 auditoría · MCS-P02 (reemplazado) · MCS-P03 quick scan
-│   └── operativa/ MCS-OP01 arranque · MCS-OP02 reabsorción · MCS-OP03 evidencia
+│   └── operativa/ MCS-OP01 cartera · MCS-OP02 reabsorción · MCS-OP03 evidencia
 │
 ├── mca/                       ← Capacidades Agénticas · el entorno de trabajo
 │   ├── MCA-CORE.md
 │   ├── guias/     MCA-G01 entorno agéntico, niveles y destilación
+│   ├── prompts/   MCA-P01 andamiaje · MCA-P02 auditoría de entorno
 │   └── operativa/ MCA-OP01 mapa de capacidades de la plataforma (30d)
 │
 ├── mcc/                       ← Consultoría de Tecnología · MFB-N2
@@ -100,7 +102,7 @@ dependen del paquete.
 | Validación de MCS-G04 | La rúbrica del Track E se redactó desde §3.7, §3.8 e IA-06. CON-08 exige que la certifique una persona experta | Que la clasificación rol/skill sea autoritativa |
 | MCC-P02, P03, P04 | Inmersión sectorial, propuesta y costeo, estimación | Operar los dominios INV, ECO y ESF sin leer las guías |
 | MCC-T01, T02 | Ficha de encargo y propuesta (EST-09) | Que MCC llegue a MFB-N3 |
-| Skills | 17 propuestas, ninguna construida (EST-10) | Que el sistema funcione sin consultar la tabla de ruteo |
+| Ejecución de la evaluación de `task-executor` | Los doce casos existen con umbral declarado; nadie los ha corrido. Sin resultado registrado el rol no pasa de `candidato` | Que el único rol sea vigente |
 
 ### 2.1 MFB — Marco de Construcción de Marcos
 
@@ -120,7 +122,7 @@ dependen del paquete.
 | MCS-CORE | Documento normativo | Normativa | 204 requisitos, 17 dominios, niveles N1–N5 | ✅ |
 | MCS-P01 | Auditoría | Prompt | Auditoría formal de conformidad, seis etapas | ✅ |
 | MCS-P03 | Quick scan | Prompt | Reconocimiento rápido, una página, quick wins | ✅ |
-| MCS-OP01 | Arranque de auditorías | Operativa | Poner en marcha las auditorías de la cartera | ✅ |
+| MCS-OP01 | Gestión de la cartera | Operativa | Inventario, prioridad, consolidación y cadencia entre proyectos | ✅ |
 | MCS-OP02 | Reabsorción del repositorio | Operativa | Un solo uso: migrar los activos previos | ✅ |
 | MCS-OP03 | Evidencia y certificación | Operativa | Conservación de evidencia y control de cambios | ✅ |
 | MCS-ERRATAS | Erratas v2.0.0 | Operativa | Siete defectos pendientes de emitir v2.0.1 | ✅ |
@@ -154,8 +156,8 @@ Gobierna **la IA que construye el producto**; MCS §5.15 gobierna la que el prod
 | MCA-CORE | Documento normativo | Normativa | 48 requisitos, 7 dominios, niveles N1–N5 | ✅ |
 | MCA-G01 | El entorno agéntico | Guía | Niveles, dónde va cada cosa, destilación | ✅ |
 | MCA-OP01 | Mapa de capacidades | Operativa | Único documento que nombra mecanismos. Revisión cada 30 días | ✅ |
-| MCA-P01 | Andamiaje de entorno | Prompt | Lleva un repositorio a N2 | ❌ |
-| MCA-P02 | Auditoría de entorno | Prompt | Determina el nivel alcanzado | ❌ |
+| MCA-P01 | Andamiaje de entorno | Prompt | Lleva un repositorio a N2 en una sesión | ✅ |
+| MCA-P02 | Auditoría de entorno | Prompt | Mide el contexto y determina el nivel alcanzado | ✅ |
 
 **Dominios:** CTX contexto · CAP capacidades · FLU flujos · AUT autonomía · HER herramientas ·
 EVA evaluación · APR aprendizaje.
