@@ -24,7 +24,7 @@ detalla los existentes.
 
 MCS-G03-ia-agentes.md
 MFB-P01-crear-marco.md
-MCS-OP01-arranque-auditorias.md
+MCS-OP01-gestion-de-cartera.md
 MCS-CORE.md                     ← el normativo no lleva número
 ```
 

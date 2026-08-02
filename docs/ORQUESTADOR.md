@@ -53,7 +53,7 @@ Qué cargar según lo que estás haciendo. Nada más.
 | Si la tarea es… | Carga | Nivel |
 |---|---|---|
 | Preguntar, explorar, decidir a grandes rasgos | Nada | L0 |
-| Empezar un proyecto nuevo | MCS-OP01 §5 tanda 1 | L2 |
+| Empezar un proyecto nuevo | MCS-OP01 Anexo A tanda 1 | L2 |
 | Revisar un repo por encima | MCS-P03 | L2 |
 | Auditar formalmente un producto | MCS-P01 + MCS-CORE | L3 |
 | Tomar una decisión de arquitectura | MCS-G01 fase 2 | L2 |

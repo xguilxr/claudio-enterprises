@@ -7,6 +7,33 @@ y el versionado sigue [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ---
 
+## [6.1.1] — 2026-08-02
+
+Solo documentación. Ningún archivo del plugin cambió; el bump existe para que el caché no deje a nadie con un índice que miente.
+
+### Changed
+- **`MCS-OP01` → v2.0.0, «Gestión de la cartera de proyectos».** `MCS-OP01` y `AUDITORIA.md` decían los dos dónde se registran los informes por proyecto. Fallo del propietario: **gana `AUDITORIA.md`; MCS-OP01 se queda con la cartera** (TRZ-02, un hecho vive en un solo documento). El documento declara el fallo y lo retirado en su §0, en vez de borrarlo en silencio (VER-05).
+- **Renombrado a `MCS-OP01-gestion-de-cartera.md`.** El descriptor viejo, `arranque-auditorias`, describía justo lo que el documento dejó de hacer. Las dependencias por identificador sobrevivieron solas al renombre, que es para lo que existe TRZ-03: la única referencia por nombre de archivo estaba en `CONVENCIONES.md`, como ejemplo del patrón.
+
+### Removed
+- **`auditorias/<proyecto>/` del repositorio de gobierno.** Los informes van al repositorio auditado. Tenerlos en dos sitios garantiza que uno quede viejo.
+- **`marco/` con copias de los documentos.** El marco vive en este repositorio y se referencia por identificador (TRZ-03). Copiarlo creaba una segunda versión que envejece sola.
+- **La tabla de nivel objetivo del antiguo Paso 2.** Decidía lo mismo que `AUDITORIA.md` §2 y solo para MCS.
+- **El antiguo Paso 3, auditoría piloto.** Es procedimiento de auditoría, no de cartera.
+
+Lo que **no** se retiró: las cinco tandas de MCS N1 y las reglas de ejecución pasan a Anexo A y B. Son descomposición de la parte MCS del plan, no un plan que compita con el consolidado.
+
+### Fixed
+- **El índice decía que `MCA-P01` y `MCA-P02` no existían.** Existen desde `de7be3a`. Marcados ✅.
+- **`AUDITORIA.md` no figuraba en el mapa de `docs/README.md`**, pese a ser el documento que gobierna toda auditoría. Añadido.
+- **«17 skills propuestas, ninguna construida» era falso** desde v6.0.0. Fila sustituida por la que sí bloquea hoy: la evaluación de `task-executor` sin ejecutar.
+- `docs/ORQUESTADOR.md` apuntaba a `MCS-OP01 §5`, que ya no existe con ese número → `Anexo A`.
+
+### Notas
+- **`mcs.yaml` no se tocó.** Al buscar referencias resultó ser normativo de `MCS-CORE` Anexo B, no un artefacto de MCS-OP01. Queda un asunto abierto que este fallo no cubre: `mcs.yaml`, `mca.yaml` y `conformidad.yaml` conviven en la raíz de un repositorio auditado. No es contradicción —los dos primeros son detalle por marco, el tercero es el resumen— pero son tres archivos y nadie lo ha decidido explícitamente.
+
+---
+
 ## [6.1.0] — 2026-08-02
 
 ### Fixed
