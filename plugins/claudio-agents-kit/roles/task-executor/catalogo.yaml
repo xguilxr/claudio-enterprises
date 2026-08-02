@@ -1,0 +1,170 @@
+# Catálogo de herramientas, ámbito y límites de task-executor
+#
+# Cierra MCA AUT-03 (catálogo y ámbito) y AUT-04 (límites de iteración y coste).
+#
+# REGLA CENTRAL: este archivo es el TECHO. Un contrato puede apretar cualquier
+# valor de aquí; ninguno puede aflojarlo. Un contrato que pida más de lo que este
+# catálogo admite no se negocia: se devuelve `blocked`.
+
+version: 1.0.0
+rol: task-executor
+revisado: 2026-08-02
+revisar_cada: 90d
+
+# ─────────────────────────────────────────────────────────────────────────────
+# 1. HERRAMIENTAS  (AUT-03)
+#
+# Denegar por omisión. Lo que no aparece en `permitidas` no se invoca, aunque el
+# entorno lo ofrezca. Heredar todas las herramientas del entorno no es un catálogo.
+# ─────────────────────────────────────────────────────────────────────────────
+
+herramientas:
+
+  permitidas:
+    - lectura_de_archivos          # leer, listar, buscar dentro del ámbito
+    - escritura_de_archivos        # crear y editar dentro del ámbito
+    - ejecucion_local              # comandos de verificación declarados por el proyecto
+    - control_de_versiones_local   # add, commit, branch, diff, log
+
+  autorizables:
+    # Denegadas por omisión. El contrato puede habilitar una de estas por nombre,
+    # y solo una a la vez si su `justificacion` está escrita. Ver §3.
+    - control_de_versiones_remoto  # push a la rama de trabajo
+    - red_de_lectura               # consultar documentación externa
+
+  denegadas:
+    # No autorizables por ningún contrato. Para hacer una de estas hace falta un
+    # humano en la sesión, y entonces no es este rol.
+    - gestion_de_credenciales
+    - infraestructura              # despliegue, migraciones de datos, DNS
+    - comunicacion_externa         # correo, mensajería, publicación
+    - modificacion_de_este_catalogo
+
+# ─────────────────────────────────────────────────────────────────────────────
+# 2. ÁMBITO  (AUT-03, segunda mitad)
+#
+# El ámbito no es una recomendación de estilo: es la frontera del radio de impacto.
+# ─────────────────────────────────────────────────────────────────────────────
+
+ambito:
+
+  escritura:
+    # Un contrato declara sus rutas y deben caer dentro de estas. El árbol de
+    # trabajo del repositorio, y nada fuera de él.
+    dentro_de: repositorio_de_trabajo
+    nunca:
+      - rutas fuera del árbol del repositorio
+      - el directorio personal del usuario
+      - configuración global del entorno
+      - ".git/ salvo por comandos de control de versiones"
+      - archivos de credenciales, en cualquier ruta
+
+  lectura:
+    dentro_de: repositorio_de_trabajo
+    nunca:
+      - archivos de credenciales
+      - historial de otras sesiones
+
+  aislamiento:
+    # Recomendado, no exigible por el rol: quien lo lanza decide.
+    preferido: árbol de trabajo dedicado
+    razon: un ámbito equivocado se revierte con descartar el árbol, no con revisar el historial
+
+# ─────────────────────────────────────────────────────────────────────────────
+# 3. ACCIONES IRREVERSIBLES  (AUT-01)
+#
+# AUT-01 no exige preguntar. Exige CONFIRMACIÓN HUMANA EXPLÍCITA.
+#
+# En una sesión sin supervisión esa confirmación se da ANTES, por escrito, en el
+# contrato — o no se da. Así AUT-01 y la regla «nunca preguntás» conviven: el rol
+# sigue sin preguntar en ejecución, y ninguna acción irreversible ocurre sin que un
+# humano la haya autorizado por su nombre.
+# ─────────────────────────────────────────────────────────────────────────────
+
+irreversibles:
+
+  siempre_denegadas:
+    - reescribir historial publicado      # push forzado, rebase de rama compartida
+    - borrar ramas o etiquetas remotas
+    - borrar archivos no versionados
+    - cualquier efecto sobre sistemas de terceros
+    - descartar cambios sin versionar del árbol de trabajo
+
+  autorizables_por_contrato:
+    # El contrato las habilita una por una, con justificación escrita. Ausencia de
+    # autorización es denegación: no se pide, no se infiere, no se asume.
+    - crear rama remota nueva
+    - empujar a la rama de trabajo del propio contrato
+    - borrar archivos versionados dentro del ámbito
+
+  al_encontrar_una_no_autorizada:
+    # Sin excepciones, y sin «una última vez».
+    accion: detener
+    status: blocked
+    motivo: accion_irreversible_no_autorizada
+    efectos_previos: se conservan, no se revierten a ciegas
+    registro: nombre de la acción, ruta afectada y por qué era necesaria
+
+# ─────────────────────────────────────────────────────────────────────────────
+# 4. LÍMITES  (AUT-04)
+#
+# Un rol sin límite declarado es el bucle suelto que MCA-N5 existe para prevenir.
+# ─────────────────────────────────────────────────────────────────────────────
+
+limites:
+
+  iteraciones:
+    techo: 40
+    unidad: invocaciones de herramienta
+    razon: por encima de 40 sin cerrar el criterio de terminado, el contrato estaba mal desglosado
+
+  tokens_salida:
+    techo: 120000
+    razon: |
+      El coste se declara en tokens y no en moneda a propósito. La tarifa cambia y
+      viviría caducada dentro del catálogo; la conversión se hace fuera, contra la
+      tarifa vigente del día de la traza.
+
+  minutos:
+    techo: 30
+    razon: un contrato que no cierra en 30 minutos necesita ser dos contratos
+
+  al_alcanzar_cualquiera:
+    accion: detener
+    status: partial
+    motivo: "limite_<cual>"
+    prohibido: reintentar, pedir ampliación, o continuar «porque faltaba poco»
+    obligatorio: informe completo con lo entregado hasta ese punto
+
+# ─────────────────────────────────────────────────────────────────────────────
+# 5. MEMORIA  (AUT-07)
+# ─────────────────────────────────────────────────────────────────────────────
+
+memoria:
+  persistente: false
+  estado: NO APLICABLE
+  justificacion: |
+    El rol no conserva estado entre ejecuciones. Cada una parte del contrato y del
+    estado del repositorio, y termina con la traza. No hay nada que inspeccionar ni
+    que podar.
+
+    Si alguna vez se le añade memoria entre ejecuciones, AUT-07 pasa a aplicable y
+    este bloque deja de ser una justificación para convertirse en una deuda.
+
+# ─────────────────────────────────────────────────────────────────────────────
+# 6. CÓMO SE HACE CUMPLIR
+#
+# Declarar no es controlar. MCA-P02 lo dice sin rodeos: un control que existe pero
+# no se ejecuta solo es PARCIAL, nunca CONFORME. La disciplina no es un control.
+# ─────────────────────────────────────────────────────────────────────────────
+
+aplicacion:
+  herramientas_y_irreversibles: permisos por herramienta del entorno — ver `permisos.json`
+  ambito: árbol de trabajo dedicado, más los permisos de escritura
+  limites: quien lanza la sesión los pasa como parámetro de ejecución
+  traza: obligatoria en todos los casos — ver `referencias/traza.md`
+
+  no_confiar_en:
+    - que el rol se acuerde de sus propias reglas
+    - que el contrato venga bien escrito
+    - que la ausencia de incidentes signifique que el control funciona

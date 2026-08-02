@@ -1,16 +1,22 @@
-# Claudio-Enterprises Marketplace
+# Claudio-Enterprises
 
-Marketplace privado de Claude Code para la agencia Claudio-Enterprises de David Aguilar: **22 agentes + 21 skills + 5 templates de proyecto + comando `/setup` para bootstrap de agentes/skills locales + sistema de prompts de 6 modos**.
+Familia de **cuatro marcos de trabajo** y el paquete que los opera.
 
-## Identidad: David vs Claudio
+| | Qué gobierna | Requisitos |
+|---|---|---|
+| **MFB** | Cómo se construye un marco | 52 |
+| **MCA** | Cómo trabaja Claude sobre un repositorio | 48 |
+| **MCC** | Cómo se conduce un encargo de cliente | 92 |
+| **MCS** | Cómo se construye software de calidad | 204 |
 
-Para evitar confusión al leer este repo, el `CLAUDE.md` global y los proyectos:
+**Empezá por [`docs/ORQUESTADOR.md`](docs/ORQUESTADOR.md).** Son 396 requisitos y no se
+cargan nunca todos: el orquestador dice qué entra y cuándo. Por defecto, nada.
 
-- **David** = el ser humano dueño del marketplace y de la agencia (David Aguilar). Toma decisiones, firma contratos, paga impuestos.
-- **Claudio** = el **colectivo de agentes** de este kit (orquestador, backend-expert, frontend-expert, etc.). Es la personalidad de la agencia cuando los agentes hablan.
-- **Claudio-Enterprises** = el nombre comercial de la agencia que opera David.
+- [`docs/README.md`](docs/README.md) — qué existe
+- [`docs/AUDITORIA.md`](docs/AUDITORIA.md) — cómo se audita un proyecto: MCA → MCC → MCS
+- [`docs/conocimiento/glosario.yaml`](docs/conocimiento/glosario.yaml) — el único eje común
 
-Cuando una frase se refiere a una decisión, acción o comunicación que solo un humano puede hacer, decí **David**. Cuando se refiere a un agente, un equipo de agentes o una convención de la agencia, decí **Claudio**.
+## El paquete
 
 ## Instalación (one-liner)
 
@@ -24,10 +30,10 @@ claude plugin install claudio-agents-kit@claudio-enterprises
 Verificá:
 
 ```bash
-claude plugin list   # debe mostrar claudio-agents-kit con versión 5.1.0+
+claude plugin list
 ```
 
-Dentro de Claude Code, `/agents` debería listar los 22 agentes.
+Dentro de Claude Code, `/skills` debería listar 21 skills. Los agentes se retiraron en la v6.0.0: ver `docs/migracion/03-disposicion.md`.
 
 ### (Recomendado) Linkear el CLAUDE.md global
 

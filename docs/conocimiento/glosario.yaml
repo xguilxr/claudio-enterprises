@@ -1,0 +1,261 @@
+# Glosario canónico — eje común de TODA la familia de marcos
+# Un concepto: un nombre en español, uno en inglés, una definición.
+# Antes de nombrar un concepto en cualquier marco, comprobar si ya existe aquí.
+# Regla: ningún marco mantiene glosario propio para conceptos definidos aquí (TRZ-04).
+
+meta:
+  version: 1.2.0
+  revisado: 2026-08-02
+  responsable: propietario
+  revisar_cada: 90d
+
+terminos:
+
+  - id: marco
+    es: marco
+    en: framework
+    definicion_es: >
+      Cuerpo normativo y explicativo que codifica una disciplina profesional en
+      requisitos verificables, con su propio prefijo de familia de tres letras.
+    no_usar_es: [framework, metodología, modelo]
+    marcos: [MFB, MCS]
+
+  - id: requisito
+    es: requisito
+    en: requirement
+    definicion_es: >
+      Exigencia numerada e inmutable de un documento normativo, con nivel mínimo
+      asignado y cumplimiento comprobable sin depender del juicio del evaluador.
+    no_usar_es: [regla, norma, criterio, control]
+    marcos: [MFB, MCS]
+
+  - id: nivel-conformidad
+    es: nivel de conformidad
+    en: conformance level
+    definicion_es: >
+      Grado de cumplimiento de un marco en la escala N1 a N5. Los niveles son
+      acumulativos y se declaran por producto y por marco.
+    no_usar_es: [nivel de madurez, grado, tier]
+    marcos: [MFB, MCS, MCC]
+
+  - id: puerta-calidad
+    es: puerta de calidad
+    en: quality gate
+    definicion_es: >
+      Conjunto de verificaciones automáticas cuyo resultado condiciona la
+      progresión de un cambio hacia producción.
+    no_usar_es: [checkpoint, control de paso]
+    marcos: [MCS]
+
+  - id: capa
+    es: capa
+    en: layer
+    definicion_es: >
+      Función de un documento dentro de un marco: normativa, guía, prompt,
+      operativa o plantilla.
+    no_usar_es: [nivel, tipo de documento]
+    marcos: [MFB]
+
+  - id: dominio
+    es: dominio
+    en: domain
+    definicion_es: >
+      Agrupación temática de requisitos dentro de una normativa, identificada por
+      un código de tres letras único en toda la familia de marcos.
+    no_usar_es: [área, categoría, sección]
+    marcos: [MFB, MCS]
+
+  - id: escenario-calidad
+    es: escenario de calidad
+    en: quality scenario
+    definicion_es: >
+      Especificación verificable de un atributo de calidad, expresada como
+      estímulo, contexto, respuesta y medida de respuesta con valor numérico.
+    no_usar_es: [requisito no funcional, NFR]
+    marcos: [MCS]
+
+  - id: deriva-conceptual
+    es: deriva conceptual
+    en: concept drift
+    definicion_es: >
+      Situación en la que un mismo concepto de dominio recibe nombres, unidades o
+      definiciones distintas en partes diferentes del sistema, sin producir un
+      fallo detectable.
+    no_usar_es: [inconsistencia, divergencia]
+    marcos: [MCS]
+
+  - id: cifra-viva
+    es: cifra viva
+    en: live figure
+    definicion_es: >
+      Valor numérico cuya vigencia depende del momento de consulta. No constituye
+      conocimiento estable y no forma parte de ningún corpus ni documento.
+    no_usar_es: [dato dinámico, valor volátil]
+    marcos: [MCS, MCC]
+
+  - id: frontera-competencia
+    es: frontera de competencia
+    en: scope of practice boundary
+    definicion_es: >
+      Límite declarado más allá del cual un sistema no emite juicio propio y
+      deriva a persona profesional cualificada, por tratarse de actividad regulada.
+    no_usar_es: [límite de responsabilidad, disclaimer]
+    marcos: [MCS, MCC]
+
+  - id: skill
+    es: skill
+    en: skill
+    definicion_es: >
+      Procedimiento repetible empaquetado, cargado bajo demanda mediante
+      divulgación progresiva. Se distingue de una capacidad atómica (tool) y de
+      un rol.
+    nota: Anglicismo aceptado por ser estándar de la industria.
+    no_usar_es: [habilidad, competencia, capacidad]
+    marcos: [MCS, MFB, MCC, MCA]
+
+  - id: agente
+    es: agente
+    en: agent
+    definicion_es: >
+      Sistema en el que un modelo de lenguaje determina dinámicamente qué
+      acciones ejecutar y en qué orden, mediante un bucle con herramientas.
+      Una declaración de rol no constituye un agente.
+    no_usar_es: [asistente, bot, rol]
+    marcos: [MCS, MCA]
+
+  - id: flujo-trabajo
+    es: flujo de trabajo
+    en: workflow
+    definicion_es: >
+      Secuencia de pasos predefinida en código, en la que un modelo de lenguaje
+      ejecuta pasos concretos sin decidir el orden.
+    no_usar_es: [pipeline, proceso, cadena]
+    marcos: [MCS, MCA]
+
+  - id: elemento-configuracion
+    es: elemento de configuración
+    en: configuration item
+    definicion_es: >
+      Artefacto sujeto a control de versiones e identificación única, cuya
+      modificación afecta al comportamiento o a la comprensión del producto.
+    no_usar_es: [artefacto, activo]
+    marcos: [MCS]
+
+  - id: linea-base
+    es: línea base
+    en: baseline
+    definicion_es: >
+      Conjunto de elementos de configuración en estado formalmente revisado, que
+      sirve de referencia y solo se altera mediante control de cambios.
+    no_usar_es: [snapshot, versión congelada]
+    marcos: [MCS]
+
+  - id: encargo
+    es: encargo
+    en: engagement
+    definicion_es: >
+      Unidad de trabajo consultivo con un solo cliente, una pregunta central y un
+      criterio de éxito declarado y comprobable al cierre.
+    no_usar_es: [proyecto, contrato, trabajo, cuenta]
+    marcos: [MCC]
+
+  - id: inmersion-sectorial
+    es: inmersión sectorial
+    en: sector immersion
+    definicion_es: >
+      Estudio acotado en tiempo del subsegmento del cliente, previo al
+      descubrimiento, orientado a conducir la conversación con solvencia y a
+      detectar anomalías operativas.
+    no_usar_es: [research, investigación de mercado, onboarding]
+    marcos: [MCC]
+
+  - id: subsegmento
+    es: subsegmento
+    en: subsegment
+    definicion_es: >
+      Nivel de desagregación de un rubro en el que la operación y los sistemas
+      son homogéneos. «Restaurantes» no lo es; «comida rápida con franquicia» sí.
+    no_usar_es: [nicho, vertical, sector]
+    marcos: [MCC]
+
+  - id: hallazgo
+    es: hallazgo
+    en: finding
+    definicion_es: >
+      Afirmación sobre la situación del cliente, sostenida por evidencia
+      identificable y registrada durante el descubrimiento o el diagnóstico.
+    no_usar_es: [observación, insight, conclusión]
+    marcos: [MCC, MCS]
+
+  - id: tanda
+    es: tanda
+    en: increment
+    definicion_es: >
+      Agrupación de trabajo que produce un resultado observable por sí misma, sin
+      depender de la siguiente para aportar valor.
+    no_usar_es: [fase, sprint, entrega, milestone]
+    marcos: [MCC]
+
+  - id: kit-reunion
+    es: kit de reunión
+    en: meeting kit
+    definicion_es: >
+      Salida de la inmersión sectorial: tarjeta de una pantalla, preguntas de
+      descubrimiento e hipótesis de necesidad con su criterio de descarte.
+    no_usar_es: [briefing, one-pager]
+    marcos: [MCC]
+
+  - id: entorno-agentico
+    es: entorno agéntico
+    en: agentic environment
+    definicion_es: >
+      Conjunto de artefactos versionados de un repositorio que determinan cómo un
+      asistente de programación opera sobre él.
+    no_usar_es: [setup, configuración, tooling]
+    marcos: [MCA]
+
+  - id: contexto-permanente
+    es: contexto permanente
+    en: always-on context
+    definicion_es: >
+      Porción del entorno agéntico que se carga en toda sesión sin que nadie la
+      solicite. Su tamaño se declara como presupuesto y se verifica.
+    no_usar_es: [system prompt, contexto base]
+    marcos: [MCA]
+
+  - id: capacidad-agentica
+    es: capacidad agéntica
+    en: agentic capability
+    definicion_es: >
+      Aptitud que el entorno habilita en el asistente. No es un artefacto: se
+      materializa en skills, instrucciones de alcance temático, flujos de trabajo
+      y roles. Se distingue de skill, que es el artefacto concreto.
+    no_usar_es: [feature, funcionalidad]
+    marcos: [MCA]
+
+  - id: patron-observado
+    es: patrón observado
+    en: observed pattern
+    definicion_es: >
+      Repetición registrada durante el trabajo real que sugiere la ausencia de un
+      artefacto del entorno agéntico.
+    no_usar_es: [insight, aprendizaje, señal]
+    marcos: [MCA]
+
+  - id: destilacion
+    es: destilación
+    en: distillation
+    definicion_es: >
+      Procedimiento por el que un patrón observado se convierte en artefacto del
+      entorno, mediante rúbrica declarada y aprobación humana.
+    no_usar_es: [extracción, refactor de prompts]
+    marcos: [MCA]
+
+  - id: radio-impacto
+    es: radio de impacto
+    en: blast radius
+    definicion_es: >
+      Conjunto de sistemas que una herramienta puede modificar, junto con la
+      reversibilidad de esa modificación.
+    no_usar_es: [alcance, superficie]
+    marcos: [MCA]

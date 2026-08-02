@@ -1,141 +1,117 @@
-# CLAUDE.md — Claudio-Enterprises Marketplace (repo-level)
+# CLAUDE.md — claudio-enterprises
 
-Estás trabajando DENTRO del repo marketplace. Este archivo define cómo se edita el contenido del marketplace (agentes, skills, templates) sin romper a los consumidores del plugin.
+Dos cosas viven acá:
 
-> Si tu tarea NO es editar el marketplace, probablemente estás en el repo equivocado.
+- **`docs/`** — la familia de marcos: **MFB** (cómo se construye un marco), **MCC**
+  (consultoría), **MCS** (software), **MCA** (entorno agéntico). Es el contenido normativo.
+- **`plugins/claudio-agents-kit/`** — el plugin que los pone a trabajar: skills de marco,
+  plantillas de proyecto, corpus y un rol.
 
-## Contexto del repo
+Si tu tarea no toca ninguna de las dos, estás en el repo equivocado.
 
-Este es un **Claude Code plugin marketplace**. Contiene:
+## Economía de tokens
 
-- `.claude-plugin/marketplace.json` — índice público de plugins
-- `plugins/<plugin-name>/` — cada plugin (hoy: `claudio-agents-kit`)
-- `CHANGELOG.md` — historial de cambios del marketplace
+**Es una filosofía del repo, no una preferencia de estilo.** Aplica a lo que se escribe y a
+cómo se contesta.
 
-La estructura de un plugin es fija:
+- Frases cortas, voz activa, sin decoración. Nada de repetir lo ya dicho en el mismo turno.
+- No cargues un marco completo para responder una pregunta. `docs/ORQUESTADOR.md` rutea por
+  nivel: L0 nada, L1 instrucciones, L2 la guía del marco, L3 la normativa.
+- Este archivo es contexto permanente: se paga en cada turno de cada sesión. **Presupuesto
+  declarado: 5 000 caracteres.** Lo que se use a veces no vive acá (MCA CTX-01, CTX-02).
+- Nada de cifras ni inventarios que deriven del contenido real. Los conteos viven en
+  `docs/README.md` y se verifican ahí (MCA CTX-03).
+
+## Estructura del plugin
 
 ```
 plugins/claudio-agents-kit/
-├── .claude-plugin/plugin.json       ← metadata + versión
-├── agents/<name>.md                 ← 1 archivo por agente
-├── skills/<name>/SKILL.md           ← 1 carpeta por skill
-├── commands/<name>.md               ← slash commands
-├── scripts/*.sh                     ← referenciar con ${CLAUDE_PLUGIN_ROOT}
-├── templates/                       ← plantillas (proyecto, agente, skill)
-└── README.md
+├── .claude-plugin/plugin.json    ← metadata + versión
+├── skills/<name>/SKILL.md        ← skills para operar los marcos de ESTE repo
+├── plantillas-skill/<name>/      ← skills de stack, para copiar a proyectos
+├── corpus/<name>.md              ← conocimiento de referencia, no procedimiento
+├── roles/<name>/AGENT.md         ← rol + catálogo, permisos, traza y evaluación
+└── templates/                    ← plantillas de proyecto y CLAUDE-global.md
 ```
 
-## Cómo se gestionan agentes y skills
+Un **rol** es lo que supera la rúbrica de autonomía de MCS-G04 track E. Todo lo demás es
+skill, plantilla o corpus. Hoy hay un solo rol.
 
-**Regla de oro**: no edites a mano. Usá el meta-agente `agent-manager` (vive en `plugins/claudio-agents-kit/agents/agent-manager.md`).
+## Cómo se cambia el contenido
 
-`agent-manager` se encarga de:
+La skill `mantener-marketplace` enruta a este procedimiento; el procedimiento es este
+(TRZ-02: un hecho vive en un solo documento).
 
-1. **Crear** agente o skill desde plantilla (`templates/agent-template.md`, `templates/skill-template.md`).
-2. **Validar frontmatter** (name, description, model, memory) antes de escribir.
-3. **Modificar / renombrar** con sus referencias.
-4. **Remover con limpieza** (archivo + menciones en CLAUDE-global.md y README).
-5. **Bumpear versión** en `plugins/claudio-agents-kit/.claude-plugin/plugin.json` Y `.claude-plugin/marketplace.json` según SemVer.
-6. **Actualizar CHANGELOG.md** con fecha y entrada Keep-a-Changelog.
-7. **Commit + push** usando skill `commit-message-format` (Conventional Commits).
-
-### Cuándo invocarlo
-
-Cualquier pedido de "agregá", "modificá", "renombrá", "borrá" un agente o skill → delegar a `agent-manager`. No intentar editar directamente.
-
-## Reglas de versionado (SemVer)
+1. **Rama dedicada.** `git checkout -b claude/<tema>`. Nunca directo a `main`.
+2. **Plantilla, no folio en blanco.** `docs/mfb/plantillas/`: T01 normativa · T02 guía ·
+   T03 prompt · T04 operativa · T05 skill · T06 ADR.
+3. **Validar el frontmatter** antes de escribir. Esquema en `docs/CONVENCIONES.md`.
+4. **Buscar referencias antes de renombrar o quitar** algo: `docs/`, `README.md` y
+   `templates/CLAUDE-global.md`.
+5. **Bumpear versión** en `plugin.json` **y** `.claude-plugin/marketplace.json`. Sin bump,
+   el caché deja a los consumidores en la versión vieja.
+6. **`CHANGELOG.md`** con fecha y entrada Keep a Changelog.
+7. **Probar**: `claude plugin marketplace add $(pwd) && claude plugin install claudio-agents-kit`
+8. **Commit en Conventional Commits** y `git push -u origin <rama>`.
 
 | Cambio | Bump |
 |---|---|
-| Typo, ajuste menor de descripción | PATCH (`2.1.0` → `2.1.1`) |
-| Agente o skill nuevo, sin romper | MINOR (`2.1.0` → `2.2.0`) |
-| Renombrar/remover agente existente, cambio de comportamiento que rompe flujos | MAJOR (`2.1.0` → `3.0.0`) |
+| Typo, ajuste de descripción | PATCH |
+| Skill, plantilla o documento nuevo, sin romper | MINOR |
+| Renombrar o quitar algo existente; cambio que rompe flujos | MAJOR |
 
-**Ambos archivos deben estar sincronizados**: `plugin.json` y `marketplace.json`. Si no bumpeás, los consumidores no ven el cambio (caching).
+## Formato
 
-## Formato esperado
-
-### Agente (`agents/<name>.md`)
 ```yaml
+# skills/<name>/SKILL.md
 ---
 name: <kebab-case>
-description: <frase que permita routing automático. Mencionar cuándo invocarlo.>
+description: <qué hace y cuándo usarla, en las palabras de quien la necesita (MFB ACT-04)>
+---
+```
+
+```yaml
+# roles/<name>/AGENT.md
+---
+name: <kebab-case>
+description: <cuándo delegarle una tarea>
 model: sonnet | opus | haiku
-memory: user
+version: <semver>
+estado: candidato | vigente
 ---
-
-# Rol
-# Responsabilidades
-# Reglas
 ```
 
-### Skill (`skills/<name>/SKILL.md`)
-```yaml
----
-name: <kebab-case>
-description: <cuándo aplicarla. Verbo imperativo.>
----
-
-# Contenido de la skill (convenciones, ejemplos, do/don't)
-```
-
-## Flujo de trabajo local antes de push
-
-```bash
-# 1. Branch dedicada (ya estás en una si seguís la convención)
-git checkout -b claude/<tema>
-
-# 2. Agent-manager hace los cambios + bump + CHANGELOG
-
-# 3. Probar localmente
-claude plugin marketplace add $(pwd)
-claude plugin install claudio-agents-kit
-
-# 4. Commit + push (agent-manager lo hace o lo hacés a mano)
-git push -u origin <branch>
-```
+Un rol exige además catálogo, límites, traza y evaluación: MCA dominio AUT.
 
 ## Reporte post-cambio (obligatorio)
 
-Cuando cualquier operación modifica archivos del marketplace, cerrás el turno con el reporte en **Markdown normal** — NO envuelto en un fence exterior. Si lo envolvés en triple-backticks, la prosa queda monoespaciada y los comandos anidados no son copiables (se invierte el efecto).
+Cuando modifiques archivos, cerrás el turno con un reporte en **Markdown plano — nunca
+envuelto en un fence exterior**. Envolverlo todo deja la prosa monoespaciada y los comandos
+sin poder copiarse: se invierte el efecto.
 
-Estructura:
+Secciones: **Cambios aplicados** · **Commits** (`hash` + mensaje) · **Archivos modificados**
+(ruta, +N −M) · **Cómo replicar** (PR si falta merge; `claude plugin marketplace update &&
+claude plugin update claudio-agents-kit`; recopiar `CLAUDE-global.md` si cambió).
 
-**📦 Cambios aplicados**
-
-**Commits**
-- `<hash>` &lt;mensaje&gt;
-
-**Archivos modificados**
-- `<ruta>` (+N −M)
-
-**Cómo replicar en el ambiente**
-1. Si falta merge: crear PR a `main` (dar URL o comando `gh pr create ...`).
-2. En cada máquina consumidora: `claude plugin marketplace update && claude plugin update claudio-agents-kit`.
-3. Si cambió `CLAUDE-global.md`: recopiar a `~/.claude/CLAUDE.md` (o `ln -sf` si usás symlink).
-
-Reglas de formato:
-- Prosa como Markdown plano (listas, headers, bold).
-- Comandos copiables en backticks inline o fenced code block con lenguaje (` ```bash `).
-- Nunca envolver TODO el reporte en un fence exterior.
-
-Regla general completa: ver `templates/CLAUDE-global.md` → sección "Reporte post-cambio".
+Comandos en backticks o en bloque con lenguaje. Regla completa en
+`plugins/claudio-agents-kit/templates/CLAUDE-global.md`.
 
 ## No hacer
 
-- ❌ Editar `plugin.json`/`marketplace.json` sin bumpear.
-- ❌ Agregar un agente sin actualizar `CLAUDE-global.md` si pertenece al equipo core.
-- ❌ Commits sin formato Conventional Commits (ver skill `commit-message-format`).
-- ❌ Push a `main` directo. Siempre branch + PR.
-- ❌ Remover un agente sin buscar referencias en templates y README primero.
+- ❌ Tocar `plugin.json` o `marketplace.json` sin bumpear.
+- ❌ Quitar o renombrar algo sin buscar sus referencias primero.
+- ❌ Declarar conformidad sin evidencia ejecutada. Un control que existe y no corre es
+  PARCIAL, nunca CONFORME.
+- ❌ Inventar requisitos, normas o rutas. Lo no verificado se marca como tal (TRZ-09).
+- ❌ Commits fuera de Conventional Commits.
+- ❌ Push directo a `main`. Siempre rama + PR.
 
-## Herramientas que normalmente usás (Claudio)
+## Stack por defecto
 
-Stack que asumimos en este marketplace y en los proyectos que lo instalan:
+- **Python**: pytest, ruff, uv (preferido) o poetry
+- **Node/TypeScript**: pnpm, vitest, eslint, prettier, tsx
+- **SQL**: PostgreSQL 15+, SQLAlchemy async desde Python
+- **MCP**: GitHub, Notion, Gmail, PostgreSQL cuando esté disponible
 
-- **Python**: pytest, ruff, uv (preferido) o poetry.
-- **Node/TypeScript**: pnpm, vitest, eslint, prettier, tsx para scripts.
-- **SQL**: PostgreSQL 15+ como principal, SQLAlchemy async desde Python.
-- **MCP comunes**: GitHub, Notion, Gmail, PostgreSQL cuando esté disponible.
-
-Cualquier skill nueva debe respetar este stack por defecto; otros stacks van como skill opt-in.
+Una skill nueva respeta este stack. Otro stack va como plantilla opt-in en
+`plantillas-skill/`.

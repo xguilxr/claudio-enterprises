@@ -7,6 +7,72 @@ y el versionado sigue [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ---
 
+## [6.1.0] — 2026-08-02
+
+### Fixed
+- **`CLAUDE.md` reescrito.** Su regla de oro mandaba delegar en el meta-agente `agent-manager`, que v6.0.0 eliminó: la instrucción más importante del archivo más importante apuntaba a algo que no existe. Con ella caían `agents/`, `commands/`, `scripts/`, `agent-template.md` y `skill-template.md`, todos borrados en v6.0.0. **Ninguna referencia muerta queda, y las seis rutas que cita se verificaron una a una.**
+- `CLAUDE.md` no mencionaba `docs/` — la familia de marcos, que es hoy el centro de gravedad del repo. Ahora abre con las dos mitades y rutea a `docs/ORQUESTADOR.md` en vez de cargar marcos completos.
+- El procedimiento de cambio deja de delegar y pasa a ser el propio archivo, que es lo que la skill `mantener-marketplace` ya declaraba al decir «el procedimiento completo vive en CLAUDE.md» (TRZ-02).
+- **Economía de tokens declarada como filosofía del repo**, con presupuesto de contexto permanente de 5 000 caracteres (MCA CTX-01, CTX-02). Medido: 5 380 → **4 932**. La primera reescritura dio 5 094 y se recortó hasta entrar, porque `MCA-P01` Etapa 5 no admite discutir el presupuesto propio.
+
+### Added
+- **`roles/task-executor/catalogo.yaml`** — catálogo de herramientas, ámbito, acciones irreversibles, límites y memoria. Cierra **MCA AUT-03, AUT-04, AUT-01 y AUT-07**. Deniega por omisión: heredar todas las herramientas del entorno no era un catálogo.
+- **`roles/task-executor/permisos.json`** — el catálogo hecho cumplir por permisos del entorno. `catalogo.yaml` declara, este archivo controla. Separados, el control vuelve a ser prosa.
+- **`roles/task-executor/referencias/traza.md`** — esquema de traza con entrada, herramientas invocadas, salida y coste (**AUT-05**). El coste va en tokens y no en moneda: la tarifa cambia y viviría caducada dentro de la traza.
+- **`roles/task-executor/evaluacion/`** — doce casos con umbral declarado (**AUT-06**): seguridad 6/6 eliminatorio, disciplina ≥ 5/6. No se compensan entre sí. Incluye `verificar-coherencia.sh`, que comprueba que las declaraciones del rol no se contradigan y **está probado contra fallos inyectados**, no solo contra el caso bueno.
+
+### Changed
+- **`roles/task-executor/AGENT.md`** reescrito. Estado `propuesto` → **`candidato`**: las cinco puertas de diseño cerradas, pendientes dos de ejecución (correr la evaluación, producir la primera traza). No pasa a `vigente` con un esquema por traza y un conjunto de casos por resultado — `MCA-P02` puntúa eso PARCIAL, nunca CONFORME.
+- **`referencias/contrato.md`** — bloques `limites` y `autorizaciones`. Regla central: **el contrato solo puede apretar, nunca aflojar**; el techo vive en el catálogo.
+- **`referencias/disciplina.md`** — de 5 reglas a 7. Nuevas: «el catálogo es el techo» y «traza siempre». Se explicita que registrar una objeción en `assumptions` no autoriza a desobedecer la restricción.
+- Referencias muertas corregidas: apuntaban a `executor-discipline` y `warroom-task-contract` como skills instaladas, y desde v6.0.0 son `referencias/` del propio rol y una plantilla de proyecto. También se quitó una versión de modelo inexistente que había quedado escrita.
+
+### Notas
+- **AUT-01 no exige preguntar: exige confirmación humana explícita.** Se daba de bruces con la regla «nunca preguntás durante la ejecución». Se resolvió dando la confirmación *antes*, por escrito, en el contrato: catálogo que deniega por omisión, autorizaciones nominales con justificación, y ausencia de autorización tratada como denegación. Las dos reglas sobreviven enteras.
+- La rúbrica que clasificó el rol, `MCS-G04`, sigue en **v0.1.0 pendiente de validación experta** (CON-08). Si cambia, la clasificación se recalcula.
+
+---
+
+## [6.0.0] — 2026-08-02
+
+### Removed — BREAKING
+- **Los 22 agentes.** La rúbrica del Track E (`MCS-G04` v0.1.0) se aplicó a los 22 y **uno solo superó el umbral de 9 sobre 12**. Los otros 21 se descompusieron en skills, plantillas y corpus conforme a `docs/migracion/03-disposicion.md`. Ningún activo se borró sin fila de justificación.
+- **`orquestador`.** Puntuó 3 y es el único que no deja descendencia: su tabla de enrutamiento ya está mejor expresada en `docs/ORQUESTADOR.md`, que además rutea marcos y no solo agentes.
+- **`scripts/setup.sh`** (334 líneas). El CHANGELOG v5.1.0 ya lo daba por superado por `/scaffold` del vault.
+- **`commands/setup.md`.** La documentación oficial declara que comandos y skills son el mismo mecanismo; su función la cubre la skill `andamiaje-entorno`.
+- **`templates/agent-template.md`** y **`templates/skill-template.md`**, sustituidas por `MFB-T05`.
+
+### Added
+- **`roles/task-executor/`** — el único rol, con su puntuación registrada conforme a IA-06 y las cinco puertas que le faltan para ser vigente declaradas abiertas. Absorbe `executor-discipline` y `warroom-task-contract`, que eran el mismo procedimiento en tres sitios.
+- **21 skills de marco** que ejecutan MFB, MCS, MCC, MCA y la auditoría transversal. Cada una enruta al documento que contiene el procedimiento; no lo copia (TRZ-02).
+- **27 plantillas de skill** en `plantillas-skill/`, que se instalan en el proyecto que las necesita. No se cargan nunca de forma permanente.
+- **7 corpus** en `corpus/`, con el conocimiento declarativo que estaba dentro de los agentes.
+
+### Changed
+- Las cuatro búsquedas en Notion pasan a dos, con el detalle por fuente en `referencias/`.
+- `plugin.json` y `marketplace.json` describen ahora lo que el paquete hace, no su historial.
+
+### Notas
+- **Contexto permanente: de 3 870 a ~1 500 tokens por turno.** Las descripciones de los 22 agentes eran 2 106 de ellos.
+- Este repositorio aloja cuatro marcos en `docs/`. El paquete los implementa; ellos no dependen de él.
+
+---
+
+## [5.2.0] — 2026-08-02
+
+### Changed
+- **Descripciones de las 21 skills reescritas conforme a MFB ACT-04**: en las palabras de quien las necesita, no con terminología interna. De 5 697 a 2 941 caracteres. Ahorra ~689 tokens de contexto permanente en cada turno de cada sesión. La descripción es el campo que determina la activación de una skill, por eso el cambio es MENOR y no PATCH: altera cuándo se activa cada una.
+- **`plugin.json` → `description`**: de 1 310 a 164 caracteres. El campo contenía el historial de versiones en prosa y los conteos de agentes, skills y templates — cifras vivas dentro de un manifiesto, que CON-04 prohíbe y que derivan al primer cambio. El historial vive en este archivo.
+
+### Added
+- Nada. Ningún agente ni skill nuevo.
+
+### Notas
+- El repositorio aloja ahora los tres marcos en `docs/`: **MFB** construcción de marcos, **MCS** calidad de software y **MCC** consultoría de tecnología. El paquete implementa los marcos; los marcos no dependen del paquete.
+- La reabsorción de los 22 agentes está diseñada en `docs/migracion/03-disposicion.md` y **no ejecutada**: exige aprobación conforme a MCS-OP02.
+
+---
+
 ## [5.1.0] — 2026-05-21
 
 ### Changed

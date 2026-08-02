@@ -8,10 +8,16 @@
     {
       "name": "claudio-agents-kit",
       "source": "./plugins/claudio-agents-kit",
-      "description": "Equipo reutilizable de agentes + skills + templates + meta-agente agent-manager",
-      "version": "5.1.0",
+      "description": "Skills que operan los marcos MFB, MCS, MCC y MCA, más plantillas instalables por proyecto",
+      "version": "6.1.0",
       "category": "workflow",
-      "tags": ["agents", "consulting", "pandas", "fastapi", "spanish"]
+      "tags": [
+        "marcos",
+        "calidad",
+        "consultoria",
+        "agentico",
+        "spanish"
+      ]
     }
   ]
 }
