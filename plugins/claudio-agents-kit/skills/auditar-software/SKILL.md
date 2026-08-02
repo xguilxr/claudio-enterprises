@@ -1,5 +1,5 @@
 ---
-name: auditoria-conformidad
+name: auditar-software
 description: Audita una base de código contra el marco de calidad y devuelve el nivel real más un plan por tandas. Úsala cuando necesites saber en qué estado está un producto de verdad, no por impresión.
 ---
 

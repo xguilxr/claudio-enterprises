@@ -7,6 +7,15 @@ y el versionado sigue [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ---
 
+## [7.0.0] — 2026-08-02
+
+### Changed — BREAKING
+- **`auditoria-conformidad` → `auditar-software`.** Las tres skills por marco no eran paralelas: `auditar-entorno` (MCA), `auditar-encargo` (MCC) y `auditoria-conformidad` (MCS). La tercera obligaba a recordar cuál era cuál en el momento de invocarla. **Quien la llame por el nombre viejo deja de encontrarla** — de ahí el MAJOR.
+
+### Fixed
+- **El inventario de skills de `docs/README.md` estaba entero desactualizado.** Declaraba las 17 filas como «Propuesta» cuando las 22 están construidas desde v6.0.0, y dos nombres ya no existían: `rubrica-autonomia-ia` y `andamiaje-n1`. Faltaban cinco skills que sí existen, entre ellas `auditar-proyecto` — el punto de entrada. Tabla regenerada desde los archivos, con los 22 nombres verificados uno a uno contra el directorio.
+- `docs/migracion/03-disposicion.md` conserva la trazabilidad del renombre: `auditar-software` (antes `auditoria-conformidad`). El registro de migración sirve para encontrar dónde quedó cada activo; con el nombre viejo a secas dejaba de servir.
+
 ## [6.3.0] — 2026-08-02
 
 ### Added

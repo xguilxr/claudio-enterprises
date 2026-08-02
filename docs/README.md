@@ -207,29 +207,39 @@ Un esquema de traza no es una traza; un conjunto de casos no es un resultado.
 
 ## 4. Inventario de skills
 
-Una **skill** es un procedimiento repetible, cargado bajo demanda.
+Una **skill** es un procedimiento repetible, cargado bajo demanda. Se invoca con `/nombre`,
+o sola cuando su `description` encaja con lo que se pidió.
 
-| Marco | Skill | Qué hace | Requisitos que cierra | Estado |
-|---|---|---|---|---|
-| MCS | auditoria-conformidad | Ejecuta MCS-P01 | GOB-03 | Propuesta |
-| MCS | quick-scan | Ejecuta MCS-P03 | — | Propuesta |
-| MCS | redactar-adr | Genera un ADR conforme al anexo C | ARQ-02, GOB-02 | Propuesta |
-| MCS | glosario-canonico | Crea y mantiene el glosario | LEN-01, DAT-01 | Propuesta |
-| MCS | definir-indicador | Ficha de métrica y prueba de reconciliación | DAT-10, DAT-13 | Propuesta |
-| MCS | rubrica-autonomia-ia | Puntúa una funcionalidad de IA | IA-06 | Propuesta |
-| MCS | impacto-documental | Detecta documentos afectados por un cambio | DOC-06 | Propuesta |
-| MCS | andamiaje-n1 | Genera el esqueleto de repositorio en nivel N1 | CFG-01..06, INT-01 | Propuesta |
-| MCS | modelado-amenazas | STRIDE sobre una arquitectura | SEG-06 | Propuesta |
-| MCS | auditar-deriva | Detecta deriva de unidades y conceptos | DAT-01..08 | Propuesta |
-| MFB | crear-marco | Ejecuta MFB-P01 | EST-01..05 | Propuesta |
-| MFB | auditar-marco | Ejecuta MFB-P02 | Todos los de MFB | Propuesta |
-| MCC | encuadrar-encargo | Produce la ficha de encargo y clasifica el tipo | CTR-01..06 | Propuesta |
-| MCC | inmersion-sectorial | Dossier y kit de reunión de un rubro nuevo | INV-01..09 | Propuesta |
-| MCC | estimar-esfuerzo | Descompone, estima en rango y declara supuestos | ESF-01..07 | Propuesta |
-| MCC | costear-solucion | Cuatro capas de costo con cifras vivas fechadas | ECO-01..09 | Propuesta |
-| MCC | plan-por-tandas | Convierte alcance en tandas con resultado observable | PLA-01..05 | Propuesta |
+Todas están construidas. Ninguna copia el procedimiento: enruta al documento, que viaja con
+el plugin en `marcos/` (TRZ-02).
 
-Estados: Propuesta · En construcción · Vigente · Retirada.
+| Marco | Skill | Qué hace | Requisitos que cierra |
+|---|---|---|---|
+| — | **`auditar-proyecto`** | **Auditoría completa: MCA → MCC → MCS, un solo plan** | — |
+| MCA | `auditar-entorno` | Mide el contexto permanente y determina el nivel | Todos los de MCA |
+| MCC | `auditar-encargo` | Evalúa un encargo **cerrado** contra MCC | — |
+| MCS | `auditar-software` | Ejecuta MCS-P01 sobre una base de código | GOB-03 |
+| MCS | `quick-scan` | Reconocimiento en 20 minutos | — |
+| MCA | `andamiaje-entorno` | Monta el entorno a MCA-N2. Remedia, no audita | CTX-01..05, FLU-01..03 |
+| MCA | `destilar-skill` | Detecta procedimientos repetidos y los convierte en skill | APR-01..07 |
+| MFB | `crear-marco` | Ejecuta MFB-P01 | EST-01..05, NOM-01..07 |
+| MFB | `auditar-marco` | Ejecuta MFB-P02 sobre un marco, no sobre un proyecto | Todos los de MFB |
+| MCC | `encuadrar-encargo` | Ficha de encargo y clasificación del tipo | CTR-01..06 |
+| MCC | `inmersion-sectorial` | Dossier y kit de reunión de un rubro nuevo | INV-01..09 |
+| MCC | `estimar-esfuerzo` | Descompone, estima en rango, declara supuestos | ESF-01..07 |
+| MCC | `costear-solucion` | Cuatro capas de costo con cifras vivas fechadas | ECO-01..09 |
+| MCC | `plan-por-tandas` | Convierte alcance en tandas con resultado observable | PLA-01..05 |
+| MCS | `auditar-deriva` | Deriva de unidades y conceptos | DAT-01..08 |
+| MCS | `redactar-adr` | Genera un ADR conforme al anexo C | ARQ-02, GOB-02 |
+| MCS | `glosario-canonico` | Crea y mantiene el glosario | LEN-01, DAT-01 |
+| MCS | `definir-indicador` | Ficha de métrica y prueba de reconciliación | DAT-10, DAT-13 |
+| MCS | `rubrica-autonomia` | Puntúa una funcionalidad de IA | IA-06 |
+| MCS | `impacto-documental` | Documentos afectados por un cambio | DOC-06 |
+| MCS | `modelado-amenazas` | STRIDE sobre una arquitectura | SEG-06 |
+| — | `mantener-marketplace` | Cambia el contenido de este repo. **Solo acá** | CFG-04, CFG-06, CFG-08 |
+
+**`auditar-proyecto` es el punto de entrada.** Las tres por marco existen para auditar uno
+solo cuando ya sabés cuál te duele.
 
 ---
 
