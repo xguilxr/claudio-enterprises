@@ -173,15 +173,33 @@ autonomía de MCS-G04 track E. Todo lo que no lo supera es una skill, no un rol.
 
 | Marco | Rol | Puntuación rúbrica | Estado |
 |---|---|---|---|
-| MCS | `task-executor` | **11/12**, dim4 = 2 | Propuesto |
+| MCS | `task-executor` v1.1.0 | **11/12**, dim4 = 2 | Candidato |
 
 Rúbrica aplicada a los 22 agentes previos en `migracion/03-disposicion.md`: **uno pasa el
 umbral**. Los otros 21 se descomponen en 34 skills y 5 corpus. Es el resultado que MCS-OP02
 anticipaba.
 
-Antes de declarar `task-executor` vigente hay que cerrar las puertas de MCS-G04 §4: ADR con
-la puntuación (IA-06), evaluación con umbral (IA-07, IA-08), límites de iteración y coste
-(IA-03) y confirmación humana en acciones irreversibles (IA-10).
+### 3.1 Puertas de `task-executor`
+
+Las de diseño están cerradas; quedan dos de ejecución.
+
+| Puerta | Requisito | Dónde | Estado |
+|---|---|---|---|
+| Clasificación registrada | AUT-02 · IA-06 | `AGENT.md` | ✅ |
+| Catálogo y ámbito | AUT-03 | `catalogo.yaml` · `permisos.json` | ✅ |
+| Límites de iteración y coste | AUT-04 · IA-03 | `catalogo.yaml` §4 | ✅ |
+| Confirmación en irreversibles | AUT-01 · IA-10 | `catalogo.yaml` §3 | ✅ |
+| Memoria inspeccionable | AUT-07 | `catalogo.yaml` §5 — NO APLICABLE | ✅ |
+| Traza de ejecución | AUT-05 · IA-13 | `referencias/traza.md` | ⏳ definida, no producida |
+| Evaluación con umbral | AUT-06 · IA-07 | `evaluacion/` | ⏳ definida, no ejecutada |
+
+**AUT-01 se resolvió sin romper la regla de no preguntar**: el requisito exige confirmación
+humana explícita, no interacción. En una sesión sin supervisión esa confirmación se da antes,
+por escrito, en el contrato. El catálogo deniega por omisión y el contrato solo puede
+apretar, nunca aflojar.
+
+Pasa a **vigente** con un resultado registrado en `evaluacion/resultados/` y una traza real.
+Un esquema de traza no es una traza; un conjunto de casos no es un resultado.
 
 ---
 

@@ -7,6 +7,26 @@ y el versionado sigue [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ---
 
+## [6.1.0] — 2026-08-02
+
+### Added
+- **`roles/task-executor/catalogo.yaml`** — catálogo de herramientas, ámbito, acciones irreversibles, límites y memoria. Cierra **MCA AUT-03, AUT-04, AUT-01 y AUT-07**. Deniega por omisión: heredar todas las herramientas del entorno no era un catálogo.
+- **`roles/task-executor/permisos.json`** — el catálogo hecho cumplir por permisos del entorno. `catalogo.yaml` declara, este archivo controla. Separados, el control vuelve a ser prosa.
+- **`roles/task-executor/referencias/traza.md`** — esquema de traza con entrada, herramientas invocadas, salida y coste (**AUT-05**). El coste va en tokens y no en moneda: la tarifa cambia y viviría caducada dentro de la traza.
+- **`roles/task-executor/evaluacion/`** — doce casos con umbral declarado (**AUT-06**): seguridad 6/6 eliminatorio, disciplina ≥ 5/6. No se compensan entre sí. Incluye `verificar-coherencia.sh`, que comprueba que las declaraciones del rol no se contradigan y **está probado contra fallos inyectados**, no solo contra el caso bueno.
+
+### Changed
+- **`roles/task-executor/AGENT.md`** reescrito. Estado `propuesto` → **`candidato`**: las cinco puertas de diseño cerradas, pendientes dos de ejecución (correr la evaluación, producir la primera traza). No pasa a `vigente` con un esquema por traza y un conjunto de casos por resultado — `MCA-P02` puntúa eso PARCIAL, nunca CONFORME.
+- **`referencias/contrato.md`** — bloques `limites` y `autorizaciones`. Regla central: **el contrato solo puede apretar, nunca aflojar**; el techo vive en el catálogo.
+- **`referencias/disciplina.md`** — de 5 reglas a 7. Nuevas: «el catálogo es el techo» y «traza siempre». Se explicita que registrar una objeción en `assumptions` no autoriza a desobedecer la restricción.
+- Referencias muertas corregidas: apuntaban a `executor-discipline` y `warroom-task-contract` como skills instaladas, y desde v6.0.0 son `referencias/` del propio rol y una plantilla de proyecto. También se quitó una versión de modelo inexistente que había quedado escrita.
+
+### Notas
+- **AUT-01 no exige preguntar: exige confirmación humana explícita.** Se daba de bruces con la regla «nunca preguntás durante la ejecución». Se resolvió dando la confirmación *antes*, por escrito, en el contrato: catálogo que deniega por omisión, autorizaciones nominales con justificación, y ausencia de autorización tratada como denegación. Las dos reglas sobreviven enteras.
+- La rúbrica que clasificó el rol, `MCS-G04`, sigue en **v0.1.0 pendiente de validación experta** (CON-08). Si cambia, la clasificación se recalcula.
+
+---
+
 ## [6.0.0] — 2026-08-02
 
 ### Removed — BREAKING
