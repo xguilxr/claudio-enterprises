@@ -150,31 +150,46 @@ la sustitución introduce un error peor que el que corrige.
 
 ---
 
-## E-06 · Dependencia no satisfecha: la rúbrica del Track E — GRAVEDAD ALTA (bloqueante)
+## E-06 · Referencias fantasma: las guías G01–G04 no existen — GRAVEDAD ALTA (bloqueante)
 
-**Ubicación:** `prompts/MCS-P04-reabsorcion.md`, Etapa 2, «Regla crítica sobre los agentes».
+> **Actualizado 2026-08-02.** La redacción anterior asumía que las guías existían y no
+> habían sido entregadas. David confirma que **nunca fueron creadas**. Eso cambia la
+> naturaleza del hallazgo: no es una dependencia no satisfecha, es una referencia a
+> documentos inexistentes dentro de un documento normativo.
 
-P04 exige: *«Aplica a cada supuesto agente la rúbrica del Track E (seis dimensiones, 0 a 2
-puntos)… Solo sobrevive como AGENTE lo que puntúe 9 o más Y tenga catálogo de herramientas
-real.»*
+**Ubicación:** `MCS-CORE-normativo.md` §0.3, y `prompts/MCS-P04-reabsorcion.md` Etapa 2.
 
-Esa rúbrica vive en **MCS-G04**, que no forma parte de lo entregado. §0.3 del normativo la
-declara como documento del marco.
+§0.3 declara cuatro guías de aplicación —G01 ciclo de vida, G02 diseño, G03 IA, G04
+disciplinas transversales— como documentos del marco. **Ninguna existe.**
 
-**Consecuencia:** la decisión central de la reabsorción —qué activo sigue siendo agente y
-cuál se descompone en skill— no tiene criterio declarado. Inventar la rúbrica incumpliría
-CON-10 (*la selección entre marcos, metodologías o instrumentos alternativos DEBE regirse
-por una rúbrica declarada y versionada, no por criterio no explicitado del modelo*) y
-CON-02.
+P04 depende de una de ellas: *«Aplica a cada supuesto agente la rúbrica del Track E (seis
+dimensiones, 0 a 2 puntos)… Solo sobrevive como AGENTE lo que puntúe 9 o más Y tenga
+catálogo de herramientas real.»* El Track E es la «E» de las disciplinas L, M, E, K de G04.
 
-**Opciones, ninguna aplicada:**
+**Doble consecuencia:**
 
-1. Aportar MCS-G04 y usar la rúbrica real. Es la única que no degrada el criterio.
-2. Derivar una rúbrica provisional de §3.7 y §3.8 del normativo (distinción entre flujo de
-   trabajo y agente) más IA-06, versionarla en `conocimiento/rubricas/` y marcarla
-   `PENDIENTE DE VALIDACIÓN`. Cumple la forma de CON-10 pero no su fondo hasta que se valide.
-3. No clasificar agentes en esta iteración y limitar la reabsorción a lo que no depende de
-   la rúbrica.
+1. La decisión central de la reabsorción —qué sigue siendo agente y qué se descompone en
+   skill— no tiene criterio declarado. Inventar la rúbrica incumple CON-10 (*la selección
+   entre marcos, metodologías o instrumentos alternativos DEBE regirse por una rúbrica
+   declarada y versionada, no por criterio no explicitado del modelo*).
+2. Un normativo que cita documentos inexistentes se autodesautoriza. Es el mismo defecto
+   que el propio marco tipifica en el patrón transversal 11 de P01: *documentación que
+   describe un comportamiento que el código ya no tiene*.
+
+**Corrección propuesta en dos partes:**
+
+- **Sobre §0.3:** marcar las cuatro guías como `PLANIFICADA — no emitida`, o retirarlas de
+  la tabla. Una tabla de documentos relacionados donde ninguno existe es peor que ausente.
+- **Sobre la rúbrica:** redactarla. No es recuperable de ningún lado. Base disponible en el
+  propio normativo: §3.7 (flujo de trabajo) y §3.8 (agente) ya distinguen los dos conceptos,
+  e IA-06 exige que el nivel de autonomía se determine «mediante la rúbrica establecida» y
+  se registre en un ADR. Se versiona en `conocimiento/rubricas/` y se marca
+  `PENDIENTE DE VALIDACIÓN` hasta que David la confirme.
+
+Redactarla con esa base cumple CON-10 en forma y en fondo: el criterio queda declarado,
+versionado y trazable a los términos que el normativo ya define. Lo que no cumple es CON-08
+—conjunto de evaluación certificado por experto distinto de quien desarrolla— hasta que
+David la valide.
 
 ---
 
