@@ -1,0 +1,151 @@
+# Glosario canónico — eje común de TODA la familia de marcos
+# Un concepto: un nombre en español, uno en inglés, una definición.
+# Antes de nombrar un concepto en cualquier marco, comprobar si ya existe aquí.
+# Regla: ningún marco mantiene glosario propio para conceptos definidos aquí (TRZ-04).
+
+meta:
+  version: 1.0.0
+  revisado: 2026-08-02
+  responsable: propietario
+  revisar_cada: 90d
+
+terminos:
+
+  - id: marco
+    es: marco
+    en: framework
+    definicion_es: >
+      Cuerpo normativo y explicativo que codifica una disciplina profesional en
+      requisitos verificables, con su propio prefijo de familia de tres letras.
+    no_usar_es: [framework, metodología, modelo]
+    marcos: [MFB, MCS]
+
+  - id: requisito
+    es: requisito
+    en: requirement
+    definicion_es: >
+      Exigencia numerada e inmutable de un documento normativo, con nivel mínimo
+      asignado y cumplimiento comprobable sin depender del juicio del evaluador.
+    no_usar_es: [regla, norma, criterio, control]
+    marcos: [MFB, MCS]
+
+  - id: nivel-conformidad
+    es: nivel de conformidad
+    en: conformance level
+    definicion_es: >
+      Grado de cumplimiento de un marco en la escala N1 a N5. Los niveles son
+      acumulativos y se declaran por producto y por marco.
+    no_usar_es: [nivel de madurez, grado, tier]
+    marcos: [MFB, MCS]
+
+  - id: puerta-calidad
+    es: puerta de calidad
+    en: quality gate
+    definicion_es: >
+      Conjunto de verificaciones automáticas cuyo resultado condiciona la
+      progresión de un cambio hacia producción.
+    no_usar_es: [checkpoint, control de paso]
+    marcos: [MCS]
+
+  - id: capa
+    es: capa
+    en: layer
+    definicion_es: >
+      Función de un documento dentro de un marco: normativa, guía, prompt,
+      operativa o plantilla.
+    no_usar_es: [nivel, tipo de documento]
+    marcos: [MFB]
+
+  - id: dominio
+    es: dominio
+    en: domain
+    definicion_es: >
+      Agrupación temática de requisitos dentro de una normativa, identificada por
+      un código de tres letras único en toda la familia de marcos.
+    no_usar_es: [área, categoría, sección]
+    marcos: [MFB, MCS]
+
+  - id: escenario-calidad
+    es: escenario de calidad
+    en: quality scenario
+    definicion_es: >
+      Especificación verificable de un atributo de calidad, expresada como
+      estímulo, contexto, respuesta y medida de respuesta con valor numérico.
+    no_usar_es: [requisito no funcional, NFR]
+    marcos: [MCS]
+
+  - id: deriva-conceptual
+    es: deriva conceptual
+    en: concept drift
+    definicion_es: >
+      Situación en la que un mismo concepto de dominio recibe nombres, unidades o
+      definiciones distintas en partes diferentes del sistema, sin producir un
+      fallo detectable.
+    no_usar_es: [inconsistencia, divergencia]
+    marcos: [MCS]
+
+  - id: cifra-viva
+    es: cifra viva
+    en: live figure
+    definicion_es: >
+      Valor numérico cuya vigencia depende del momento de consulta. No constituye
+      conocimiento estable y no forma parte de ningún corpus ni documento.
+    no_usar_es: [dato dinámico, valor volátil]
+    marcos: [MCS]
+
+  - id: frontera-competencia
+    es: frontera de competencia
+    en: scope of practice boundary
+    definicion_es: >
+      Límite declarado más allá del cual un sistema no emite juicio propio y
+      deriva a persona profesional cualificada, por tratarse de actividad regulada.
+    no_usar_es: [límite de responsabilidad, disclaimer]
+    marcos: [MCS]
+
+  - id: skill
+    es: skill
+    en: skill
+    definicion_es: >
+      Procedimiento repetible empaquetado, cargado bajo demanda mediante
+      divulgación progresiva. Se distingue de una capacidad atómica (tool) y de
+      un rol.
+    nota: Anglicismo aceptado por ser estándar de la industria.
+    no_usar_es: [habilidad, competencia, capacidad]
+    marcos: [MCS, MFB]
+
+  - id: agente
+    es: agente
+    en: agent
+    definicion_es: >
+      Sistema en el que un modelo de lenguaje determina dinámicamente qué
+      acciones ejecutar y en qué orden, mediante un bucle con herramientas.
+      Una declaración de rol no constituye un agente.
+    no_usar_es: [asistente, bot, rol]
+    marcos: [MCS]
+
+  - id: flujo-trabajo
+    es: flujo de trabajo
+    en: workflow
+    definicion_es: >
+      Secuencia de pasos predefinida en código, en la que un modelo de lenguaje
+      ejecuta pasos concretos sin decidir el orden.
+    no_usar_es: [pipeline, proceso, cadena]
+    marcos: [MCS]
+
+  - id: elemento-configuracion
+    es: elemento de configuración
+    en: configuration item
+    definicion_es: >
+      Artefacto sujeto a control de versiones e identificación única, cuya
+      modificación afecta al comportamiento o a la comprensión del producto.
+    no_usar_es: [artefacto, activo]
+    marcos: [MCS]
+
+  - id: linea-base
+    es: línea base
+    en: baseline
+    definicion_es: >
+      Conjunto de elementos de configuración en estado formalmente revisado, que
+      sirve de referencia y solo se altera mediante control de cambios.
+    no_usar_es: [snapshot, versión congelada]
+    marcos: [MCS]

@@ -3,7 +3,7 @@ id: INDICE
 titulo: Índice maestro de marcos
 marco: —
 capa: indice
-version: 1.1.0
+version: 1.2.0
 estado: vigente
 idioma: es
 responsable: propietario
@@ -56,6 +56,10 @@ docs/
 ├── README.md                  ← este archivo: qué existe
 ├── ORQUESTADOR.md             ← cuándo cargar cada cosa
 ├── CONVENCIONES.md            ← nomenclatura, estructura, front-matter
+│
+├── conocimiento/
+│   ├── glosario.yaml          ← eje comun de TODA la familia
+│   └── README.md              ← verificacion contra los normativos
 │
 ├── mfb/
 │   ├── MFB-CORE.md
