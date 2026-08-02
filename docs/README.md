@@ -3,13 +3,13 @@ id: INDICE
 titulo: Índice maestro de marcos
 marco: —
 capa: indice
-version: 1.4.0
+version: 1.5.0
 estado: vigente
 idioma: es
 responsable: propietario
 revisado: 2026-08-02
 revisar_cada: 90d
-depende_de: [ORQUESTADOR, CONVENCIONES, glosario, MFB-CORE, MCS-CORE, MCC-CORE]
+depende_de: [ORQUESTADOR, CONVENCIONES, glosario, MFB-CORE, MCS-CORE, MCC-CORE, MCA-CORE]
 ---
 
 # claudio-enterprises — Índice maestro
@@ -27,15 +27,16 @@ Este índice dice qué existe; el orquestador dice cuándo usarlo.
 
 | Prefijo | Marco | Estado | Versión | Dominios | Requisitos |
 |---|---|---|---|---|---|
-| **MFB** | Construcción de Marcos | Vigente | 1.0.0 | 7 | 52 |
+| **MFB** | Construcción de Marcos | Vigente | 1.2.0 | 7 | 52 |
 | **MCS** | Calidad de Software | Vigente | 2.0.0 | 17 | 204 |
 | **MCC** | Consultoría de Tecnología | Vigente | 1.0.0 | 9 | 92 |
+| **MCA** | Capacidades Agénticas | Vigente | 1.0.0 | 7 | 48 |
 
 Conteos **verificados uno a uno**. MFB corrigió los suyos en v1.1.0 (errata F-01). MCS
-publica 203 y su fila DAT no cuadra: ver `mcs/MCS-ERRATAS-2.0.0.md` E-01 y E-02. MCC es el
-único cuyo anexo cuadró a la primera.
+publica 203 y su fila DAT no cuadra: ver `mcs/MCS-ERRATAS-2.0.0.md` E-01 y E-02. MCC y MCA son los únicos cuyos
+anexos cuadraron a la primera.
 
-**Total de la familia: 348 requisitos.** Por eso existe `ORQUESTADOR.md`: no se cargan
+**Total de la familia: 396 requisitos.** Por eso existe `ORQUESTADOR.md`: no se cargan
 nunca todos.
 
 ### Marcos previstos
@@ -57,7 +58,7 @@ docs/
 ├── CONVENCIONES.md            ← nomenclatura, estructura, front-matter
 │
 ├── conocimiento/
-│   ├── glosario.yaml          ← eje común de TODA la familia (21 términos)
+│   ├── glosario.yaml          ← eje común de TODA la familia (27 términos)
 │   └── README.md              ← su verificación contra los normativos
 │
 ├── mfb/                       ← Construcción de Marcos · COMPLETO
@@ -70,6 +71,11 @@ docs/
 │   ├── MCS-CORE.md · MCS-ERRATAS-2.0.0.md
 │   ├── prompts/   MCS-P01 auditoría · MCS-P02 (reemplazado) · MCS-P03 quick scan
 │   └── operativa/ MCS-OP01 arranque · MCS-OP02 reabsorción · MCS-OP03 evidencia
+│
+├── mca/                       ← Capacidades Agénticas · el entorno de trabajo
+│   ├── MCA-CORE.md
+│   ├── guias/     MCA-G01 entorno agéntico, niveles y destilación
+│   └── operativa/ MCA-OP01 mapa de capacidades de la plataforma (30d)
 │
 ├── mcc/                       ← Consultoría de Tecnología · MFB-N2
 │   ├── MCC-CORE.md · MCC-PARCHES-ENTORNO.md
@@ -100,7 +106,7 @@ dependen del paquete.
 
 | ID | Documento | Capa | Para qué | Estado |
 |---|---|---|---|---|
-| MFB-CORE | Documento normativo | Normativa | 52 requisitos que todo marco de la familia debe cumplir | ✅ v1.1.0 |
+| MFB-CORE | Documento normativo | Normativa | 52 requisitos que todo marco de la familia debe cumplir | ✅ v1.2.0 |
 | MFB-G01 | Diseño de marcos | Guía | Cómo se decide, estructura y redacta un marco | ✅ |
 | MFB-P01 | Crear marco | Prompt | Construye un marco nuevo de principio a fin | ✅ |
 | MFB-P02 | Auditar marco | Prompt | Verifica homogeneidad y conformidad con MFB | ✅ |
@@ -138,6 +144,25 @@ dependen del paquete.
 
 **Dominios de MCC:** CTR contratación · INV inmersión · ANA análisis · PRO propuesta ·
 ECO economía · ESF esfuerzo · PLA planificación · ENT entrega · CLI relación con el cliente.
+
+### 2.4 MCA — Marco de Capacidades Agénticas
+
+Gobierna **la IA que construye el producto**; MCS §5.15 gobierna la que el producto expone.
+
+| ID | Documento | Capa | Para qué | Estado |
+|---|---|---|---|---|
+| MCA-CORE | Documento normativo | Normativa | 48 requisitos, 7 dominios, niveles N1–N5 | ✅ |
+| MCA-G01 | El entorno agéntico | Guía | Niveles, dónde va cada cosa, destilación | ✅ |
+| MCA-OP01 | Mapa de capacidades | Operativa | Único documento que nombra mecanismos. Revisión cada 30 días | ✅ |
+| MCA-P01 | Andamiaje de entorno | Prompt | Lleva un repositorio a N2 | ❌ |
+| MCA-P02 | Auditoría de entorno | Prompt | Determina el nivel alcanzado | ❌ |
+
+**Dominios:** CTX contexto · CAP capacidades · FLU flujos · AUT autonomía · HER herramientas ·
+EVA evaluación · APR aprendizaje.
+
+**Niveles:** N1 orientado · N2 verificable · N3 capacitado · N4 conectado · N5 autónomo.
+N1 y N2 suman 11 requisitos y no añaden ninguna clase de fallo nueva: ahí está el
+rendimiento. Los 24 de N4 y N5 son de acotación de alcance y evidencia.
 
 ---
 
@@ -197,6 +222,7 @@ Este repositorio se somete a sus propios marcos. Ver `mcs.yaml` en la raíz.
 | MCS | N1 | Pendiente | — |
 | MFB | N2 | Pendiente | — |
 | MCC | N1 | Pendiente | — |
+| MCA | N2 | Pendiente | — |
 
 Un repositorio que aloja los marcos y no los cumple carece de autoridad.
 

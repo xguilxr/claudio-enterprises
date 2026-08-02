@@ -4,7 +4,7 @@
 # Regla: ningún marco mantiene glosario propio para conceptos definidos aquí (TRZ-04).
 
 meta:
-  version: 1.1.0
+  version: 1.2.0
   revisado: 2026-08-02
   responsable: propietario
   revisar_cada: 90d
@@ -111,7 +111,7 @@ terminos:
       un rol.
     nota: Anglicismo aceptado por ser estándar de la industria.
     no_usar_es: [habilidad, competencia, capacidad]
-    marcos: [MCS, MFB, MCC]
+    marcos: [MCS, MFB, MCC, MCA]
 
   - id: agente
     es: agente
@@ -121,7 +121,7 @@ terminos:
       acciones ejecutar y en qué orden, mediante un bucle con herramientas.
       Una declaración de rol no constituye un agente.
     no_usar_es: [asistente, bot, rol]
-    marcos: [MCS]
+    marcos: [MCS, MCA]
 
   - id: flujo-trabajo
     es: flujo de trabajo
@@ -130,7 +130,7 @@ terminos:
       Secuencia de pasos predefinida en código, en la que un modelo de lenguaje
       ejecuta pasos concretos sin decidir el orden.
     no_usar_es: [pipeline, proceso, cadena]
-    marcos: [MCS]
+    marcos: [MCS, MCA]
 
   - id: elemento-configuracion
     es: elemento de configuración
@@ -204,3 +204,58 @@ terminos:
       descubrimiento e hipótesis de necesidad con su criterio de descarte.
     no_usar_es: [briefing, one-pager]
     marcos: [MCC]
+
+  - id: entorno-agentico
+    es: entorno agéntico
+    en: agentic environment
+    definicion_es: >
+      Conjunto de artefactos versionados de un repositorio que determinan cómo un
+      asistente de programación opera sobre él.
+    no_usar_es: [setup, configuración, tooling]
+    marcos: [MCA]
+
+  - id: contexto-permanente
+    es: contexto permanente
+    en: always-on context
+    definicion_es: >
+      Porción del entorno agéntico que se carga en toda sesión sin que nadie la
+      solicite. Su tamaño se declara como presupuesto y se verifica.
+    no_usar_es: [system prompt, contexto base]
+    marcos: [MCA]
+
+  - id: capacidad-agentica
+    es: capacidad agéntica
+    en: agentic capability
+    definicion_es: >
+      Aptitud que el entorno habilita en el asistente. No es un artefacto: se
+      materializa en skills, instrucciones de alcance temático, flujos de trabajo
+      y roles. Se distingue de skill, que es el artefacto concreto.
+    no_usar_es: [feature, funcionalidad]
+    marcos: [MCA]
+
+  - id: patron-observado
+    es: patrón observado
+    en: observed pattern
+    definicion_es: >
+      Repetición registrada durante el trabajo real que sugiere la ausencia de un
+      artefacto del entorno agéntico.
+    no_usar_es: [insight, aprendizaje, señal]
+    marcos: [MCA]
+
+  - id: destilacion
+    es: destilación
+    en: distillation
+    definicion_es: >
+      Procedimiento por el que un patrón observado se convierte en artefacto del
+      entorno, mediante rúbrica declarada y aprobación humana.
+    no_usar_es: [extracción, refactor de prompts]
+    marcos: [MCA]
+
+  - id: radio-impacto
+    es: radio de impacto
+    en: blast radius
+    definicion_es: >
+      Conjunto de sistemas que una herramienta puede modificar, junto con la
+      reversibilidad de esa modificación.
+    no_usar_es: [alcance, superficie]
+    marcos: [MCA]

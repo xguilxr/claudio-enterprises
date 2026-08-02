@@ -3,7 +3,7 @@ id: MFB-CORE
 titulo: Marco de Construcción de Marcos — Documento normativo
 marco: MFB
 capa: normativa
-version: 1.1.0
+version: 1.2.0
 estado: vigente
 idioma: es
 responsable: propietario
@@ -23,7 +23,7 @@ depende_de: [INDICE, CONVENCIONES, glosario]
 | Campo | Valor |
 |---|---|
 | Identificador | MFB-CORE |
-| Versión | 1.1.0 |
+| Versión | 1.2.0 |
 | Estado | Vigente |
 | Emisión | 2026-08-02 |
 | Próxima revisión | 2026-11-02 |
@@ -34,6 +34,7 @@ depende_de: [INDICE, CONVENCIONES, glosario]
 | Versión | Fecha | Naturaleza del cambio |
 |---|---|---|
 | 1.0.0 | 2026-08-02 | Emisión inicial. 34 requisitos en 7 dominios, derivados de la construcción de MCS |
+| 1.2.0 | 2026-08-02 | Registro de los siete códigos de dominio de MCA en el anexo B. Versión menor: actualiza un registro |
 | 1.1.0 | 2026-08-02 | Registro de los nueve códigos de dominio de MCC en el anexo B. Corrección de la fila TRZ y de los totales del anexo A: el conteo real es 52 requisitos, no 34 ni 51 (errata F-01). Versión menor: actualiza registros y corrige aritmética, no altera requisitos |
 
 ## Convenciones de lenguaje normativo
@@ -230,11 +231,12 @@ Los códigos son únicos en toda la familia. Verificar aquí antes de asignar un
 | EST, NOM, NIV, TRZ, RED, VER, ACT | MFB | Construcción de marcos |
 | GOB, CFG, REQ, ARQ, DIS, LEN, DAT, DEV, INT, SUM, INF, DES, OPS, SEG, IA, DOC, CON | MCS | Calidad de software |
 | CTR, INV, ANA, PRO, ECO, ESF, PLA, ENT, CLI | MCC | Consultoría de tecnología |
+| CTX, CAP, FLU, AUT, HER, EVA, APR | MCA | Capacidades agénticas |
 
-**Disponibles y sugeridos para marcos futuros:** ADQ, CAL, COM, EDU, EQP, EVA, FIN, GES, JUR, MER, ODC, PER, RSG, SRV, TAL, VTA.
+**Disponibles y sugeridos para marcos futuros:** ADQ, CAL, COM, EDU, EQP, FIN, GES, JUR, MER, ODC, PER, RSG, SRV, TAL, VTA.
 
-Retirados de la lista por el registro de MCC: ANA, CLI, CTR, ECO, ENT, INV, PLA, PRO. **ESF** es código nuevo, no figuraba entre los sugeridos; verificado como único.
+Retirados por el registro de MCC: ANA, CLI, CTR, ECO, ENT, INV, PLA, PRO. Retirado por el de MCA: EVA. Códigos nuevos, no sugeridos y verificados como únicos: **ESF** (MCC) y **CTX, CAP, FLU, AUT, HER, APR** (MCA).
 
 ---
 
-**Fin del documento MFB-CORE v1.1.0**
+**Fin del documento MFB-CORE v1.2.0**

@@ -3,20 +3,20 @@ id: ORQUESTADOR
 titulo: Orquestador entre marcos
 marco: —
 capa: operativa
-version: 1.1.0
+version: 1.2.0
 estado: vigente
 idioma: es
 responsable: propietario
 revisado: 2026-08-02
 revisar_cada: 90d
-depende_de: [INDICE, MFB-CORE, MCS-CORE, MCC-CORE]
+depende_de: [INDICE, MFB-CORE, MCS-CORE, MCC-CORE, MCA-CORE]
 ---
 
 # Orquestador entre marcos
 
 ## El problema que resuelve
 
-Un cuerpo normativo de 348 requisitos aplicado a todo momenta la operación
+Un cuerpo normativo de 396 requisitos aplicado a todo momenta la operación
 diaria y termina abandonado. El riesgo real de este proyecto no es que los
 marcos sean insuficientes: es que estorben.
 
@@ -68,6 +68,11 @@ Qué cargar según lo que estás haciendo. Nada más.
 | Estimar esfuerzo de un alcance | MCC-G03 §2 | L2 |
 | Planificar por fases un encargo aprobado | MCC-G01 §5 | L2 |
 | Auditar la conducción de un encargo | MCC-CORE | L3 |
+| Montar o revisar el entorno de trabajo de un repo | MCA-G01 | L2 |
+| Decidir dónde poner una convención o un procedimiento | MCA-G01 §3 | L2 |
+| Conectar el asistente a un sistema externo | MCA-OP01 §3.3 | L2 |
+| Promover un patrón repetido a skill | MCA-G01 §4 | L2 |
+| Auditar el entorno agéntico | MCA-CORE | L3 |
 | Crear un marco nuevo | MFB-P01 + MFB-CORE | L3 |
 | Revisar la coherencia entre marcos | MFB-P02 | L3 |
 
@@ -113,6 +118,10 @@ Cuando dos marcos aplican a la vez:
    aplican, MCC determina qué se acuerda y MCS qué se construye. El nivel de
    conformidad del producto se propone en MCC-ANA-08 y se declara en
    MCC-ENT-07, pero su contenido lo define MCS-CORE.
+6. **MCA gobierna el entorno; MCS gobierna el producto.** MCA rige la IA que
+   construye; MCS §5.15 rige la IA que el producto expone a sus usuarios. Ante
+   duda de encaje, preguntar quién sufre el fallo: si es quien desarrolla, MCA;
+   si es un usuario del producto, MCS.
 
 ---
 
@@ -125,6 +134,7 @@ conformidad:
   MCS: { objetivo: N2, alcanzado: N1 }
   MFB: { objetivo: N1, alcanzado: N1 }
   MCC: { objetivo: N1, alcanzado: N1 }
+  MCA: { objetivo: N2, alcanzado: N1 }
 ```
 
 Un producto puede ser N3 en calidad de software y N1 en otro marco. Es normal y
