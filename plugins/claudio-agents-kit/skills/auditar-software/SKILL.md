@@ -1,12 +1,12 @@
 ---
-name: inmersion-sectorial
-description: Estudia un rubro que no conocés contra reloj y devuelve un dossier más un kit de reunión. Úsala antes de la primera reunión con un cliente de un sector nuevo.
+name: auditar-software
+description: Audita una base de código contra el marco de calidad y devuelve el nivel real más un plan por tandas. Úsala cuando necesites saber en qué estado está un producto de verdad, no por impresión.
 ---
 
-# Inmersion sectorial
+# Auditoria conformidad
 
-**Marco:** MCC
-**Requisitos que ayuda a cumplir:** INV-01..09
+**Marco:** MCS
+**Requisitos que ayuda a cumplir:** GOB-03
 **Confirmación humana requerida en:** ninguna
 
 ## Cuándo aplica
@@ -16,11 +16,11 @@ otras y el marco no exige adopción íntegra.
 
 ## Procedimiento
 
-El procedimiento vive en `marcos/mcc/MCC-G02-inmersion-sectorial.md`, que **viaja con este plugin**. Un hecho reside en
-un solo documento (TRZ-02); esta skill lo enruta, no lo copia.
+El procedimiento vive en `marcos/mcs/MCS-P01-auditoria.md`, que **viaja con este plugin**. Un hecho reside en un
+solo documento (TRZ-02); esta skill lo enruta, no lo copia.
 
-1. Localizalo: `${CLAUDE_PLUGIN_ROOT}/marcos/mcc/MCC-G02-inmersion-sectorial.md`. Si esa variable no resuelve, buscá
-   `marcos/mcc/MCC-G02-inmersion-sectorial.md` a partir del directorio de esta skill, subiendo hasta la raíz del plugin.
+1. Localizalo: `${CLAUDE_PLUGIN_ROOT}/marcos/mcs/MCS-P01-auditoria.md`. Si esa variable no resuelve, buscá
+   `marcos/mcs/MCS-P01-auditoria.md` a partir del directorio de esta skill, subiendo hasta la raíz del plugin.
    **Si no lo encontrás, pará y decilo. No lo reconstruyas de memoria: un
    procedimiento recordado produce resultados con apariencia de rigor.**
 2. Ejecutalo sobre el caso concreto, respetando sus etapas y sus puntos de control.
@@ -34,5 +34,5 @@ un solo documento (TRZ-02); esta skill lo enruta, no lo copia.
 
 ## Referencias
 
-- `marcos/mcc/MCC-G02-inmersion-sectorial.md` — procedimiento completo
+- `marcos/mcs/MCS-P01-auditoria.md` — procedimiento completo
 - `marcos/ORQUESTADOR.md` — qué más cargar y cuándo

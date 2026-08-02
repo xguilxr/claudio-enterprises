@@ -7,6 +7,45 @@ y el versionado sigue [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ---
 
+## [7.0.0] — 2026-08-02
+
+### Changed — BREAKING
+- **`auditoria-conformidad` → `auditar-software`.** Las tres skills por marco no eran paralelas: `auditar-entorno` (MCA), `auditar-encargo` (MCC) y `auditoria-conformidad` (MCS). La tercera obligaba a recordar cuál era cuál en el momento de invocarla. **Quien la llame por el nombre viejo deja de encontrarla** — de ahí el MAJOR.
+
+### Fixed
+- **El inventario de skills de `docs/README.md` estaba entero desactualizado.** Declaraba las 17 filas como «Propuesta» cuando las 22 están construidas desde v6.0.0, y dos nombres ya no existían: `rubrica-autonomia-ia` y `andamiaje-n1`. Faltaban cinco skills que sí existen, entre ellas `auditar-proyecto` — el punto de entrada. Tabla regenerada desde los archivos, con los 22 nombres verificados uno a uno contra el directorio.
+- `docs/migracion/03-disposicion.md` conserva la trazabilidad del renombre: `auditar-software` (antes `auditoria-conformidad`). El registro de migración sirve para encontrar dónde quedó cada activo; con el nombre viejo a secas dejaba de servir.
+
+## [6.3.0] — 2026-08-02
+
+### Added
+- **`auditar-encargo`** — la auditoría MCC no tenía skill propia. Con `auditar-entorno` (MCA) y `auditoria-conformidad` (MCS) ya existentes, MCC era el único de los tres marcos que solo se podía auditar dentro del recorrido completo. Lleva escrita en la Etapa 0 la regla que decide si corre siquiera: **`MCC-CORE` §6, un encargo abierto no se evalúa** — con los cuatro casos resueltos, incluido el de fases cerradas dentro de un proyecto en curso. Y avisa de lo que MCC tiene de particular: **no audita el repositorio, audita el encargo**, y esa evidencia casi nunca está en git.
+
+### Notas
+- Los nombres de las tres skills por marco no son paralelos: `auditar-entorno`, `auditar-encargo`, `auditoria-conformidad`. La tercera desentona. Renombrarla a `auditar-software` es MAJOR —rompe la invocación de quien ya la use— y queda a decisión del propietario.
+
+---
+
+## [6.2.0] — 2026-08-02
+
+**Las skills ya funcionan fuera de este repositorio.** Antes rutaban a `docs/…`, que solo existe acá: activadas sobre otro proyecto no encontraban su procedimiento y lo reconstruían de memoria. Eso produce auditorías inventadas — con número, tabla y apariencia de rigor sobre requisitos que nadie leyó. Peor que no auditar.
+
+### Added
+- **`marcos/`** — 21 documentos que viajan con el plugin: los cuatro normativos, los prompts de auditoría, las guías y el glosario. 272 KB, y no entran en contexto permanente: se leen bajo demanda.
+- **`scripts/sincronizar-marcos.sh`** — copia `docs/ → marcos/` desde un manifiesto explícito. `docs/` sigue siendo la fuente (TRZ-02); esto es una copia de publicación y el script es lo que impide que se despeguen. Con `--verificar` falla y no copia: **detecta las tres formas de despegue** —original desaparecido, copia vieja, copia huérfana fuera del manifiesto—. Probado contra las tres inyectadas, no solo contra el caso bueno.
+- Paso 5 del procedimiento de `CLAUDE.md`: si tocaste `docs/`, sincronizá. Y `--verificar` entra en el paso de pruebas previo a publicar.
+
+### Changed
+- **Las 21 skills** apuntan a `marcos/` y traen una puerta nueva: **si el procedimiento no se pudo leer, se para y se dice**. Nunca se reconstruye de memoria. Es la protección real; el resto es fontanería.
+- **`auditar-proyecto` reescrita como punto de entrada autosuficiente.** Ya no enruta a un documento y espera adjuntos: localiza los suyos, lee `conformidad.yaml` de la raíz para los niveles objetivo, comprueba banderas rojas antes que nada, corre MCA → MCC → MCS, registra en `docs/conformidad/` y devuelve un solo plan. Lleva escritos los dos cortes duros: **MCA N0 detiene la auditoría**, y **un encargo abierto no evalúa MCC** (`MCC-CORE` §6).
+- `mantener-marketplace` es la única que sigue apuntando a `docs/`, y es correcto: declara que solo se usa dentro de este repositorio.
+
+### Fixed
+- `CLAUDE.md` describía una estructura de plugin sin `marcos/` ni `scripts/`, y llamaba a las skills «para operar los marcos de ESTE repo» — que es justo lo que dejó de ser verdad.
+- **`CLAUDE.md` decía «Hoy hay un solo rol».** Es una cifra que deriva del contenido real, en contexto permanente: viola CTX-03, y la escribí yo en v6.1.0. Retirada. Presupuesto tras el recorte: **4 988 / 5 000**.
+
+---
+
 ## [6.1.1] — 2026-08-02
 
 Solo documentación. Ningún archivo del plugin cambió; el bump existe para que el caché no deje a nadie con un índice que miente.

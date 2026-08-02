@@ -118,7 +118,7 @@ y coste (IA-03), y acciones irreversibles con confirmación (IA-10). Hoy no cump
 ### Marco · MCS (12)
 | Skill | Origen | Cierra |
 |---|---|---|
-| `auditoria-conformidad` | MCS-P01 | GOB-03 |
+| `auditar-software` (antes `auditoria-conformidad`) | MCS-P01 | GOB-03 |
 | `quick-scan` | MCS-P03 | — |
 | `redactar-adr` | MFB-T06 | ARQ-02, GOB-02 |
 | `glosario-canonico` | nueva | LEN-01, DAT-01 |
