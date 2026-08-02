@@ -9,6 +9,12 @@ y el versionado sigue [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ## [6.1.0] — 2026-08-02
 
+### Fixed
+- **`CLAUDE.md` reescrito.** Su regla de oro mandaba delegar en el meta-agente `agent-manager`, que v6.0.0 eliminó: la instrucción más importante del archivo más importante apuntaba a algo que no existe. Con ella caían `agents/`, `commands/`, `scripts/`, `agent-template.md` y `skill-template.md`, todos borrados en v6.0.0. **Ninguna referencia muerta queda, y las seis rutas que cita se verificaron una a una.**
+- `CLAUDE.md` no mencionaba `docs/` — la familia de marcos, que es hoy el centro de gravedad del repo. Ahora abre con las dos mitades y rutea a `docs/ORQUESTADOR.md` en vez de cargar marcos completos.
+- El procedimiento de cambio deja de delegar y pasa a ser el propio archivo, que es lo que la skill `mantener-marketplace` ya declaraba al decir «el procedimiento completo vive en CLAUDE.md» (TRZ-02).
+- **Economía de tokens declarada como filosofía del repo**, con presupuesto de contexto permanente de 5 000 caracteres (MCA CTX-01, CTX-02). Medido: 5 380 → **4 932**. La primera reescritura dio 5 094 y se recortó hasta entrar, porque `MCA-P01` Etapa 5 no admite discutir el presupuesto propio.
+
 ### Added
 - **`roles/task-executor/catalogo.yaml`** — catálogo de herramientas, ámbito, acciones irreversibles, límites y memoria. Cierra **MCA AUT-03, AUT-04, AUT-01 y AUT-07**. Deniega por omisión: heredar todas las herramientas del entorno no era un catálogo.
 - **`roles/task-executor/permisos.json`** — el catálogo hecho cumplir por permisos del entorno. `catalogo.yaml` declara, este archivo controla. Separados, el control vuelve a ser prosa.
