@@ -15,6 +15,8 @@ y el versionado sigue [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 ### Notas
 - Los nombres de las tres skills por marco no son paralelos: `auditar-entorno`, `auditar-encargo`, `auditoria-conformidad`. La tercera desentona. Renombrarla a `auditar-software` es MAJOR —rompe la invocación de quien ya la use— y queda a decisión del propietario.
 
+---
+
 ## [6.2.0] — 2026-08-02
 
 **Las skills ya funcionan fuera de este repositorio.** Antes rutaban a `docs/…`, que solo existe acá: activadas sobre otro proyecto no encontraban su procedimiento y lo reconstruían de memoria. Eso produce auditorías inventadas — con número, tabla y apariencia de rigor sobre requisitos que nadie leyó. Peor que no auditar.
