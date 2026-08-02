@@ -1,3 +1,19 @@
+---
+id: MCS-P03
+titulo: Reconocimiento rápido
+marco: MCS
+capa: prompt
+version: 1.0.0
+estado: vigente
+reemplazado_por: null
+idioma: es
+responsable: propietario
+revisado: 2026-08-02
+revisar_cada: 180d
+uso: recurrente
+depende_de: [MCS-CORE, CONVENCIONES, glosario]
+---
+
 # MCS-P03 — Prompt de Reconocimiento Rápido
 
 | Campo | Valor |

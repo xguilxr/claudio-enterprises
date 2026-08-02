@@ -1,3 +1,18 @@
+---
+id: MIG-01
+titulo: Inventario y arqueología del repositorio
+marco: MCS
+capa: operativa
+version: 1.0.0
+estado: vigente
+idioma: es
+responsable: propietario
+revisado: 2026-08-02
+revisar_cada: 90d
+uso: un solo uso
+depende_de: [MCS-P04, MCS-CORE, MFB-CORE]
+---
+
 # Reabsorción MCS-P04 · Etapa 1 — Inventario y arqueología
 
 | Campo | Valor |
@@ -6,9 +21,9 @@
 | Responsable | David Aguilar |
 | Estado | Cerrado — pendiente de Punto de Control 1 |
 | Fecha | 2026-08-02 |
-| Prompt aplicado | `marco/prompts/MCS-P04-reabsorcion.md`, Etapa 1 |
+| Prompt aplicado | `docs/mcs/prompts/MCS-P04-reabsorcion.md`, Etapa 1 |
 | Marco de referencia | MCS-CORE v2.0.0 |
-| Depende de | `marco/erratas-MCS-CORE-2.0.0.md` (E-06 es bloqueante para la Etapa 2) |
+| Depende de | `docs/mcs/MCS-ERRATAS-2.0.0.md` (E-06 es bloqueante para la Etapa 2) |
 
 > **Alcance de esta etapa:** describir qué hay. No propone destinos, no propone estructura,
 > no retira nada. Esas decisiones son de las Etapas 2 y 3, y P04 las condiciona a respuestas
@@ -205,7 +220,7 @@ conserva marcado **AUTORIDAD NO DETERMINADA**; no se promueve a normativo.
 
 ## 1.3 Estado del repositorio — reconocimiento MCS-P03
 
-Aplicado `marco/prompts/MCS-P03-quickscan.md` a este repositorio, tratado como proyecto de
+Aplicado `docs/mcs/prompts/MCS-P03-quick-scan.md` a este repositorio, tratado como proyecto de
 software. **P03 declara que no determina nivel de conformidad y este resultado no se
 registra como evaluación.**
 

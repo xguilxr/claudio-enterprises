@@ -1,3 +1,19 @@
+---
+id: MCS-CORE
+titulo: Marco de Calidad de Software — Documento normativo
+marco: MCS
+capa: normativa
+version: 2.0.0
+estado: vigente
+reemplazado_por: null
+idioma: es
+responsable: propietario
+revisado: 2026-08-02
+revisar_cada: 90d
+uso: recurrente
+depende_de: [INDICE, CONVENCIONES, glosario]
+---
+
 # MCS — Marco de Calidad de Software
 
 **Documento normativo**

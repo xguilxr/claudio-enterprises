@@ -1,12 +1,41 @@
+---
+id: MIG-02
+titulo: Propuesta de arquitectura multi-marco
+marco: MCS
+capa: operativa
+version: 1.0.0
+estado: reemplazado
+idioma: es
+responsable: propietario
+revisado: 2026-08-02
+revisar_cada: 90d
+uso: un solo uso
+depende_de: [MCS-P04, MCS-CORE, MFB-CORE]
+---
+
 # Propuesta: de un marco de software a varios marcos conectados
 
-| Campo | Valor |
-|---|---|
-| Tipo | Explicación (Diátaxis) |
-| Responsable | David Aguilar |
-| Estado | Propuesta — pendiente de decisión |
-| Fecha | 2026-08-02 |
-| Depende de | `marco/MCS-CORE-normativo.md` v2.0.0 |
+> ## ⛔ REEMPLAZADO por MFB-CORE v1.0.0 y MFB-G01 v1.0.0 — 2026-08-02
+>
+> Este documento se escribió sin conocer que MFB ya existía. Se conserva por VER-05
+> (reemplazo, no borrado) y porque una parte se confirmó.
+>
+> **Confirmado por MFB.** Los tres mecanismos de conexión son correctos y están en el
+> marco real: identificadores de dominio únicos en toda la familia (NOM-02), escala N1–N5
+> compartida (NIV-01), y glosario canónico único (TRZ-04). MFB §2.5 va más lejos y declara
+> el glosario como el **único** eje común de la familia.
+>
+> **Refutado por MFB.** La propuesta central —partir MCS en `MC-BASE` + vertical software—
+> **no se hace**. MFB resuelve la interconexión sin capa base: cada marco es autónomo con
+> su prefijo, y lo compartido se referencia por identificador (TRZ-02, TRZ-03) en lugar de
+> extraerse a un tronco común. La rúbrica de encaje de MFB-G01 §3 aplicada a la propuesta
+> la habría frenado antes de escribirla, y el antipatrón 1 —«marco por tema»— describe con
+> exactitud el riesgo que introducía.
+>
+> **Sigue vivo.** El requisito de economía de expresión (abajo, LEN-09 y LEN-10) no está en
+> MFB ni en MCS. Se mantiene como propuesta y se decidirá dónde ubicarlo: RED de MFB si
+> gobierna la redacción de los marcos, LEN de MCS si gobierna lo que emite el producto.
+> Probablemente ambos, con uno referenciando al otro.
 
 ---
 

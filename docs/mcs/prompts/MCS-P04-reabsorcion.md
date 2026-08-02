@@ -1,3 +1,19 @@
+---
+id: MCS-P04
+titulo: Reabsorción y empaquetado
+marco: MCS
+capa: prompt
+version: 1.0.0
+estado: vigente
+reemplazado_por: null
+idioma: es
+responsable: propietario
+revisado: 2026-08-02
+revisar_cada: 180d
+uso: un solo uso
+depende_de: [MCS-CORE, MFB-CORE, CONVENCIONES, glosario]
+---
+
 # MCS-P04 — Prompt de Reabsorción y Empaquetado
 
 | Campo | Valor |

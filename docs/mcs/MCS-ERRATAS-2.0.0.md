@@ -1,3 +1,19 @@
+---
+id: MCS-ERRATAS
+titulo: Erratas verificadas contra MCS-CORE v2.0.0
+marco: MCS
+capa: operativa
+version: 1.1.0
+estado: vigente
+reemplazado_por: null
+idioma: es
+responsable: propietario
+revisado: 2026-08-02
+revisar_cada: 30d
+uso: recurrente
+depende_de: [MCS-CORE, MFB-CORE]
+---
+
 # Erratas verificadas contra MCS-CORE v2.0.0
 
 | Campo | Valor |
@@ -206,3 +222,25 @@ Si la intención es que cada versión mayor reemplace a la anterior como documen
 el archivo sea único y el historial haga de traza, entonces el campo es correcto y lo que
 sobra es la exigencia de reemplazo bidireccional aplicada a sí mismo. Requiere decisión,
 no corrección.
+
+---
+
+## E-07 · La estructura que propone P04 quedó superada por CONVENCIONES — BAJA
+
+**Ubicación:** `prompts/MCS-P04-reabsorcion.md`, Etapa 3.
+
+P04 propone `marco/`, `paquete/`, `conocimiento/`, `evals/`. `CONVENCIONES.md` §2 fija otra:
+`<prefijo>/` con `guias/`, `prompts/`, `operativa/`, `plantillas/`, `roles/`, `skills/`, y el
+INDICE sitúa todo bajo `docs/`.
+
+Se aplicó la de CONVENCIONES. Razón: P04 dice «punto de partida a adaptar, no a copiar» y
+pide justificar la desviación; CONVENCIONES es normativa derivada de MFB y gobierna la forma
+de todos los marcos. Un prompt no puede imponer estructura contra ella.
+
+**Desviación adicional que también se justifica:** el paquete instalable se queda en
+`plugins/claudio-agents-kit/` y no se renombra a `paquete/`. Esa ruta la fija el formato de
+plugin de Claude Code, no este marco. Renombrarla rompe a los consumidores instalados a
+cambio de nada.
+
+**Corrección propuesta:** en P04 Etapa 3, sustituir el árbol por una referencia a
+CONVENCIONES §2. Un hecho debe vivir en un solo documento (TRZ-02).
