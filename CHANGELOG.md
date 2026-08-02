@@ -7,6 +7,31 @@ y el versionado sigue [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ---
 
+## [6.0.0] — 2026-08-02
+
+### Removed — BREAKING
+- **Los 22 agentes.** La rúbrica del Track E (`MCS-G04` v0.1.0) se aplicó a los 22 y **uno solo superó el umbral de 9 sobre 12**. Los otros 21 se descompusieron en skills, plantillas y corpus conforme a `docs/migracion/03-disposicion.md`. Ningún activo se borró sin fila de justificación.
+- **`orquestador`.** Puntuó 3 y es el único que no deja descendencia: su tabla de enrutamiento ya está mejor expresada en `docs/ORQUESTADOR.md`, que además rutea marcos y no solo agentes.
+- **`scripts/setup.sh`** (334 líneas). El CHANGELOG v5.1.0 ya lo daba por superado por `/scaffold` del vault.
+- **`commands/setup.md`.** La documentación oficial declara que comandos y skills son el mismo mecanismo; su función la cubre la skill `andamiaje-entorno`.
+- **`templates/agent-template.md`** y **`templates/skill-template.md`**, sustituidas por `MFB-T05`.
+
+### Added
+- **`roles/task-executor/`** — el único rol, con su puntuación registrada conforme a IA-06 y las cinco puertas que le faltan para ser vigente declaradas abiertas. Absorbe `executor-discipline` y `warroom-task-contract`, que eran el mismo procedimiento en tres sitios.
+- **21 skills de marco** que ejecutan MFB, MCS, MCC, MCA y la auditoría transversal. Cada una enruta al documento que contiene el procedimiento; no lo copia (TRZ-02).
+- **27 plantillas de skill** en `plantillas-skill/`, que se instalan en el proyecto que las necesita. No se cargan nunca de forma permanente.
+- **7 corpus** en `corpus/`, con el conocimiento declarativo que estaba dentro de los agentes.
+
+### Changed
+- Las cuatro búsquedas en Notion pasan a dos, con el detalle por fuente en `referencias/`.
+- `plugin.json` y `marketplace.json` describen ahora lo que el paquete hace, no su historial.
+
+### Notas
+- **Contexto permanente: de 3 870 a ~1 500 tokens por turno.** Las descripciones de los 22 agentes eran 2 106 de ellos.
+- Este repositorio aloja cuatro marcos en `docs/`. El paquete los implementa; ellos no dependen de él.
+
+---
+
 ## [5.2.0] — 2026-08-02
 
 ### Changed

@@ -8,14 +8,14 @@
     {
       "name": "claudio-agents-kit",
       "source": "./plugins/claudio-agents-kit",
-      "description": "Agentes, skills y plantillas que implementan los marcos MFB, MCS y MCC",
-      "version": "5.2.0",
+      "description": "Skills que operan los marcos MFB, MCS, MCC y MCA, más plantillas instalables por proyecto",
+      "version": "6.0.0",
       "category": "workflow",
       "tags": [
-        "agents",
-        "consulting",
-        "pandas",
-        "fastapi",
+        "marcos",
+        "calidad",
+        "consultoria",
+        "agentico",
         "spanish"
       ]
     }
