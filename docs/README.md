@@ -3,11 +3,11 @@ id: INDICE
 titulo: Índice maestro de marcos
 marco: —
 capa: indice
-version: 1.6.0
+version: 1.6.1
 estado: vigente
 idioma: es
 responsable: propietario
-revisado: 2026-08-02
+revisado: 2026-08-03
 revisar_cada: 90d
 depende_de: [ORQUESTADOR, CONVENCIONES, glosario, MFB-CORE, MCS-CORE, MCC-CORE, MCA-CORE]
 ---
@@ -86,7 +86,8 @@ docs/
 │
 └── migracion/                 ← salida de MCS-OP02, no es documento de marco
     ├── 01-inventario.md
-    └── 02-arquitectura-multimarco.md   (REEMPLAZADO por MFB)
+    ├── 02-arquitectura-multimarco.md   (REEMPLAZADO por MFB)
+    └── 03-disposicion.md               ← dónde quedó cada uno de los 22 agentes
 ```
 
 El **paquete instalable** vive fuera de `docs/`, en `plugins/claudio-agents-kit/`. Son dos
@@ -97,6 +98,7 @@ dependen del paquete.
 
 | Falta | Consecuencia | Bloquea |
 |---|---|---|
+| `conformidad.yaml` en la raíz | Es lo que `auditar-proyecto` lee para saber el nivel objetivo de cada marco. Sin él, el repositorio que aloja los marcos no se puede auditar con su propia skill | La autoauditoría de §5 |
 | `INSTRUCCIONES-PROYECTO.md` | Es el nivel L1 del orquestador, lo único permanente en contexto. Sin él no hay activación por disparador y la tabla de ruteo hay que consultarla a mano | La operación diaria |
 | **MCS-G01…G03** | No existen. MCS-CORE §0.3 las declara como parte del marco | El razonamiento tras los requisitos de ciclo de vida, diseño e IA |
 | Validación de MCS-G04 | La rúbrica del Track E se redactó desde §3.7, §3.8 e IA-06. CON-08 exige que la certifique una persona experta | Que la clasificación rol/skill sea autoritativa |
@@ -207,8 +209,12 @@ Un esquema de traza no es una traza; un conjunto de casos no es un resultado.
 
 ## 4. Inventario de skills
 
-Una **skill** es un procedimiento repetible, cargado bajo demanda. Se invoca con `/nombre`,
-o sola cuando su `description` encaja con lo que se pidió.
+Una **skill** es un procedimiento repetible, cargado bajo demanda. Activa sola cuando su
+`description` encaja con lo que se pidió, que es la vía normal.
+
+Para llamarla a mano, **lleva el prefijo del plugin**: `/claudio-agents-kit:<nombre>`. Sin el
+prefijo, Claude Code responde `Unknown command` — `/nombre` a secas solo resuelve skills
+locales del proyecto, en `.claude/skills/`.
 
 Todas están construidas. Ninguna copia el procedimiento: enruta al documento, que viaja con
 el plugin en `marcos/` (TRZ-02).
@@ -245,7 +251,10 @@ solo cuando ya sabés cuál te duele.
 
 ## 5. Estado de conformidad del propio repositorio
 
-Este repositorio se somete a sus propios marcos. Ver `mcs.yaml` en la raíz.
+Este repositorio se somete a sus propios marcos. El archivo que declara los niveles objetivo
+es `conformidad.yaml` en la raíz — el mismo nombre que lee `auditar-proyecto` en cualquier
+proyecto. **Todavía no existe acá**, y esa es la primera no conformidad del repositorio: sin
+él, la auditoría no tiene contra qué medir.
 
 | Marco | Nivel objetivo | Nivel alcanzado | Última evaluación |
 |---|---|---|---|

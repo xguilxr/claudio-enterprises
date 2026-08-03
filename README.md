@@ -12,13 +12,14 @@ Familia de **cuatro marcos de trabajo** y el paquete que los opera.
 **Empezá por [`docs/ORQUESTADOR.md`](docs/ORQUESTADOR.md).** Son 396 requisitos y no se
 cargan nunca todos: el orquestador dice qué entra y cuándo. Por defecto, nada.
 
-- [`docs/README.md`](docs/README.md) — qué existe
+- [`docs/README.md`](docs/README.md) — qué existe. **Es el inventario; los conteos se
+  verifican ahí y en ningún otro lado**
 - [`docs/AUDITORIA.md`](docs/AUDITORIA.md) — cómo se audita un proyecto: MCA → MCC → MCS
 - [`docs/conocimiento/glosario.yaml`](docs/conocimiento/glosario.yaml) — el único eje común
 
-## El paquete
+---
 
-## Instalación (one-liner)
+## Instalación
 
 En cualquier máquina donde uses Claude Code, una sola vez:
 
@@ -27,142 +28,154 @@ claude plugin marketplace add github:xguilxr/claudio-enterprises
 claude plugin install claudio-agents-kit@claudio-enterprises
 ```
 
-Verificá:
+Verificá desde la terminal:
 
 ```bash
 claude plugin list
 ```
 
-Dentro de Claude Code, `/skills` debería listar 21 skills. Los agentes se retiraron en la v6.0.0: ver `docs/migracion/03-disposicion.md`.
+Y dentro de Claude Code, `/skills` lista las 22 skills del kit.
 
 ### (Recomendado) Linkear el CLAUDE.md global
 
-Para que las reglas globales (stack preferido, agentes core, flujo por tipo de proyecto, reporte post-cambio obligatorio, karpathy-principles) se actualicen automáticamente con cada `plugin update`:
+Para que las reglas globales se actualicen solas con cada `plugin update`:
 
 ```bash
 mkdir -p ~/.claude
 ln -sf ~/.claude/plugins/claudio-enterprises/claudio-agents-kit/templates/CLAUDE-global.md ~/.claude/CLAUDE.md
 ```
 
-Si preferís editar el archivo con reglas personales (ej: cambiar "Soy Claudio" → "Soy David" como hizo David en su global), usá `cp` en vez de `ln -sf` y re-copiá manualmente cuando el kit evoluciona.
+Si preferís editarlo con reglas personales, usá `cp` en vez de `ln -sf` y re-copiá cuando el
+kit evolucione.
 
-## Dos comandos para dos cosas distintas
+---
 
-Desde v5.1.0, el plugin tiene un solo slash command (`/setup`) que **NO** crea proyectos nuevos. Esa responsabilidad la tiene `/scaffold` del vault de David. La distinción importa:
+## Cómo se invoca
 
-| Acción | Dónde corre | Qué hace |
-|---|---|---|
-| **Crear proyecto nuevo del portafolio de David** | `/scaffold` del vault (`portfolio-mgmt/scaffolding/scaffold.py`) | Operación atómica: crea repo en GitHub + carpeta en `portfolio-mgmt/projects/<slug>/` + clone local + entrada en `99-meta/repos-inventario.md` |
-| **Crear proyecto externo (no portafolio)** | Manual | Copiar `templates/project-types/<tipo>.md` a mano y editar |
-| **Bootstrappear agentes/skills LOCALES en un proyecto existente** | `/claudio-agents-kit:setup` (este plugin) | Crea `.claude/agents/<nombre>.md` o `.claude/skills/<nombre>/SKILL.md` en el CWD. Útil para forkear un agente del kit y customizarlo, o crear un agente específico del proyecto |
+**El plugin no tiene slash commands propios desde la v6.0.0.** Todo lo que se invoca es una
+skill, y una skill del plugin se llama con el prefijo del plugin:
 
-## Uso — `/claudio-agents-kit:setup`
+```
+/claudio-agents-kit:auditar-proyecto
+```
 
-El comando bootstrappea agentes y skills LOCALES del proyecto donde estás parado. Cuatro opciones:
+Sin el prefijo, Claude Code no la encuentra. Tres formas válidas, en orden de preferencia:
 
-| Opción | Qué hace |
+| Forma | Cuándo |
 |---|---|
-| **A — Agente nuevo desde cero** | Crea `.claude/agents/<nombre>.md` con skeleton (frontmatter + secciones de cuándo invocarlo / qué hace / qué no hace / output / reglas). |
-| **B — Agente forkeado del kit** | Copia un agente del marketplace (ej: `frontend-expert`) a `.claude/agents/<nombre>.md` local para customizarlo sin tocar el kit global. El local sobrescribe al global cuando se invoca. |
-| **C — Skill nuevo desde cero** | Crea `.claude/skills/<nombre>/SKILL.md` con skeleton (cuándo aplicar / la regla / ejemplos bien y mal / por qué importa). |
-| **D — Listar** | Tabla de lo que ya existe en `.claude/agents/` y `.claude/skills/`. |
+| Pedilo en prosa — «auditá este proyecto» | Casi siempre. La `description` de cada skill está escrita para que active sola |
+| `/claudio-agents-kit:<skill>` | Cuando querés esa skill y no otra |
+| `/<skill>` a secas | Solo skills locales del proyecto, en `.claude/skills/` |
 
-NO genera `CLAUDE.md` de proyecto. Si lo necesitás, usá `/scaffold` (vault) o copiá `templates/project-types/<tipo>.md` a mano.
+**El punto de entrada es `auditar-proyecto`.** Corre los tres marcos en orden y devuelve un
+solo plan. No hace falta adjuntar nada: los documentos viajan dentro del plugin.
 
-Después de bootstrap, reiniciá la sesión para que Claude Code cargue el archivo nuevo.
+---
 
-## Contenido del kit
+## Qué trae el paquete
 
-### 22 agentes
+```
+plugins/claudio-agents-kit/
+├── skills/            ← 22 skills que operan los marcos, en cualquier repositorio
+├── marcos/            ← copia de docs/ que viaja con el plugin
+├── plantillas-skill/  ← 27 skills de stack, se copian al proyecto que las necesita
+├── corpus/            ← 7 documentos de conocimiento de referencia
+├── roles/             ← 1 rol: task-executor
+├── templates/         ← plantillas de proyecto y CLAUDE-global.md
+└── scripts/           ← sincronizar-marcos.sh
+```
 
-**Core (siempre activos)**: `orquestador`, `documentador`, `limpiador`, `optimizador`.
+**El inventario completo de las 22 skills está en [`docs/README.md`](docs/README.md) §4**,
+con marco y requisitos que cierra cada una. Acá no se repite: una tabla duplicada se
+desactualiza, y esta ya se desactualizó una vez.
 
-**Planning**: `discovery-agent`, `product-analyst`, `project-manager`, `design-researcher`.
+Los cinco puntos de entrada más usados:
 
-**Expertos técnicos (opt-in por proyecto)**: `data-expert`, `backend-expert`, `frontend-expert`, `devops-expert`, `qa-expert`, `db-architect`, `client-reporter`, `security-auditor`.
+| Quiero… | Skill |
+|---|---|
+| Saber en qué estado está un proyecto | `auditar-proyecto` |
+| Que Claude trabaje bien en este repo | `andamiaje-entorno` |
+| Ver qué tiene un repo en 20 minutos | `quick-scan` |
+| Encuadrar lo que un cliente pide | `encuadrar-encargo` |
+| Convertir algo que repito en una skill | `destilar-skill` |
 
-**UX/UI review (opt-in)**: `navigator` (flujo de navegación entre páginas), `ui-reviewer` (crítico visual de una página).
+### Las plantillas de skill no se cargan
 
-**Productividad y revisión**: `prompt-optimizer` (prompts crudos → prompts optimizados de 6 modos), `code-council` (consejo de expertos para cambios cross-domain).
+`plantillas-skill/` no entra en contexto nunca desde el plugin. Existe para que el
+conocimiento de un stack no le cueste contexto a los proyectos que no usan ese stack.
+`andamiaje-entorno` copia al proyecto solo las que le correspondan. Es MCA CAP-06.
 
-**Ejecución headless**: `task-executor` (persona para `claude -p` spawneados por warroom; parsea task contract, trabaja al DoD, emite report-back estructurado).
+### Agentes: no hay
 
-**Meta**: `agent-manager` (gestiona ciclo de vida de agentes/skills dentro de este repo: crear/modificar/remover con bump + CHANGELOG + commit).
+Los 22 agentes se retiraron en la v6.0.0. Se les aplicó la rúbrica de autonomía de MCS-G04
+track E y **uno solo pasó el umbral**: `task-executor`, y sigue en estado `candidato`. Los
+otros 21 se descompusieron en skills y corpus. El detalle y la puntuación de cada uno están
+en [`docs/migracion/03-disposicion.md`](docs/migracion/03-disposicion.md).
 
-### 21 skills
+---
 
-**Convenciones de código**: `commit-message-format`, `git-flow`, `docstring-google-style`, `pandas-conventions`, `postgres-query-patterns`, `fastapi-structure`, `react-query-patterns`.
-
-**Testing y CI**: `pytest-style` (extendido con reglas de performance), `vitest-patterns`, `github-actions-ci`.
-
-**Producto y propuestas**: `epic-user-story-format`, `proposal-writing`.
-
-**Branding e inspiración**: `consultora-branding-lookup`, `design-inspiration-lookup`, `presentation-inspiration-lookup`, `prospect-branding-lookup`.
-
-**Principios transversales**: `karpathy-principles` (4 reglas: Think Before Coding / Simplicity First / Surgical Changes / Goal-Driven Execution).
-
-**Integración con ecosistema de David (v5.0+)**:
-- `obsidian-vault-conventions` — pointer al spec del vault de Obsidian de David (paths, frontmatter, convención `## Para David`).
-- `github-repo-inventory` — pointer al inventario único de repos en `99-meta/repos-inventario.md`.
-- `warroom-task-contract` — formato YAML del task contract planner → executor.
-- `executor-discipline` — 5 reglas para sesiones `claude -p` headless.
-
-### 5 templates de proyecto
-
-Un `CLAUDE.md` diferenciado por tipo: `platform`, `proposal`, `portfolio-website`, `automation`, `data-analysis`. Usar como base para `CLAUDE.md` de proyectos externos (los del portafolio de David usan los archetypes del vault, no estos).
-
-## Actualizar el kit en tus máquinas
+## Actualizar el kit
 
 ```bash
 claude plugin marketplace update
 claude plugin update claudio-agents-kit
 ```
 
-Si linkeaste con `ln -sf`, el `CLAUDE.md` global se actualiza solo.
+**Cerrá Claude Code antes de correrlo.** Actualizar con el proceso abierto deja el caché a
+medio escribir; ver Troubleshooting.
+
+---
 
 ## Evolucionar el kit (solo dentro de este repo)
 
-Dentro del repo del marketplace, pedile al meta-agente:
+Pedile la skill de mantenimiento:
 
 ```
-> Usá agent-manager para crear un agente llamado sales-expert que analice pipelines de ventas
+> Usá mantener-marketplace para agregar una skill que audite contratos
 ```
 
-`agent-manager` hace todo el bookkeeping: crea desde plantilla, valida frontmatter, bumpea `plugin.json` + `marketplace.json`, actualiza `CHANGELOG.md`, commitea con Conventional Commits y pushea a una branch.
+`mantener-marketplace` hace el bookkeeping: crea desde plantilla, valida frontmatter,
+sincroniza `marcos/`, bumpea `plugin.json` + `marketplace.json`, actualiza el `CHANGELOG.md`,
+commitea en Conventional Commits y pushea a una rama.
 
-Reglas de versionado (SemVer):
-- **MAJOR** (4.x → 5.0): cambio que rompe flujos existentes (ej: rename de slash command, redefinición de comportamiento).
-- **MINOR** (5.0 → 5.1): agente/skill/comando nuevo o redefinición de uno existente sin remover funcionalidad.
-- **PATCH** (5.1.0 → 5.1.1): typos, ajustes menores de descripción.
+El procedimiento completo, paso por paso, está en [`CLAUDE.md`](CLAUDE.md).
 
-**Importante**: si no bumpeás versión, los consumidores no ven el cambio (caching por versión).
+| Cambio | Bump |
+|---|---|
+| Typo, ajuste de descripción, corrección de documentación | PATCH |
+| Skill, plantilla o documento nuevo, sin romper | MINOR |
+| Renombrar o quitar algo existente; cambio que rompe flujos | MAJOR |
+
+**Si no bumpeás, los consumidores no ven el cambio.** Claude Code cachea por versión.
+
+---
 
 ## Estructura del repo
 
 ```
 claudio-enterprises/
-├── .claude-plugin/
-│   └── marketplace.json          ← índice público del marketplace
-├── plugins/
-│   └── claudio-agents-kit/
-│       ├── .claude-plugin/plugin.json
-│       ├── agents/               ← 22 .md
-│       ├── skills/               ← 21 carpetas con SKILL.md
-│       ├── commands/setup.md     ← único slash command (bootstrap local)
-│       ├── scripts/setup.sh      ← orphan desde v5.1.0 (deprecated, no se invoca)
-│       ├── templates/
-│       │   ├── CLAUDE-global.md
-│       │   ├── STYLE.md
-│       │   ├── prompt-system-reference.md
-│       │   ├── chrome-site-classification-prompt.md
-│       │   ├── project-types/    ← 5 templates
-│       │   ├── pytest/conftest.py
-│       │   └── github/ci.yml
-│       └── README.md
+├── .claude-plugin/marketplace.json   ← índice público del marketplace
+├── docs/                             ← los marcos. Contenido normativo, fuente de verdad
+│   ├── ORQUESTADOR.md · README.md · CONVENCIONES.md · AUDITORIA.md
+│   ├── conocimiento/  mfb/  mcs/  mcc/  mca/
+│   └── migracion/                    ← salida de MCS-OP02, no es documento de marco
+├── plugins/claudio-agents-kit/       ← el paquete instalable
 ├── CHANGELOG.md
-├── CLAUDE.md                     ← reglas para trabajar DENTRO del repo
+├── CLAUDE.md                         ← reglas para trabajar DENTRO del repo
 └── README.md
 ```
+
+`docs/` es la fuente; `plugins/claudio-agents-kit/marcos/` es una copia de publicación.
+**Si tocás `docs/`, sincronizá:**
+
+```bash
+bash plugins/claudio-agents-kit/scripts/sincronizar-marcos.sh
+```
+
+Sin eso, las skills quedan con una copia vieja del procedimiento. Con `--verificar` el script
+falla y no copia: detecta original desaparecido, copia vieja y copia huérfana.
+
+---
 
 ## Desarrollo local
 
@@ -172,24 +185,89 @@ Para probar cambios sin pushear:
 cd ~/claudio-enterprises
 claude plugin marketplace add "$(pwd)"
 claude plugin install claudio-agents-kit
+```
 
-# Al terminar:
+**El marketplace local se llama igual que el remoto** (`claudio-enterprises`, sale de
+`marketplace.json`). Uno pisa al otro. Al terminar, devolvé la máquina al remoto:
+
+```bash
 claude plugin uninstall claudio-agents-kit
 claude plugin marketplace remove claudio-enterprises
 claude plugin marketplace add github:xguilxr/claudio-enterprises
 claude plugin install claudio-agents-kit@claudio-enterprises
 ```
 
+---
+
 ## Troubleshooting
 
-**"No veo los cambios después de editar"** → olvidaste bumpear versión. Claude Code cachea por versión.
+### `Unknown command: /claudio-agents-kit:<skill>`
 
-**"El slash command `/setup` no genera el CLAUDE.md como antes"** → es esperado desde v5.1.0. `/setup` ahora bootstrappea agentes/skills LOCALES, no genera CLAUDE.md de proyecto. Para CLAUDE.md, usá `/scaffold` (vault de David) o copiá `templates/project-types/<tipo>.md` a mano.
+El plugin no cargó en esa sesión. Si la skill te funcionó antes y dejó de funcionar sin que
+cambiara nada del repo, es el caché a medio actualizar. Las dos causas habituales:
 
-**"Los agentes no aparecen en `/agents`"** → los `.md` tienen que estar directo en `plugins/claudio-agents-kit/agents/`, no en subcarpetas.
+- Correr `claude plugin update` **con Claude Code abierto**. Los archivos están tomados y la
+  actualización queda parcial.
+- Cerrar Claude Code **desde el Administrador de tareas**. El proceso muere sin escribir su
+  estado, y la sesión siguiente arranca con el registro de plugins a medias.
+
+Cerrá **todas** las ventanas de Claude Code y corré, en ese orden:
+
+```bash
+claude plugin list
+claude plugin marketplace update
+claude plugin update claudio-agents-kit
+```
+
+Si `claude plugin list` no muestra `claudio-agents-kit`, o lo muestra en una versión vieja,
+reinstalá limpio:
+
+```bash
+claude plugin uninstall claudio-agents-kit
+claude plugin marketplace remove claudio-enterprises
+claude plugin marketplace add github:xguilxr/claudio-enterprises
+claude plugin install claudio-agents-kit@claudio-enterprises
+```
+
+Abrí una sesión nueva y comprobá con `/plugin` que está habilitado y con `/skills` que
+aparecen las 22.
+
+### La skill existe pero el nombre no
+
+En la v7.0.0 se renombró **`auditoria-conformidad` → `auditar-software`**. El nombre viejo
+devuelve `Unknown command`. Los tres nombres de auditoría por marco son:
+
+| Marco | Skill |
+|---|---|
+| MCA | `auditar-entorno` |
+| MCC | `auditar-encargo` |
+| MCS | `auditar-software` |
+
+Para los tres en orden, `auditar-proyecto`.
+
+### «No veo los cambios después de editar»
+
+Olvidaste bumpear versión en `plugin.json` **y** en `marketplace.json`. Claude Code cachea
+por versión: sin bump, el consumidor se queda en la vieja.
+
+### «La auditoría no encuentra los documentos»
+
+No adjuntes nada. Viajan en `marcos/`, dentro del plugin. Si la skill dice que no los
+encontró, **debe parar y decirlo** — no reconstruir el procedimiento de memoria. Si en vez de
+eso te devolvió una auditoría igual, es una auditoría inventada: descartala. Revisá que
+`marcos/` esté sincronizado con `sincronizar-marcos.sh --verificar`.
+
+### «La auditoría devuelve no conforme en casi todo»
+
+Falta `conformidad.yaml` en la raíz del proyecto auditado, o declara un nivel objetivo que no
+es el que querés. Sin nivel objetivo la auditoría no informa ninguna decisión. La tabla de
+perfiles está en [`docs/AUDITORIA.md`](docs/AUDITORIA.md) §2.
+
+---
 
 ## Versionado público
 
-El CHANGELOG sigue [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Cada release incluye migration notes cuando rompe algo.
+El CHANGELOG sigue [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Cada release
+incluye notas de migración cuando rompe algo.
 
-Versión actual: **5.1.0** (ver `CHANGELOG.md`).
+Versión actual: **7.0.1** (ver [`CHANGELOG.md`](CHANGELOG.md)).
