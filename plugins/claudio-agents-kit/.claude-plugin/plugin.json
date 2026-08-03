@@ -1,7 +1,7 @@
 {
   "name": "claudio-agents-kit",
-  "version": "7.0.0",
-  "description": "Opera los marcos MFB, MCS, MCC y MCA de Claudio-Enterprises: 21 skills de marco, 27 plantillas de skill que se instalan por proyecto, 7 corpus y 1 rol.",
+  "version": "7.0.1",
+  "description": "Opera los marcos MFB, MCS, MCC y MCA de Claudio-Enterprises: 22 skills de marco, 27 plantillas de skill que se instalan por proyecto, 7 corpus y 1 rol.",
   "author": {
     "name": "Claudio"
   },

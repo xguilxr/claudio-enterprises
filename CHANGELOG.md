@@ -7,6 +7,25 @@ y el versionado sigue [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ---
 
+## [7.0.1] — 2026-08-03
+
+### Fixed
+- **`README.md` de la raíz describía la v5.1.0.** Documentaba 22 agentes retirados en la v6.0.0, un slash command `/setup` y una carpeta `commands/` que ya no existen, `scripts/setup.sh`, el meta-agente `agent-manager` —hoy la skill `mantener-marketplace`— y un inventario de 21 skills con nombres que se eliminaron hace tres versiones. Cerraba con «Versión actual: 5.1.0». Reescrito entero contra el estado real del repositorio.
+- **Nadie decía cómo se invoca una skill del plugin.** Ni el README de la raíz, ni el del plugin, ni `docs/README.md` §4 —que además afirmaba `/nombre` a secas, que solo resuelve skills locales del proyecto—. Sin el prefijo `/claudio-agents-kit:`, Claude Code responde `Unknown command`. Documentado en los tres, con las tres formas válidas y cuándo usar cada una.
+- **El README del plugin declaraba que los marcos no viajan con él.** «No los contiene: los marcos viven en `docs/`» dejó de ser cierto en la v6.2.0, que es justamente cuando `marcos/` se empaquetó para que las skills funcionaran fuera de este repositorio. Contradecía a `auditar-proyecto`, que dice «no pidas que te adjunten documentos: viajan con este plugin».
+- **El estado de `task-executor` en el README del plugin era el previo a la v6.1.0**: «le faltan las cinco puertas de MCA-N5». Esas cinco son de diseño y se cerraron en esa versión; las que quedan son las dos de ejecución —traza producida y evaluación corrida—, tal como ya registraba `docs/README.md` §3.1.
+- **`docs/README.md` §5 apuntaba a `mcs.yaml` en la raíz.** Ese archivo no existe y el nombre canónico es `conformidad.yaml`, que es el que leen `auditar-proyecto` y `auditar-encargo`. La referencia muerta queda como lo que es: una carencia declarada en §2.0, y la primera no conformidad del repositorio que aloja los marcos.
+- `docs/README.md` §2: el mapa de documentos omitía `migracion/03-disposicion.md`, que es donde quedó la trazabilidad de los 22 agentes.
+- Conteo de skills en la descripción de `plugin.json`: 21 → **22**. Quedó corto en la v6.3.0, cuando entró `auditar-encargo`.
+- **`templates/CLAUDE-global.md` seguía en la v5.x, y es el peor sitio donde puede pasar**: el README recomienda linkearlo a `~/.claude/CLAUDE.md`, así que se carga en **cada turno de cada sesión de todas las máquinas**. Enumeraba los 22 agentes retirados con su descripción completa, el meta-agente `agent-manager`, cinco flujos de trabajo encadenando agentes inexistentes, `memory: user` de agentes, y el acople con `/claudio-agents-kit:setup` —comando que no existe desde la v6.0.0—. Pagaba contexto permanente por un equipo que no está y desviaba a Claude hacia invocaciones que fallan. Reescrito a v3 contra el estado real: sin agentes, con la forma de invocación correcta y con el presupuesto de contexto declarado, que es lo que MCA CTX-01 y CTX-02 exigen. El bloque normativo del reporte post-cambio —al que `CLAUDE.md` de la raíz enruta como regla completa— se conserva entero.
+
+### Added
+- **Troubleshooting de `Unknown command`** en el README de la raíz. Cubre las dos causas de caché a medio actualizar —correr `claude plugin update` con Claude Code abierto, y cerrarlo desde el Administrador de tareas, que lo mata sin escribir su estado— con la secuencia de reinstalación limpia. Cubre también el renombre de la v7.0.0, que devuelve exactamente el mismo error a quien llame `auditoria-conformidad`.
+- Aviso en «Desarrollo local»: el marketplace local y el remoto se llaman igual, `claudio-enterprises`, porque el nombre sale de `marketplace.json`. Uno pisa al otro, y de ahí la secuencia para devolver la máquina al remoto.
+
+### Notas
+- El README de la raíz ya no reproduce el inventario de skills: enruta a `docs/README.md` §4. La tabla duplicada es la que se desactualizó, y mantener el mismo inventario en dos archivos garantiza que vuelva a pasar (MCA CTX-03).
+
 ## [7.0.0] — 2026-08-02
 
 ### Changed — BREAKING
